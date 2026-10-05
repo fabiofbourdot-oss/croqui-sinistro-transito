@@ -1,0 +1,2163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Croqui de Sinistro de Trânsito</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+<style>
+:root{--blue:#123e69;--border:#b8c5cf}*{box-sizing:border-box}body{margin:0;background:#e9eff4;color:#172532;font-family:Arial,sans-serif}.top{background:linear-gradient(120deg,#102e50,#1c6197);color:#fff;padding:11px 15px;display:flex;align-items:center;gap:14px}.top h1{font-size:18px;margin:0}.top small{opacity:.86}.actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}button{border:1px solid #b8c7d1;border-radius:6px;background:#fff;color:#123e69;padding:8px 9px;font-size:11px;font-weight:bold;cursor:pointer;touch-action:manipulation}.actions button{border:0}.layout{max-width:1680px;margin:auto;padding:12px;display:grid;grid-template-columns:310px 1fr;gap:12px}.panel,.work{border:1px solid var(--border);border-radius:9px;background:#fff;padding:12px}.panel{max-height:calc(100vh - 18px);overflow:auto}.panel h2{font-size:14px;color:var(--blue);border-bottom:1px solid #dbe5eb;padding:6px 0;margin:10px 0 7px}.panel h2:first-child{margin-top:0}label{display:block;font-size:11px;font-weight:bold;margin:6px 0 3px}input,textarea,select{width:100%;border:1px solid #afbdc8;border-radius:4px;padding:6px;font:inherit;font-size:12px}textarea{height:43px;resize:vertical}.row,.buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px}.buttons button{font-size:11px;padding:8px 3px;background:#f7fafc}.buttons button.active{background:#cbe9fb;border-color:#1477bb}.primary{width:100%;background:var(--blue);color:#fff;margin-top:7px}.secondary{width:100%;margin-top:6px}.vehicle{border:1px solid #c5d2dc;border-left:4px solid #1e70ae;border-radius:5px;padding:7px;margin:7px 0;background:#fafcfd}.vehicle h3{font-size:12px;color:var(--blue);margin:0 0 5px}.vehicle .remove{float:right;border:0;background:transparent;color:#a11a1a;padding:0;font-size:16px}.help{font-size:11px;line-height:1.4;background:#edf6fd;border-left:3px solid #1e70ae;padding:8px;margin-top:10px}.status{min-height:17px;font-size:11px;color:#08612b;font-weight:bold;margin-top:7px}.work{background:#cbd8e1;overflow:auto;min-height:calc(100vh - 82px);display:flex;justify-content:flex-start;align-items:flex-start;padding:16px}.page{width:1236px;height:1030px;min-width:1236px;flex:0 0 1236px;background:#fff;position:relative;box-shadow:0 2px 14px #0004;padding:18px}.paperTitle{text-align:center;font:700 18px Georgia,serif;margin-bottom:5px}.header{height:150px;border:2px solid #111;padding:10px 13px;font:15px/1.42 'Times New Roman',serif;white-space:pre-wrap;overflow:hidden;color:#111;background:#fff;text-align:left}.headerTop{line-height:1.25}.headerVehicles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:14px;row-gap:1px;margin-top:3px;font-size:13px;line-height:1.15}.headerVehicle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.headerTeam{margin-top:3px;font-size:13px;line-height:1.15}.scene{position:absolute;left:18px;top:196px;width:1200px;height:790px;border:1px solid #111;background:#fff;overflow:hidden}.sceneGrid{position:absolute;inset:0;background-image:linear-gradient(#eef2f5 1px,transparent 1px),linear-gradient(90deg,#eef2f5 1px,transparent 1px);background-size:20px 20px;pointer-events:none}.canvasBox{position:absolute;inset:0}.footer{position:absolute;bottom:8px;left:18px;right:18px;border-top:1px solid #aaa;text-align:center;font-size:10px;color:#555;padding-top:3px}.hint{font-size:11px;background:#123e69;color:#fff;padding:7px;border-radius:5px;display:none;margin-top:8px}.locked{opacity:.65}@media(max-width:850px){.layout{grid-template-columns:1fr;padding:7px}.panel{max-height:72vh}.work{min-height:60vh;justify-content:flex-start;padding:8px}.top{flex-direction:column;align-items:flex-start}.actions{margin-left:0}}@media print{
+ html,body{margin:0!important;padding:0!important;background:#fff!important}
+ .top,.panel{display:none!important}
+ .layout{display:block!important;margin:0!important;padding:0!important;max-width:none!important;height:auto!important}
+ .work{display:block!important;background:#fff!important;border:0!important;padding:0!important;margin:0!important;min-height:0!important;overflow:hidden!important;width:auto!important;height:auto!important;page-break-after:avoid!important}
+ .page{
+   box-shadow:none!important;
+   margin:0 auto!important;
+   zoom:69%!important;
+   page-break-inside:avoid!important;
+   break-inside:avoid!important;
+   page-break-after:avoid!important;
+   overflow:hidden!important;
+ }
+ .paperTitle{font-size:22px!important;line-height:1.15!important;margin:0 0 7px!important}
+ .header{
+   height:150px!important;
+   padding:11px 14px!important;
+   font-size:17px!important;
+   line-height:1.42!important;
+   overflow:hidden!important;
+ }
+ .scene{left:18px!important;top:196px!important;width:1200px!important;height:790px!important;overflow:hidden!important}
+ .footer{
+   left:18px!important;right:18px!important;bottom:8px!important;
+   padding-top:4px!important;font-size:13px!important;line-height:1.2!important;
+ }
+ @page{size:A4 landscape;margin:4mm}
+}
+
+/* ===== V3 ===== */
+.toolbarTitle{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#61717d;margin:5px 0}
+.measureBox{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.measureBox input{font-size:11px}
+.legend{display:flex;gap:6px;flex-wrap:wrap;font-size:10px;margin-top:6px}
+.legend span{border:1px solid #c7d2da;border-radius:10px;padding:3px 6px;background:#f8fafb}
+.snap{display:flex;align-items:center;gap:5px;font-size:11px;margin-top:7px}
+.snap input{width:auto}
+.modeInfo{font-size:10px;line-height:1.35;color:#435461;background:#f3f7fa;border:1px solid #d8e2e8;border-radius:5px;padding:7px;margin-top:7px}
+.scene:focus-within{outline:2px solid #1e70ae;outline-offset:2px}
+.colorButtons{grid-template-columns:1fr 1fr 1fr 1fr}.colorButtons button[data-color="#f1c40f"]{background:#f1c40f;color:#222}.colorButtons button[data-color="#e32636"]{background:#e32636;color:#fff}
+/* ===== V7: painel lateral em altura total útil ===== */
+html,body{height:100%;min-height:100%}
+.layout{height:calc(100vh - 58px);min-height:0;align-items:stretch}
+.panel{height:100%;max-height:none!important;overflow-y:auto;overflow-x:hidden}
+.work{height:100%;min-height:0}
+@media(max-width:850px){
+  .layout{height:auto;min-height:calc(100vh - 90px)}
+  .panel{height:70vh;max-height:70vh!important}
+  .work{height:auto}
+}
+
+
+/* ===== V67: abas de ferramentas sem dependência de JavaScript ===== */
+.toolTabsWrap{width:100%}
+.toolTabRadio{position:absolute;opacity:0;pointer-events:none}
+.toolTabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:8px 0 7px}
+.toolTabs label{display:block;text-align:center;padding:8px 3px;font-size:10px;font-weight:bold;
+ background:#eef4f8;color:#123e69;border:1px solid #b8c7d1;border-radius:6px;cursor:pointer;user-select:none}
+.toolTabPanel{display:none}
+#toolTabDraw:checked ~ .toolTabs label[for="toolTabDraw"],
+#toolTabEditable:checked ~ .toolTabs label[for="toolTabEditable"],
+#toolTabSignal:checked ~ .toolTabs label[for="toolTabSignal"],
+#toolTabSymbols:checked ~ .toolTabs label[for="toolTabSymbols"]{background:#123e69;color:#fff;border-color:#123e69}
+#toolTabDraw:checked ~ #tabDraw{display:block}
+#toolTabEditable:checked ~ #tabEditable{display:block}
+#toolTabSignal:checked ~ #tabSignal{display:block}
+#toolTabSymbols:checked ~ #tabSymbols{display:block}
+.toolTabPanel h2{margin-top:6px}
+
+
+/* ===== V73 Zoom — baseada na V72 ===== */
+.work{position:relative}
+.zoomBar{display:none!important;
+ position:sticky;
+ left:100%;
+ bottom:8px;
+ z-index:50;
+ width:max-content;
+ margin:8px 10px 8px auto;
+ display:flex;
+ align-items:center;
+ gap:7px;
+ padding:5px 8px;
+ background:#fff;
+ border:1px solid #b8c7d1;
+ border-radius:7px;
+ box-shadow:0 1px 4px rgba(0,0,0,.12);
+ font-size:12px;
+}
+.zoomBar button{
+ min-width:30px;
+ height:28px;
+ padding:2px 8px;
+ border:1px solid #aebdca;
+ border-radius:5px;
+ background:#f7fafc;
+ color:#123e69;
+ font-weight:700;
+ cursor:pointer;
+}
+.zoomBar input[type=range]{width:150px;cursor:pointer}
+.zoomValue{min-width:42px;text-align:center;font-weight:700}
+
+@media print{.zoomBar,.topZoom{display:none!important}}
+
+
+/* V74 — zoom no cabeçalho, junto de Salvar/Imprimir */
+.topZoom{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ margin-left:5px;
+ padding-left:7px;
+ border-left:1px solid rgba(255,255,255,.45);
+ vertical-align:middle;
+}
+.topZoom button{
+ min-width:28px;
+ height:30px;
+ padding:2px 7px;
+}
+.topZoom input[type=range]{width:105px;cursor:pointer}
+.topZoom .zoomValue{
+ min-width:40px;
+ text-align:center;
+ color:#fff;
+ font-weight:700;
+ font-size:12px;
+}
+
+
+/* V76 — centralização da folha como no Word */
+.work{
+ position:relative!important;
+}
+.page{
+ margin-left:auto!important;
+ margin-right:auto!important;
+ transform-origin:top center!important;
+}
+@media screen and (min-width:851px){
+ .work{
+   text-align:center;
+ }
+ .page{
+   display:block;
+ }
+}
+
+
+/* V77 — ocupa somente a janela visível; elimina a área vazia inferior */
+@media screen and (min-width:851px){
+  html,body{height:100%;overflow:hidden!important}
+  body{display:flex;flex-direction:column;min-height:0!important}
+  .top{flex:0 0 auto}
+  .layout{
+    flex:1 1 auto!important;
+    height:auto!important;
+    min-height:0!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  .panel,.work{height:100%!important;min-height:0!important}
+  .panel{overflow-y:auto!important}
+  .work{overflow:auto!important}
+}
+
+
+/* V78 — impede as abas de deslocarem a página inteira */
+@media screen and (min-width:851px){
+  html{
+    width:100%;
+    height:100%;
+    overflow:hidden!important;
+  }
+  body{
+    position:fixed!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    overflow:hidden!important;
+  }
+
+  /* Os radios das abas não precisam ocupar/focar posição na página. */
+  .toolTabRadio{
+    display:none!important;
+  }
+
+  .layout{
+    flex:1 1 0!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .panel,.work{
+    min-height:0!important;
+    overflow-x:hidden!important;
+  }
+  .panel{overflow-y:auto!important}
+  .work{overflow-y:auto!important}
+}
+@media print{
+  body{position:static!important;width:auto!important;height:auto!important;overflow:visible!important}
+}
+
+
+button[data-color="#b8b3a7"]{background:#b8b3a7!important;color:#222!important;border-color:#969084!important}
+.toolHelp{margin:7px 0 10px!important;position:relative;line-height:1.45}.toolHelp b{display:block;margin-bottom:4px;color:#123e69}.toolHelp #toolHelpText{font-size:11px}
+</style>
+</head>
+<body>
+<input id="draftFileInput" type="file" accept=".json,application/json" style="display:none">
+<header class="top"><div><h1>Croqui de Sinistro de Trânsito</h1><small>SAAT — editor de croqui ponto a ponto</small></div><div class="actions"><button id="novo" type="button" onclick="if(window.confirm('Apagar o croqui atual e iniciar um novo?')){window.location.reload();} return false;">Novo</button><button id="salvar" type="button">Salvar rascunho</button><button id="abrir" type="button">Abrir rascunho</button><button id="imprimir" type="button">Imprimir / PDF</button><button id="desfazer" type="button">Desfazer</button><button id="excluir" type="button">Excluir</button>
+<span class="topZoom" aria-label="Controle de zoom do croqui">
+ <button id="zoomMinus" type="button" title="Diminuir zoom">−</button>
+ <input id="zoomRange" type="range" min="40" max="150" step="5" value="100" aria-label="Zoom do croqui">
+ <button id="zoomPlus" type="button" title="Aumentar zoom">+</button>
+ <span id="zoomValue" class="zoomValue">100%</span>
+ <button id="zoomFit" type="button" title="Ajustar folha à área visível">Ajustar</button>
+</span></div></header>
+<div class="layout"><aside class="panel"><h2>Identificação</h2><div class="row"><div><label>Data</label><input id="data" type="date"></div><div><label>Hora</label><input id="hora" type="time"></div></div><label>Local</label><textarea id="local" placeholder="Rua, número, rodovia, km, referência"></textarea><h2>Veículos</h2><div id="veiculos"></div><button id="addVeiculo" class="secondary" type="button">+ Adicionar veículo</button><label>Atendimento / equipe</label><input id="equipe"><label>Rodapé</label><input id="orgao" value="Secretaria de Segurança do Cidadão"><button id="atualizar" class="primary" type="button">Atualizar documento</button>
+<div class="toolTabsWrap">
+<input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabDraw" checked>
+<input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabEditable">
+<input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabSignal">
+<input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabSymbols">
+<div class="toolTabs">
+<label for="toolTabDraw">Desenho</label>
+<label for="toolTabEditable">Editáveis</label>
+<label for="toolTabSignal">Sinalização</label>
+<label for="toolTabSymbols">Símbolos</label>
+</div>
+<div id="toolHelp" class="help toolHelp" role="status" aria-live="polite"><b>📏 Como usar — Selecionar / mover</b><div id="toolHelpText">Clique no objeto para selecioná-lo. Use as alças para ajustar e o botão direito para movimentar. Selecione uma ferramenta para ver as instruções específicas aqui.</div></div>
+<div id="tabDraw" class="toolTabPanel"><h2>Modos de desenho</h2><div class="buttons"><button data-tool="select" type="button">Selecionar / mover</button><button data-tool="street" type="button">Rua reta</button><button data-tool="streetMultiCurve" type="button">Rua curva</button><button data-tool="roundabout" type="button">Rotatória</button><button data-tool="centerDash" type="button">Eixo tracejado</button><button data-tool="arrow" type="button">Seta de trajetória</button><button data-tool="sidewalk" type="button">Calçada</button><button data-tool="grass" type="button">Grama</button><button data-tool="whiteDash" type="button">Branca tracejada</button><button data-tool="yellowDash" type="button">Amarela tracejada</button><button data-tool="whiteSolid" type="button">Branca contínua</button><button data-tool="yellowSolid" type="button">Amarela contínua</button><button data-tool="doubleSolid" type="button">Dupla contínua</button><button data-tool="cycleLane" type="button">Ciclovia / ciclofaixa</button><button data-tool="crosswalk" type="button">Faixa pedestre</button><button data-tool="stopLine" type="button">Faixa de retenção</button><button data-tool="speedBump" type="button">Lombada</button><button data-tool="compassRose" type="button">Rosa dos ventos</button><button data-tool="cardinalN" type="button">Norte (N)</button><button data-tool="cardinalS" type="button">Sul (S)</button><button data-tool="cardinalL" type="button">Leste (L)</button><button data-tool="cardinalO" type="button">Oeste (O)</button><button data-tool="text" type="button">Texto</button><button data-tool="polygonPen" type="button">Caneta Polígono</button><button data-tool="ruler" type="button">Régua</button></div></div>
+<div id="tabEditable" class="toolTabPanel"><h2>Ferramentas editáveis</h2><div class="buttons"><button data-tool="streetEditable" type="button">Rua reta editável</button><button data-tool="streetCurved" type="button">Rua curva editável</button><button data-tool="sidewalkEditable" type="button">Calçada editável</button><button data-tool="grassEditable" type="button">Grama editável</button><button data-tool="whiteDashEditable" type="button">Branca tracejada editável</button><button data-tool="yellowDashEditable" type="button">Amarela tracejada editável</button><button data-tool="whiteSolidEditable" type="button">Branca contínua editável</button><button data-tool="yellowSolidEditable" type="button">Amarela contínua editável</button><button data-tool="cycleLaneEditable" type="button">Ciclofaixa editável</button><button data-tool="stopLineEditable" type="button">Faixa de retenção editável</button></div></div>
+<div id="tabSignal" class="toolTabPanel"><h2>Sinalização horizontal</h2>
+<div class="buttons">
+<button data-tool="channelWhite" type="button">Hachurada branca</button>
+<button data-tool="channelYellow" type="button">Hachurada amarela</button>
+<button data-tool="channelZebraWhite" type="button">Zebrada branca</button>
+<button data-tool="channelZebraYellow" type="button">Zebrada amarela</button>
+<button data-tool="channelGridWhite" type="button">Grade Branca</button>
+<button data-tool="yellowBox" type="button">Yellow Box</button>
+<button data-tool="centralMedian" type="button">Canteiro Central</button>
+</div>
+<h2>Setas e símbolos de solo</h2>
+<div class="buttons">
+<button data-horizontal-symbol="yieldMark" type="button">Dê a preferência</button>
+<button data-horizontal-symbol="turnRight" type="button">Seta à direita</button>
+<button data-horizontal-symbol="turnLeft" type="button">Seta à esquerda</button>
+<button data-horizontal-symbol="straight" type="button">Siga em frente</button>
+<button data-horizontal-symbol="straightRight" type="button">Frente / direita</button>
+<button data-horizontal-symbol="straightLeft" type="button">Frente / esquerda</button>
+</div></div>
+<div id="tabSymbols" class="toolTabPanel"><h2>Símbolos</h2><div class="buttons"><button data-traffic-symbol="signStop" type="button">Placa PARE</button><button data-traffic-symbol="signYield" type="button">Dê a preferência</button><button data-traffic-symbol="signBump" type="button">Placa de lombada</button><button data-traffic-symbol="trafficLight" type="button">Semáforo</button><button data-traffic-symbol="roadSign" type="button">Placa de sinalização</button><button data-vehicle-id="1" type="button">V.1</button><button data-vehicle-id="2" type="button">V.2</button><button data-vehicle-id="3" type="button">V.3</button><button data-vehicle-id="4" type="button">V.4</button><button data-vehicle-id="5" type="button">V.5</button><button data-symbol="carInitial">Automóvel inicial</button><button data-symbol="carFinal">Automóvel final</button><button data-symbol="twoWheelsInitial">2 rodas inicial</button><button data-symbol="twoWheelsFinal">2 rodas final</button><button data-symbol="truckBus">Ônibus / caminhão inicial</button><button data-symbol="truckBusFinal">Ônibus / caminhão final</button><button data-symbol="victim">Vítima</button><button data-symbol="animals">Animais</button><button data-symbol="fixed">Objeto fixo</button><button data-symbol="puddle">Poça</button><button data-symbol="tree">Árvore</button><button data-symbol="post">Poste</button><button data-symbol="fence">Cerca</button><button data-symbol="impact">Ponto de impacto</button><button data-symbol="braking">Marcas de frenagem</button><button data-symbol="rollover">Capotamento</button><button data-symbol="forward">Marcha à frente</button><button data-symbol="reverse">Marcha à ré</button></div></div>
+
+<div id="hint" class="hint"></div>
+
+<label class="snap"><input id="snapGrid" type="checkbox"> Ajustar desenho à grade</label>
+</div>
+
+<div class="modeInfo">
+<b>Largura da via — Rotatória / Rua curva:</b>
+<div style="display:flex;gap:6px;margin-top:7px;align-items:center">
+<button id="roundRoadMinus" type="button" style="flex:1">− Via</button>
+<span id="roundRoadWidthLabel" style="min-width:58px;text-align:center;font-weight:700">—</span>
+<button id="roundRoadPlus" type="button" style="flex:1">+ Via</button>
+</div>
+<small>Selecione uma rotatória ou Rua curva e use − Via / + Via. Na Rua curva, somente a largura da pista é alterada, sem modificar o trajeto.</small>
+</div>
+<h2>Objeto selecionado</h2><label>Cor do objeto</label><div class="buttons colorButtons"><button type="button" data-color="#ffffff">Branco</button><button type="button" data-color="#f1c40f">Amarelo</button><button type="button" data-color="#b8b3a7">Concreto</button><button type="button" data-color="#e32636">Vermelho</button></div><label>Texto opcional</label><input id="texto"><div class="row"><button id="girarEsq" type="button">↺ Girar</button><button id="girarDir" type="button">Girar ↻</button></div><div class="row" style="margin-top:6px"><button id="frente" type="button">Trazer à frente</button><button id="tras" type="button">Enviar para trás</button></div><div class="help">Esta versão usa Fabric.js. As ruas são elementos independentes, criados ponto a ponto e entram sem faixas pintadas; as marcas viárias são ferramentas separadas. Selecione um objeto para usar as alças de largura, altura, tamanho geral e rotação. Use Delete para excluir.</div><div class="status" id="status"></div></aside><section class="work"><article class="page"><div class="paperTitle">CROQUI</div><div id="header" class="header">Data: ____/____/______   Hora: __:__
+Local: ________________________________________
+V1: ________ — ________________
+V2: ________ — ________________
+Atendimento / equipe: ____________________________</div><div class="scene"><div class="sceneGrid"></div><div class="canvasBox"><canvas id="canvas" width="1200" height="820"></canvas></div></div><div id="footer" class="footer">Secretaria de Segurança do Cidadão</div></article>
+</section></div>
+<script>
+(function(){
+'use strict';
+
+var canvas=new fabric.Canvas('canvas',{preserveObjectStacking:true,selection:true,fireRightClick:true,stopContextMenu:true});
+var tool='select',drawingPreview=false,start=null,history=[],historyIndex=-1,vehicles=[],lastLeftClick=0,rightDrag=null,channelPoints=[],channelPreview=null,lastChannelClick=0;
+var curvedRoadPoints=[],curvedRoadPreview=null,lastCurvedRoadClick=0;
+
+function $(x){return document.getElementById(x)}
+function note(t){$('status').textContent=t;setTimeout(function(){if($('status').textContent===t)$('status').textContent=''},3000)}
+function pad(n){return String(n).padStart(2,'0')}
+function initDate(){var d=new Date();$('data').value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());$('hora').value=pad(d.getHours())+':'+pad(d.getMinutes())}
+
+function novoVeiculo(){return{id:vehicles.length+1,label:'V'+(vehicles.length+1),tipo:'Automóvel',placa:'',modelo:'',condutor:''}}
+
+function renderVehicles(){
+ var box=$('veiculos');box.innerHTML='';
+ vehicles.forEach(function(v,i){
+  var c=document.createElement('div');c.className='vehicle';
+  c.innerHTML='<button class="remove" type="button">×</button><h3>'+v.label+' — veículo</h3>'+
+  '<div class="row"><div><label>Tipo</label><select data-c="tipo"><option>Automóvel</option><option>Motocicleta</option><option>Motoneta</option><option>Bicicleta</option><option>Autopropelido</option><option>Caminhão</option><option>Ônibus</option></select></div>'+
+  '<div><label>Placa</label><input data-c="placa"></div></div>'+
+  '<label>Marca/modelo</label><input data-c="modelo"><label>Condutor</label><input data-c="condutor">';
+  c.querySelectorAll('[data-c]').forEach(function(x){x.value=v[x.dataset.c]||'';x.oninput=function(){v[this.dataset.c]=this.value;renderHeader()}});
+  c.querySelector('.remove').onclick=function(){
+   if(vehicles.length===1)return note('Mantenha um veículo.');
+   vehicles.splice(i,1);vehicles.forEach(function(a,j){a.id=j+1;a.label='V'+(j+1)});
+   renderVehicles();renderHeader()
+  };
+  box.appendChild(c)
+ })
+}
+
+function escHtml(v){return String(v==null?'':v).replace(/[&<>\"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]})}
+function renderHeader(){
+ var r=$('data').value,d='____/____/______';
+ if(r){var p=r.split('-');d=p[2]+'/'+p[1]+'/'+p[0]}
+ var hd=$('header');
+ var top='<div class="headerTop"><b>Data:</b> '+escHtml(d)+' &nbsp;&nbsp; <b>Hora:</b> '+escHtml($('hora').value||'__:__')+'<br><b>Local:</b> '+escHtml($('local').value||'________________________________________')+'</div>';
+ var slots=[];
+ for(var i=0;i<12;i++){
+  if(i<vehicles.length){
+   var v=vehicles[i];
+   var info='<b>'+escHtml(v.label)+':</b> '+escHtml(v.placa||'________')+' — '+escHtml(v.modelo||'________________');
+   if(v.condutor)info+=' · '+escHtml(v.condutor);
+   slots.push('<div class="headerVehicle" title="'+escHtml((v.placa||'')+' '+(v.modelo||'')+' '+(v.condutor||''))+'">'+info+'</div>');
+  }else slots.push('<div class="headerVehicle"></div>');
+ }
+ hd.innerHTML=top+'<div class="headerVehicles">'+slots.join('')+'</div><div class="headerTeam"><b>Atendimento / equipe:</b> '+escHtml($('equipe').value||'____________________________')+'</div>';
+ hd.style.color='#111';hd.style.backgroundColor='#fff';hd.style.display='block';hd.style.visibility='visible';hd.style.opacity='1';
+ $('footer').textContent=$('orgao').value||'Secretaria de Segurança do Cidadão'
+}
+function snapshot(){
+ clearRoundaboutOpenings();
+ var active=canvas.getActiveObject(),road=(active&&active.toolType==='streetCurved')?active:null;
+ removeCurveHandles();
+ var j=JSON.stringify(canvas.toJSON(['kind','toolType','label','points','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation']));
+ if(road&&canvas.getObjects().indexOf(road)>=0)showCurveHandles(road);
+ return j
+}
+function save(){history=history.slice(0,historyIndex+1);history.push(snapshot());historyIndex=history.length-1;if(history.length>60){history.shift();historyIndex--}}
+function restore(j){canvas.loadFromJSON(j,function(){canvas.renderAll()})}
+function undo(){if(historyIndex<=0)return note('Nada para desfazer.');historyIndex--;restore(history[historyIndex])}
+
+
+function isChannelTool(t){return t==='channelWhite'||t==='channelYellow'||t==='channelZebraWhite'||t==='channelZebraYellow'||t==='channelGridWhite'||t==='centralMedian'||t==='yellowBox'}
+
+function clearChannelPreview(){
+ if(channelPreview){canvas.remove(channelPreview);channelPreview=null}
+ canvas.requestRenderAll()
+}
+function cancelChannelDrawing(silent){
+ clearChannelPreview();channelPoints=[];lastChannelClick=0;
+ if(!silent)note('Canalização cancelada.')
+}
+function channelBounds(pts){
+ var xs=pts.map(function(p){return p.x}),ys=pts.map(function(p){return p.y});
+ return {minX:Math.min.apply(null,xs),maxX:Math.max.apply(null,xs),
+         minY:Math.min.apply(null,ys),maxY:Math.max.apply(null,ys)}
+}
+function makeChannelPattern(color,orientation){
+ // V104: quatro orientações da hachura, alternadas pelo botão direito.
+ // 0 = diagonal ↗ | 1 = horizontal | 2 = diagonal ↘ | 3 = vertical
+ orientation=(Number(orientation)||0)%4;
+ var size=28;
+ var pc=document.createElement('canvas');pc.width=size;pc.height=size;
+ var ctx=pc.getContext('2d');ctx.clearRect(0,0,size,size);
+ ctx.strokeStyle=color;ctx.lineWidth=3;ctx.lineCap='butt';ctx.lineJoin='miter';
+ ctx.beginPath();
+ if(orientation===0){
+  ctx.moveTo(-size/2,size/2);ctx.lineTo(size/2,-size/2);
+  ctx.moveTo(0,size);ctx.lineTo(size,0);
+  ctx.moveTo(size/2,size*1.5);ctx.lineTo(size*1.5,size/2);
+ }else if(orientation===1){
+  ctx.moveTo(0,size/2);ctx.lineTo(size,size/2);
+ }else if(orientation===2){
+  ctx.moveTo(-size/2,size/2);ctx.lineTo(size/2,size*1.5);
+  ctx.moveTo(0,0);ctx.lineTo(size,size);
+  ctx.moveTo(size/2,-size/2);ctx.lineTo(size*1.5,size/2);
+ }else{
+  ctx.moveTo(size/2,0);ctx.lineTo(size/2,size);
+ }
+ ctx.stroke();
+ return new fabric.Pattern({source:pc,repeat:'repeat'})
+}
+
+function cycleChannelHatchDirection(obj){
+ if(!obj || !['channelWhite','channelYellow','channelZebraWhite','channelZebraYellow'].includes(obj.toolType))return false;
+ obj.hatchOrientation=((Number(obj.hatchOrientation)||0)+1)%4;
+ var color=(obj.toolType==='channelYellow'||obj.toolType==='channelZebraYellow')?'#f1c40f':'#ffffff';
+ var isZebra=(obj.toolType==='channelZebraWhite'||obj.toolType==='channelZebraYellow');
+ obj.set({fill:isZebra?makeChannelZebraPattern(color,obj.hatchOrientation):makeChannelPattern(color,obj.hatchOrientation)});
+ obj.dirty=true;obj.setCoords();
+ canvas.setActiveObject(obj);canvas.requestRenderAll();save();
+ var names=['Diagonal ↗','Horizontal','Diagonal ↘','Vertical'];
+ note('Hachura: '+names[obj.hatchOrientation]+'.');
+ return true;
+}
+
+function makeChannelZebraPattern(color,orientation){
+ // V107: zebrada larga com padrão matematicamente contínuo entre os ladrilhos.
+ // Evita as emendas verticais/horizontais que formavam o efeito quadriculado.
+ // 0 = diagonal ↗ | 1 = horizontal | 2 = diagonal ↘ | 3 = vertical
+ orientation=(Number(orientation)||0)%4;
+ var size=88,spacing=22,barWidth=10;
+ var pc=document.createElement('canvas');
+ pc.width=size;pc.height=size;
+ var ctx=pc.getContext('2d');
+ ctx.clearRect(0,0,size,size);
+ ctx.strokeStyle=color;
+ ctx.lineWidth=barWidth;
+ ctx.lineCap='butt';
+ ctx.lineJoin='miter';
+ ctx.beginPath();
+
+ if(orientation===0){
+  // y = -x + k  (↗). size é múltiplo exato do espaçamento,
+  // portanto o desenho casa perfeitamente nas quatro bordas do tile.
+  for(var k=-size;k<=size*3;k+=spacing){
+   ctx.moveTo(-size,k+size);
+   ctx.lineTo(size*2,k-size*2);
+  }
+ }else if(orientation===1){
+  for(var y=spacing/2;y<size;y+=spacing){
+   ctx.moveTo(0,y);ctx.lineTo(size,y);
+  }
+ }else if(orientation===2){
+  // y = x + k (↘), também contínuo entre tiles.
+  for(var k=-size*2;k<=size*2;k+=spacing){
+   ctx.moveTo(-size,-size+k);
+   ctx.lineTo(size*2,size*2+k);
+  }
+ }else{
+  for(var x=spacing/2;x<size;x+=spacing){
+   ctx.moveTo(x,0);ctx.lineTo(x,size);
+  }
+ }
+ ctx.stroke();
+ return new fabric.Pattern({source:pc,repeat:'repeat'})
+}
+
+function makeChannelGridPattern(color,wide){
+ // Grade cruzada. Na Yellow Box, a malha é mais aberta, como na sinalização real.
+ var size=wide?96:32,spacing=wide?48:16;
+ var pc=document.createElement('canvas');
+ pc.width=size;pc.height=size;
+ var ctx=pc.getContext('2d');
+ ctx.clearRect(0,0,size,size);
+ ctx.strokeStyle=color;
+ ctx.lineWidth=4;
+ ctx.lineCap='butt';
+
+ // Diagonais /
+ for(var k=-size;k<=size;k+=spacing){
+  ctx.beginPath();
+  ctx.moveTo(k,size);
+  ctx.lineTo(k+size,0);
+  ctx.stroke();
+ }
+ // Diagonais \
+ for(var k=-size;k<=size;k+=spacing){
+  ctx.beginPath();
+  ctx.moveTo(k,0);
+  ctx.lineTo(k+size,size);
+  ctx.stroke();
+ }
+ return new fabric.Pattern({source:pc,repeat:'repeat'})
+}
+
+function finishChannelPolygon(){
+ if(channelPoints.length<3){note('Marque pelo menos 3 pontos.');return}
+ clearChannelPreview();
+ var isMedian=(tool==='centralMedian');
+ var isYellow=(tool==='channelYellow'||tool==='channelZebraYellow'||tool==='yellowBox');
+ var isZebra=(tool==='channelZebraWhite'||tool==='channelZebraYellow');
+ var isGrid=(tool==='channelGridWhite'||tool==='yellowBox');
+ var color=isMedian?'#30363b':(isYellow?'#f1c40f':'#ffffff');
+ var fillPattern=isMedian?'#5fae63':(isGrid?makeChannelGridPattern(color,tool==='yellowBox'):(isZebra?makeChannelZebraPattern(color,0):makeChannelPattern(color,0)));
+ var poly=new fabric.Polygon(channelPoints.map(function(p){return{x:p.x,y:p.y}}),{
+  fill:fillPattern,
+  stroke:color,strokeWidth:isMedian?4:3,
+  objectCaching:false,transparentCorners:false
+ });
+ poly.toolType=tool;poly.kind=isMedian?'centralMedian':'channelization';poly.objectColor=isMedian?'#5fae63':color;
+ if(['channelWhite','channelYellow','channelZebraWhite','channelZebraYellow'].includes(tool))poly.hatchOrientation=0;
+ canvas.add(poly);poly.setCoords();canvas.setActiveObject(poly);
+ channelPoints=[];lastChannelClick=0;save();canvas.requestRenderAll();
+ setTool('select');note(isMedian?'Canteiro central concluído.':'Canalização concluída.')
+}
+function updateChannelPreview(pointer){
+ clearChannelPreview();
+ if(!channelPoints.length)return;
+ var pts=channelPoints.slice();
+ if(pointer)pts.push(pointer);
+ if(pts.length<2)return;
+ channelPreview=new fabric.Polyline(pts,{
+  fill:(tool==='centralMedian')?'rgba(95,174,99,0.28)':'rgba(0,0,0,0)',stroke:(tool==='centralMedian')?'#30363b':((tool==='channelYellow'||tool==='channelZebraYellow'||tool==='yellowBox')?'#f1c40f':'#ffffff'),
+  strokeWidth:3,strokeDashArray:[8,6],selectable:false,evented:false,objectCaching:false
+ });
+ channelPreview.isGuide=true;
+ canvas.add(channelPreview);canvas.bringToFront(channelPreview);canvas.requestRenderAll()
+}
+
+
+
+var multiCurveTools={
+ centerDash:true,sidewalk:true,grass:true,whiteDash:true,yellowDash:true,
+ whiteSolid:true,yellowSolid:true,doubleSolid:true,cycleLane:true
+};
+function isMultiCurveTool(t){return !!multiCurveTools[t] || t==='streetMultiCurve' || t==='polygonPen'}
+function multiToolName(t){
+ return {
+  streetMultiCurve:'Rua curva',polygonPen:'Caneta Polígono',centerDash:'Eixo tracejado',sidewalk:'Calçada',
+  grass:'Grama',whiteDash:'Branca tracejada',yellowDash:'Amarela tracejada',
+  whiteSolid:'Branca contínua',yellowSolid:'Amarela contínua',
+  doubleSolid:'Dupla contínua',cycleLane:'Ciclovia / ciclofaixa'
+ }[t]||'Ferramenta';
+}
+function multiToolStyle(t,preview){
+ var opacity=preview?.58:1;
+ var base={fill:'',strokeLineCap:'round',strokeLineJoin:'round',opacity:opacity,
+           selectable:!preview,evented:!preview,objectCaching:false,perPixelTargetFind:!preview};
+ if(t==='streetMultiCurve')return Object.assign(base,{stroke:'#4a4f55',strokeWidth:72,strokeLineCap:'butt'});
+ if(t==='centerDash'||t==='whiteDash')return Object.assign(base,{stroke:'#fff',strokeWidth:4,strokeDashArray:[14,10]});
+ if(t==='yellowDash')return Object.assign(base,{stroke:'#f1c40f',strokeWidth:4,strokeDashArray:[14,10]});
+ if(t==='whiteSolid')return Object.assign(base,{stroke:'#fff',strokeWidth:4});
+ if(t==='yellowSolid')return Object.assign(base,{stroke:'#f1c40f',strokeWidth:4});
+ if(t==='sidewalk')return Object.assign(base,{stroke:'#d9d2c1',strokeWidth:54,strokeLineCap:'butt'});
+ if(t==='grass')return Object.assign(base,{stroke:'#b8d8a9',strokeWidth:35,strokeLineCap:'butt'});
+ if(t==='cycleLane')return Object.assign(base,{stroke:'#c8102e',strokeWidth:54,strokeLineCap:'butt'});
+ return base;
+}
+function buildMultiCurveObject(t,pts,preview){
+ if(t==='polygonPen'){
+  return new fabric.Polyline(pts.map(function(p){return{x:p.x,y:p.y}}),{
+   fill:'rgba(0,0,0,0)',stroke:'#111111',strokeWidth:3,
+   strokeLineCap:'round',strokeLineJoin:'round',opacity:preview?.58:1,
+   selectable:!preview,evented:!preview,objectCaching:false,perPixelTargetFind:!preview
+  });
+ }
+ var pathData=makeRoadPath(pts);
+ if(t==='doubleSolid'){
+  var outer=new fabric.Path(pathData,{fill:'',stroke:'#f1c40f',strokeWidth:12,strokeLineCap:'round',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+  var inner=new fabric.Path(pathData,{fill:'',stroke:'#4a4f55',strokeWidth:4,strokeLineCap:'round',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+  return new fabric.Group([outer,inner],{selectable:!preview,evented:!preview,objectCaching:false,opacity:1});
+ }
+ if(t==='sidewalk'){
+  // V108: calçada com largura inicial semelhante à ciclofaixa e pedestres repetidos no trajeto.
+  var walk=new fabric.Path(pathData,{fill:'',stroke:'#d9d2c1',strokeWidth:54,strokeLineCap:'butt',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+  var parts=[walk];
+  if(!preview){
+   var samples=[{x:pts[0].x,y:pts[0].y}], previous=pts[0];
+   if(pts.length===2){samples.push(pts[1]);}
+   else{
+    for(var seg=1;seg<pts.length;seg++){
+     var control=pts[seg], target=seg===pts.length-1?control:
+      {x:(pts[seg].x+pts[seg+1].x)/2,y:(pts[seg].y+pts[seg+1].y)/2};
+     for(var step=1;step<=20;step++){
+      var u=step/20,v=1-u;
+      samples.push({x:v*v*previous.x+2*v*u*control.x+u*u*target.x,
+                    y:v*v*previous.y+2*v*u*control.y+u*u*target.y});
+     }
+     previous=target;
+    }
+   }
+   var length=0,nextMark=55;
+   for(var i=1;i<samples.length;i++){
+    var a=samples[i-1],b=samples[i],dist=Math.hypot(b.x-a.x,b.y-a.y);
+    while(dist>0 && length+dist>=nextMark){
+     var f=(nextMark-length)/dist,x=a.x+(b.x-a.x)*f,y=a.y+(b.y-a.y)*f;
+     var angle=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
+     var person=[
+      new fabric.Circle({left:0,top:-11,radius:4,originX:'center',originY:'center',fill:'#fff',stroke:'#fff',strokeWidth:1}),
+      new fabric.Line([0,-6,0,5],{stroke:'#fff',strokeWidth:3,strokeLineCap:'round'}),
+      new fabric.Line([0,-2,-7,3],{stroke:'#fff',strokeWidth:3,strokeLineCap:'round'}),
+      new fabric.Line([0,-2,7,3],{stroke:'#fff',strokeWidth:3,strokeLineCap:'round'}),
+      new fabric.Line([0,5,-6,13],{stroke:'#fff',strokeWidth:3,strokeLineCap:'round'}),
+      new fabric.Line([0,5,6,13],{stroke:'#fff',strokeWidth:3,strokeLineCap:'round'})
+     ];
+     parts.push(new fabric.Group(person,{left:x,top:y,originX:'center',originY:'center',angle:angle,selectable:false,evented:false,objectCaching:false}));
+     nextMark+=110;
+    }
+    length+=dist;
+   }
+  }
+  return new fabric.Group(parts,{selectable:!preview,evented:!preview,objectCaching:false,opacity:1});
+ }
+ if(t==='cycleLane'){
+  var edge=new fabric.Path(pathData,{fill:'',stroke:'#fff',strokeWidth:58,strokeLineCap:'butt',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+  var lane=new fabric.Path(pathData,{fill:'',stroke:'#c8102e',strokeWidth:54,strokeLineCap:'butt',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+  var parts=[edge,lane];
+  // Pictogramas brancos repetidos no eixo da ciclofaixa, acompanhando as curvas.
+  // Os pontos amostrados reproduzem os trechos quadráticos de makeRoadPath.
+  if(!preview){
+   var samples=[{x:pts[0].x,y:pts[0].y}], previous=pts[0];
+   if(pts.length===2){samples.push(pts[1]);}
+   else{
+    for(var seg=1;seg<pts.length;seg++){
+     var control=pts[seg], target=seg===pts.length-1?control:
+      {x:(pts[seg].x+pts[seg+1].x)/2,y:(pts[seg].y+pts[seg+1].y)/2};
+     for(var step=1;step<=20;step++){
+      var u=step/20,v=1-u;
+      samples.push({x:v*v*previous.x+2*v*u*control.x+u*u*target.x,
+                    y:v*v*previous.y+2*v*u*control.y+u*u*target.y});
+     }
+     previous=target;
+    }
+   }
+   var length=0,nextMark=55;
+   for(var i=1;i<samples.length;i++){
+    var a=samples[i-1],b=samples[i],dist=Math.hypot(b.x-a.x,b.y-a.y);
+    while(dist>0 && length+dist>=nextMark){
+     var f=(nextMark-length)/dist,x=a.x+(b.x-a.x)*f,y=a.y+(b.y-a.y)*f;
+     var angle=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
+     var bike=[
+      new fabric.Circle({left:-16,top:0,radius:8,originX:'center',originY:'center',fill:'rgba(0,0,0,0)',stroke:'#fff',strokeWidth:2}),
+      new fabric.Circle({left:16,top:0,radius:8,originX:'center',originY:'center',fill:'rgba(0,0,0,0)',stroke:'#fff',strokeWidth:2}),
+      new fabric.Line([-16,0,0,-13],{stroke:'#fff',strokeWidth:2}),
+      new fabric.Line([0,-13,16,0],{stroke:'#fff',strokeWidth:2}),
+      new fabric.Line([-16,0,2,0],{stroke:'#fff',strokeWidth:2})
+     ];
+     parts.push(new fabric.Group(bike,{left:x,top:y,originX:'center',originY:'center',angle:angle,selectable:false,evented:false,objectCaching:false}));
+     nextMark+=110;
+    }
+    length+=dist;
+   }
+  }
+  return new fabric.Group(parts,{selectable:!preview,evented:!preview,objectCaching:false,opacity:1});
+ }
+ return new fabric.Path(pathData,multiToolStyle(t,preview));
+}
+
+
+var curvedGuideObjects=[];
+function clearCurvedGuides(){
+ curvedGuideObjects.forEach(function(o){try{canvas.remove(o)}catch(e){}});
+ curvedGuideObjects=[];
+}
+function updateCurvedGuides(pointer){
+ clearCurvedGuides();
+ if(!curvedRoadPoints.length)return;
+ var pts=curvedRoadPoints.map(function(p){return{x:p.x,y:p.y}});
+ if(pointer)pts.push({x:pointer.x,y:pointer.y});
+ if(pts.length>1){
+  var line=new fabric.Path(makeRoadPath(pts),{
+   fill:'',stroke:'#1683ff',strokeWidth:2,strokeDashArray:[9,6],
+   strokeLineCap:'round',strokeLineJoin:'round',
+   selectable:false,evented:false,objectCaching:false,excludeFromExport:true
+  });
+  line.isGuide=true;
+  canvas.add(line);curvedGuideObjects.push(line);
+ }
+ curvedRoadPoints.forEach(function(p,i){
+  var dot=new fabric.Circle({
+   left:p.x,top:p.y,radius:i===curvedRoadPoints.length-1?5:4,
+   originX:'center',originY:'center',fill:'#1683ff',
+   stroke:'#fff',strokeWidth:2,selectable:false,evented:false,
+   objectCaching:false,excludeFromExport:true
+  });
+  dot.isGuide=true;
+  canvas.add(dot);curvedGuideObjects.push(dot);
+ });
+ curvedGuideObjects.forEach(function(o){canvas.bringToFront(o)});
+}
+
+function clearCurvedRoadPreview(){
+ if(curvedRoadPreview){canvas.remove(curvedRoadPreview);curvedRoadPreview=null}
+ clearCurvedGuides();
+}
+function cancelCurvedRoadDrawing(silent){
+ clearCurvedRoadPreview();
+ curvedRoadPoints=[];
+ lastCurvedRoadClick=0;
+ if(!silent)note('Rua curva cancelada.');
+ canvas.requestRenderAll();
+}
+function updateCurvedRoadPreview(pointer){
+ clearCurvedRoadPreview();
+ if(!curvedRoadPoints.length)return;
+ var pts=curvedRoadPoints.slice();
+ if(pointer)pts.push({x:pointer.x,y:pointer.y});
+ if(pts.length<2)return;
+ curvedRoadPreview=buildMultiCurveObject(tool,pts,true);
+ curvedRoadPreview.isGuide=true;
+ canvas.add(curvedRoadPreview);
+ canvas.bringToFront(curvedRoadPreview);
+ updateCurvedGuides(pointer);
+ canvas.requestRenderAll();
+}
+function finishCurvedRoad(){
+ if(curvedRoadPoints.length<3){
+  note('Marque pelo menos 3 pontos para concluir.');
+  return;
+ }
+ var finishedTool=tool;
+ clearCurvedRoadPreview();
+ var pts=curvedRoadPoints.map(function(p){return{x:p.x,y:p.y}});
+ var road=buildMultiCurveObject(finishedTool,pts,false);
+ road.kind='drawn';
+ road.toolType=finishedTool;
+ road.roadPoints=pts;
+ if(road.set)road.set({cornerSize:12,touchCornerSize:24,transparentCorners:false});
+ canvas.add(road);
+ road.setCoords();
+ canvas.setActiveObject(road);
+ curvedRoadPoints=[];
+ lastCurvedRoadClick=0;
+ save();
+ canvas.requestRenderAll();
+ setTool('select');
+ note(multiToolName(finishedTool)+' concluída.');
+}
+
+function setTool(t){
+ if(window.__preview){canvas.remove(window.__preview);window.__preview=null}
+ if(tool!==t&&channelPoints.length)cancelChannelDrawing(true);
+ if(tool!==t&&curvedRoadPoints.length)cancelCurvedRoadDrawing(true);
+ tool=t;drawingPreview=false;start=null;lastLeftClick=0;canvas.isDrawingMode=false;canvas.selection=t==='select';
+ document.querySelectorAll('[data-tool]').forEach(function(b){b.classList.toggle('active',b.dataset.tool===t)});
+ canvas.forEachObject(function(o){if(!o.isGuide){o.selectable=t==='select';o.evented=t==='select'}});
+ $('hint').style.display=t==='select'?'none':'block';
+ if(isMultiCurveTool(t)){
+  $('hint').textContent=multiToolName(t)+': clique no ponto inicial e continue marcando os pontos do trajeto. No último ponto, dê 2 cliques rápidos para concluir.';
+ }else if(isChannelTool(t)){
+  $('hint').textContent=t==='centralMedian'?
+   'Canteiro Central: clique com o botão esquerdo para marcar o contorno. Marque 3 pontos ou mais. Ao voltar ao ponto inicial, dê 2 cliques rápidos para fechar. O interior será preenchido de verde.':
+   'Canalização: clique com o botão esquerdo para marcar cada vértice. Marque 3 pontos ou mais. Ao voltar ao ponto inicial, dê 2 cliques rápidos com o botão esquerdo para fechar e concluir.';
+ }else{
+  $('hint').textContent=t==='text'?'Clique com o botão esquerdo no local para inserir texto.':'Botão esquerdo: 1º clique marca o início; mova o mouse sem segurar; 2º clique conclui. Duplo clique esquerdo cancela.';
+ }
+}
+
+function snapPoint(p){
+ if(!$('snapGrid')||!$('snapGrid').checked)return p;
+ return {x:Math.round(p.x/10)*10,y:Math.round(p.y/10)*10}
+}
+function distance(a,b){return Math.hypot(b.x-a.x,b.y-a.y)}
+function angleDeg(a,b){return Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI}
+function meters(len){return len/10}
+
+function makeTrafficSymbol(kind,x,y){
+ var parts=[],g;
+ if(kind==='signStop'){var pts=[];for(var i=0;i<8;i++){var a=(-22.5+i*45)*Math.PI/180;pts.push({x:Math.cos(a)*25,y:Math.sin(a)*25})}parts.push(new fabric.Polygon(pts,{left:0,top:0,originX:'center',originY:'center',fill:'#e21b23',stroke:'#fff',strokeWidth:3}));parts.push(new fabric.Text('PARE',{left:0,top:0,originX:'center',originY:'center',fill:'#fff',fontWeight:'bold',fontSize:14,fontFamily:'Arial'}));}
+ else if(kind==='signYield'){parts.push(new fabric.Triangle({left:0,top:0,width:52,height:46,originX:'center',originY:'center',angle:180,fill:'#fff',stroke:'#e21b23',strokeWidth:6}));}
+ else if(kind==='signBump'){parts.push(new fabric.Rect({left:0,top:0,width:48,height:48,originX:'center',originY:'center',angle:45,rx:3,ry:3,fill:'#f6c515',stroke:'#111',strokeWidth:3}));parts.push(new fabric.Rect({left:0,top:8,width:30,height:6,originX:'center',originY:'center',fill:'#111'}));parts.push(new fabric.Path('M -14 8 Q 0 -9 14 8',{left:0,top:0,originX:'center',originY:'center',fill:'#111',stroke:'#111',strokeWidth:2}));}
+ else if(kind==='trafficLight'){parts.push(new fabric.Rect({left:0,top:0,width:26,height:64,originX:'center',originY:'center',rx:5,ry:5,fill:'#171717',stroke:'#444',strokeWidth:2}));parts.push(new fabric.Circle({left:0,top:-20,radius:7,originX:'center',originY:'center',fill:'#e32636'}));parts.push(new fabric.Circle({left:0,top:0,radius:7,originX:'center',originY:'center',fill:'#f1c40f'}));parts.push(new fabric.Circle({left:0,top:20,radius:7,originX:'center',originY:'center',fill:'#199447'}));}
+ else if(kind==='roadSign'){
+  // Placa vista de perfil: haste vertical e placa semicircular à direita, conforme referência.
+  parts.push(new fabric.Rect({left:-7,top:10,width:7,height:78,originX:'center',originY:'center',fill:'#111',stroke:null}));
+  parts.push(new fabric.Path('M -4 -25 C 12 -25 19 -14 19 0 C 19 14 12 25 -4 25 Z',{
+   left:5,top:-13,originX:'center',originY:'center',fill:'#111',stroke:null
+  }));
+ }
+ g=new fabric.Group(parts,{left:x,top:y,originX:'center',originY:'center',selectable:true,evented:true});g.kind='symbol';g.toolType=kind;canvas.add(g);canvas.setActiveObject(g);save();canvas.requestRenderAll();return g;
+}
+function addTrafficSymbol(kind){var c=canvas.getCenter();makeTrafficSymbol(kind,c.left,c.top)}
+
+function addHorizontalSymbol(kind){
+ var c=canvas.getCenter(), parts=[], white='#ffffff', outline='#b8b8b8';
+ function poly(points){return new fabric.Polygon(points,{fill:white,stroke:outline,strokeWidth:1.2,originX:'center',originY:'center'});}
+ function makeStraight(){
+  return poly([{x:-10,y:42},{x:10,y:42},{x:10,y:-12},{x:28,y:-12},{x:0,y:-48},{x:-28,y:-12},{x:-10,y:-12}]);
+ }
+ function makeTurn(dir){
+  var k=dir==='right'?1:-1;
+  return poly([
+   {x:-10*k,y:44},{x:10*k,y:44},{x:10*k,y:3},{x:14*k,y:-7},
+   {x:25*k,y:-15},{x:37*k,y:-15},{x:37*k,y:-1},{x:58*k,y:-24},
+   {x:37*k,y:-47},{x:37*k,y:-33},{x:22*k,y:-33},{x:5*k,y:-26},
+   {x:-5*k,y:-13},{x:-10*k,y:2}
+  ]);
+ }
+ if(kind==='yieldMark'){
+  parts.push(new fabric.Triangle({left:0,top:0,width:66,height:58,originX:'center',originY:'center',
+    angle:180,fill:'transparent',stroke:white,strokeWidth:7}));
+ }else if(kind==='straight'){
+  parts.push(makeStraight());
+ }else if(kind==='turnRight'){
+  parts.push(makeTurn('right'));
+ }else if(kind==='turnLeft'){
+  parts.push(makeTurn('left'));
+ }else if(kind==='straightRight'||kind==='straightLeft'){
+  // Combina os dois símbolos originais, como na montagem de referência.
+  // Sem contornos, as áreas brancas sobrepostas se unem visualmente.
+  var dir=kind==='straightRight'?'right':'left';
+  var straight=makeStraight();
+  straight.set({stroke:null,strokeWidth:0,left:0,top:0});
+  parts.push(straight);
+  var turn=makeTurn(dir);
+  turn.set({stroke:null,strokeWidth:0,left:dir==='right'?18:-18,top:19,scaleX:.78,scaleY:.78});
+  parts.push(turn);
+ }
+ var g=new fabric.Group(parts,{
+  left:c.left,top:c.top,originX:'center',originY:'center',
+  selectable:true,evented:true,objectCaching:false,
+  cornerSize:12,touchCornerSize:24,transparentCorners:false
+ });
+ g.kind='horizontalSymbol'; g.toolType=kind;
+ canvas.add(g);canvas.setActiveObject(g);canvas.requestRenderAll();save();setTool('select');
+}
+
+
+
+function addVehicleIdentification(label){
+ var obj=new fabric.Text(label,{
+  left:canvas.getWidth()/2,
+  top:canvas.getHeight()/2,
+  originX:'center',originY:'center',
+  fontFamily:'Arial',
+  fontSize:34,
+  fontWeight:'bold',
+  fill:'#111111',
+  stroke:null,
+  selectable:true,evented:true,
+  objectCaching:false
+ });
+ obj.toolType='vehicleIdentification';
+ obj.label=label;
+ canvas.add(obj);
+ canvas.setActiveObject(obj);
+ canvas.requestRenderAll();
+ save();
+ setTool('select');
+}
+
+function addTextAt(p){
+ var t=prompt('Texto / legenda:','');
+ if(!t)return;
+ var o=new fabric.Textbox(t,{left:p.x,top:p.y,fontSize:14,fill:'#111',backgroundColor:'#fff',padding:4,width:180});
+ o.kind='text';canvas.add(o);canvas.setActiveObject(o);save();canvas.requestRenderAll()
+}
+
+function addSymbol(type){
+ var c=canvas.getCenter(),x=c.left,y=c.top,parts=[],g;
+ function L(x1,y1,x2,y2,opt){return new fabric.Line([x1,y1,x2,y2],Object.assign({stroke:'#111',strokeWidth:2},opt||{}))}
+ if(type==='carInitial'||type==='carFinal'){
+  var d=type==='carFinal'?[4,3]:null;
+  parts.push(new fabric.Polygon([{x:-42,y:-22},{x:18,y:-22},{x:42,y:0},{x:18,y:22},{x:-42,y:22}],{
+   originX:'center',originY:'center',fill:'rgba(255,255,255,0)',stroke:'#111',strokeWidth:2,strokeDashArray:d
+  }));
+ }else if(type==='twoWheelsInitial'||type==='twoWheelsFinal'){
+  var d=type==='twoWheelsFinal'?[3,3]:null;
+  parts.push(new fabric.Circle({left:-25,top:10,radius:11,originX:'center',originY:'center',fill:'#fff',stroke:'#111',strokeWidth:2,strokeDashArray:d}));
+  parts.push(new fabric.Circle({left:25,top:10,radius:11,originX:'center',originY:'center',fill:'#fff',stroke:'#111',strokeWidth:2,strokeDashArray:d}));
+  parts.push(L(-14,10,14,10,{strokeDashArray:d}));
+  parts.push(L(-14,10,0,-18,{strokeDashArray:d}));
+  parts.push(L(0,-18,14,10,{strokeDashArray:d}));
+ }else if(type==='truckBus'||type==='truckBusFinal'){
+  var d=type==='truckBusFinal'?[4,3]:null;
+  parts.push(new fabric.Rect({
+   left:-14,top:0,width:62,height:42,originX:'center',originY:'center',
+   fill:'#fff',stroke:'#111',strokeWidth:2,strokeDashArray:d
+  }));
+  parts.push(new fabric.Triangle({
+   left:28,top:0,width:42,height:34,originX:'center',originY:'center',angle:90,
+   fill:'#fff',stroke:'#111',strokeWidth:2,strokeDashArray:d
+  }));
+ }else if(type==='victim'){
+  parts.push(new fabric.Ellipse({left:0,top:0,rx:27,ry:13,originX:'center',originY:'center',fill:'#fff',stroke:'#111',strokeWidth:2}));
+  parts.push(new fabric.Circle({left:-34,top:0,radius:7,originX:'center',originY:'center',fill:'#fff',stroke:'#111'}));
+  parts.push(L(-20,-18,-7,-8));parts.push(L(20,-18,7,-8));parts.push(L(-20,18,-7,8));parts.push(L(20,18,7,8));
+ }else if(type==='animals'){
+  parts.push(new fabric.Ellipse({
+   left:0,top:0,rx:34,ry:18,originX:'center',originY:'center',
+   fill:'rgba(255,255,255,0)',stroke:'#111',strokeWidth:2
+  }));
+  parts.push(L(-25,-13,-43,-32));
+  parts.push(L(25,-13,43,-32));
+  parts.push(L(-25,13,-43,32));
+  parts.push(L(25,13,43,32));
+ }else if(type==='fixed'){
+  parts.push(new fabric.Rect({left:0,top:0,width:58,height:42,originX:'center',originY:'center',fill:'#fff',stroke:'#111',strokeWidth:2}));
+  parts.push(L(-29,-21,29,21));parts.push(L(-29,21,29,-21));
+ }else if(type==='puddle'){
+  // Poça: contorno irregular conforme a referência.
+  parts.push(new fabric.Polygon([
+   {x:-42,y:-28},{x:7,y:-28},{x:7,y:-36},{x:23,y:-36},
+   {x:23,y:-18},{x:38,y:5},{x:38,y:16},{x:46,y:16},
+   {x:46,y:39},{x:-24,y:39},{x:-42,y:31}
+  ],{
+   originX:'center',originY:'center',fill:'rgba(255,255,255,0)',
+   stroke:'#111',strokeWidth:2
+  }));
+ }else if(type==='tree'){
+  // Árvore: mesmo contorno da poça com um círculo interno, como na referência.
+  parts.push(new fabric.Polygon([
+   {x:-42,y:-28},{x:7,y:-28},{x:7,y:-36},{x:23,y:-36},
+   {x:23,y:-18},{x:38,y:5},{x:38,y:16},{x:46,y:16},
+   {x:46,y:39},{x:-24,y:39},{x:-42,y:31}
+  ],{
+   originX:'center',originY:'center',fill:'rgba(255,255,255,0)',
+   stroke:'#111',strokeWidth:2
+  }));
+  parts.push(new fabric.Circle({
+   left:-7,top:8,radius:12,originX:'center',originY:'center',
+   fill:'rgba(255,255,255,0)',stroke:'#111',strokeWidth:2
+  }));
+ }else if(type==='post'){
+  parts.push(new fabric.Circle({left:0,top:0,radius:21,originX:'center',originY:'center',fill:'#fff',stroke:'#111',strokeWidth:2}));
+  parts.push(L(-15,-15,15,15));parts.push(L(-15,15,15,-15));
+ }else if(type==='fence'){
+  parts.push(L(-42,0,42,0,{strokeWidth:3}));
+  [-30,0,30].forEach(function(xx){parts.push(L(xx-12,-15,xx+12,15,{strokeWidth:3}));parts.push(L(xx-12,15,xx+12,-15,{strokeWidth:3}))});
+ }else if(type==='impact'){
+  [0,45,90,135].forEach(function(a){var r=a*Math.PI/180;parts.push(L(-22*Math.cos(r),-22*Math.sin(r),22*Math.cos(r),22*Math.sin(r),{strokeWidth:3}))});
+ }else if(type==='braking'){
+  parts.push(new fabric.Path('M -46 22 Q -8 -6 46 24',{fill:'',stroke:'#111',strokeWidth:2,strokeDashArray:[2,2]}));
+  parts.push(new fabric.Path('M -46 32 Q -8 4 46 34',{fill:'',stroke:'#111',strokeWidth:2,strokeDashArray:[2,2]}));
+ }else if(type==='rollover'){
+  parts.push(new fabric.Path('M -58 15 C -30 18 -6 23 20 22 C 42 21 50 16 43 1 C 34 -19 20 -37 4 -38 C -12 -39 -29 -25 -31 -9 C -34 12 -18 28 2 39 C 22 50 39 57 58 66',{
+   left:0,top:0,originX:'center',originY:'center',fill:'',stroke:'#111',strokeWidth:3,strokeLineCap:'round',strokeLineJoin:'round'
+  }));
+ }else if(type==='forward'){
+  parts.push(L(-38,0,22,0,{strokeWidth:7}));
+  parts.push(new fabric.Triangle({left:31,top:0,width:27,height:27,originX:'center',originY:'center',angle:90,fill:'#111'}));
+ }else if(type==='reverse'){
+  parts.push(L(38,0,8,0,{strokeWidth:7}));
+  parts.push(new fabric.Triangle({left:-2,top:0,width:25,height:25,originX:'center',originY:'center',angle:270,fill:'#111'}));
+  parts.push(L(8,0,-22,0,{strokeWidth:7}));
+  parts.push(new fabric.Triangle({left:-32,top:0,width:25,height:25,originX:'center',originY:'center',angle:270,fill:'#111'}));
+ }else{return}
+ g=new fabric.Group(parts,{left:x,top:y,originX:'center',originY:'center',selectable:true,evented:true,objectCaching:false});
+ // V95: contornos reforçados nos símbolos de perícia, independentes do preenchimento.
+ var outlinedSymbols=['carInitial','carFinal','truckBus','truckBusFinal',
+  'twoWheelsInitial','twoWheelsFinal','victim','animals','puddle','tree',
+  'post','fence','impact','braking','rollover'];
+ if(outlinedSymbols.indexOf(type)!==-1){
+  g.preserveSymbolOutline=true;
+  parts.forEach(function(part){
+   if(part.stroke && part.stroke!=='transparent'){
+    part.set({strokeWidth:Math.max(3.8,part.strokeWidth||0),
+     strokeLineCap:'round',strokeLineJoin:'round'});
+   }
+  });
+  g.addWithUpdate();
+ }
+ g.kind='symbol';g.toolType=type;
+ canvas.add(g);canvas.setActiveObject(g);save();canvas.requestRenderAll()
+}
+function clearRoundaboutOpenings(){
+ canvas.getObjects().filter(function(o){return o.isRoundaboutOpening}).forEach(function(o){canvas.remove(o)})
+}
+
+function getRoadEnds(road){
+ var ctr=road.getCenterPoint(), ang=(road.angle||0)*Math.PI/180;
+ var half=(road.width*(road.scaleX||1))/2;
+ return [
+  {x:ctr.x-Math.cos(ang)*half,y:ctr.y-Math.sin(ang)*half},
+  {x:ctr.x+Math.cos(ang)*half,y:ctr.y+Math.sin(ang)*half}
+ ]
+}
+
+function refreshAllRoundaboutConnections(){
+ if(refreshingRoundabout)return;
+ refreshingRoundabout=true;
+ try{
+  clearRoundaboutOpenings();
+  var rounds=canvas.getObjects().filter(function(o){return o.toolType==='roundabout'});
+  var roads=canvas.getObjects().filter(function(o){return o.toolType==='street'});
+  for(var ri=0;ri<rounds.length;ri++){
+   var g=rounds[ri],rg=getRoundaboutGeometry(g);if(!rg)continue;
+   for(var si=0;si<roads.length;si++){
+    var road=roads[si],ends=getRoadEnds(road),best=null,bestDelta=1e9;
+    for(var ei=0;ei<ends.length;ei++){
+     var p=ends[ei],d=Math.hypot(p.x-rg.cx,p.y-rg.cy),delta=Math.abs(d-rg.r);
+     if(delta<bestDelta){bestDelta=delta;best=p}
+    }
+    if(!best||bestDelta>30)continue;
+    var theta=Math.atan2(best.y-rg.cy,best.x-rg.cx);
+    var roadW=(road.height||72)*(road.scaleY||1);
+    var bridgeLen=Math.max(10,Math.min(16,roadW*.18));
+    var centerR=rg.r-1;
+    var bridge=new fabric.Rect({
+     left:rg.cx+Math.cos(theta)*centerR,
+     top:rg.cy+Math.sin(theta)*centerR,
+     width:bridgeLen,
+     height:Math.max(16,roadW-8),
+     originX:'center',originY:'center',
+     angle:theta*180/Math.PI,
+     fill:'#4a4f55',stroke:null,
+     selectable:false,evented:false,objectCaching:false
+    });
+    bridge.isRoundaboutOpening=true;
+    bridge.excludeFromExport=true;
+    canvas.add(bridge);
+    canvas.bringToFront(bridge);
+   }
+  }
+ }finally{
+  refreshingRoundabout=false;
+ }
+ canvas.requestRenderAll()
+}
+
+function getRoundaboutGeometry(g){
+ if(!g||g.toolType!=='roundabout')return null;
+ var c=g.getCenterPoint(),r=0;
+ if(g._objects&&g._objects.length){
+  var circles=g._objects.filter(function(o){return o.type==='circle'&&!o.isRoundaboutOpening});
+  if(circles.length){
+   var outer=circles.reduce(function(a,b){return (a.radius||0)>(b.radius||0)?a:b});
+   r=(outer.radius||0)*(g.scaleX||1);
+  }
+ }
+ if(!r)r=(Math.min(g.width,g.height)*(g.scaleX||1))/2;
+ return {cx:c.x,cy:c.y,r:r}
+}
+
+function snapRoadEndpointToRoundabout(a,b){
+ var rounds=canvas.getObjects().filter(function(o){return o.toolType==='roundabout'});
+ if(!rounds.length)return {a:a,b:b,roundabout:null};
+ var best=null,bestDist=Infinity,bestWhich=null;
+ rounds.forEach(function(g){
+  var rg=getRoundaboutGeometry(g);if(!rg)return;
+  [['a',a],['b',b]].forEach(function(pair){
+   var p=pair[1],d=Math.hypot(p.x-rg.cx,p.y-rg.cy);
+   // zona de encaixe: aceita clique próximo ou mesmo um pouco para dentro da rotatória
+   var delta=Math.abs(d-rg.r);
+   if((delta<55 || d<rg.r+35) && delta<bestDist){
+    bestDist=delta;best={g:g,rg:rg};bestWhich=pair[0]
+   }
+  })
+ });
+ if(!best)return {a:a,b:b,roundabout:null};
+ var p=bestWhich==='a'?a:b;
+ var vx=p.x-best.rg.cx,vy=p.y-best.rg.cy;
+ var vl=Math.hypot(vx,vy)||1;
+ var edge={
+  x:best.rg.cx+(vx/vl)*(best.rg.r-2),
+  y:best.rg.cy+(vy/vl)*(best.rg.r-2)
+ };
+ return {
+  a:bestWhich==='a'?edge:a,
+  b:bestWhich==='b'?edge:b,
+  roundabout:best.g
+ }
+}
+
+function addRoad(a,b){
+ var fit=snapRoadEndpointToRoundabout(a,b);
+ a=fit.a;b=fit.b;
+ var dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+ var cx=(a.x+b.x)/2,cy=(a.y+b.y)/2;
+ var o=new fabric.Rect({
+  left:cx,top:cy,width:len,height:72,originX:'center',originY:'center',
+  fill:'#4a4f55',stroke:'#4a4f55',strokeWidth:0,angle:ang
+ });
+ o.kind='drawn';o.toolType='street';
+ if(fit.roundabout)o.connectedRoundabout=true;
+ canvas.add(o);
+ // Se encaixou, deixa a rotatória por cima apenas no limite do encontro.
+ // Isso elimina a tampa retangular sobre o anel e cria uma junção visual limpa.
+ if(fit.roundabout){
+  canvas.bringToFront(fit.roundabout);
+  canvas.setActiveObject(o);
+  refreshAllRoundaboutConnections();
+ }else canvas.setActiveObject(o);
+ save();canvas.requestRenderAll()
+}
+
+function addLine(type,a,b){
+ var dx=b.x-a.x,dy=b.y-a.y,len=Math.max(10,Math.hypot(dx,dy)),cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,ang=angleDeg(a,b),o,h;
+ if(type==='whiteDash'||type==='yellowDash'||type==='centerDash'){
+  var stroke=type==='yellowDash'?'#f1c40f':'#fff';
+  o=new fabric.Line([-len/2,0,len/2,0],{left:cx,top:cy,originX:'center',originY:'center',stroke:stroke,strokeWidth:4,strokeDashArray:[14,10],strokeLineCap:'butt',angle:ang});
+ }else if(type==='sidewalk'||type==='grass'){
+  h=type==='sidewalk'?12:35;
+  o=new fabric.Rect({left:cx,top:cy,width:len,height:h,originX:'center',originY:'center',fill:type==='sidewalk'?'#d9d2c1':'#b8d8a9',stroke:'#888',strokeWidth:1,angle:ang});
+  }else if(type==='whiteSolid'||type==='yellowSolid'){
+  var solidColor=type==='yellowSolid'?'#f1c40f':'#fff';
+  o=new fabric.Line([-len/2,0,len/2,0],{
+   left:cx,top:cy,originX:'center',originY:'center',
+   stroke:solidColor,strokeWidth:4,strokeLineCap:'butt',angle:ang
+  });
+ }else if(type==='doubleSolid'){
+  var gap=5;
+  var l1=new fabric.Line([-len/2,-gap,len/2,-gap],{stroke:'#f1c40f',strokeWidth:4,strokeLineCap:'butt'});
+  var l2=new fabric.Line([-len/2,gap,len/2,gap],{stroke:'#f1c40f',strokeWidth:4,strokeLineCap:'butt'});
+  o=new fabric.Group([l1,l2],{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+ }else if(type==='cycleLane'){
+  var laneH=54,parts=[];
+  parts.push(new fabric.Rect({left:0,top:0,width:len,height:laneH,originX:'center',originY:'center',
+   fill:'#c8102e',stroke:'#fff',strokeWidth:2}));
+  // repeated simple bicycle pictograms along the lane
+  var step=110;
+  for(var bx=-len/2+55; bx<len/2; bx+=step){
+   var c1=new fabric.Circle({left:bx-16,top:0,radius:8,originX:'center',originY:'center',fill:'rgba(0,0,0,0)',stroke:'#fff',strokeWidth:2});
+   var c2=new fabric.Circle({left:bx+16,top:0,radius:8,originX:'center',originY:'center',fill:'rgba(0,0,0,0)',stroke:'#fff',strokeWidth:2});
+   var f1=new fabric.Line([bx-16,0,bx,-13],{stroke:'#fff',strokeWidth:2});
+   var f2=new fabric.Line([bx,-13,bx+16,0],{stroke:'#fff',strokeWidth:2});
+   var f3=new fabric.Line([bx-16,0,bx+2,0],{stroke:'#fff',strokeWidth:2});
+   parts.push(c1,c2,f1,f2,f3);
+  }
+  o=new fabric.Group(parts,{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+}else if(type==='crosswalk'){
+  var parts=[];for(var x=-len/2;x<=len/2;x+=16)parts.push(new fabric.Rect({left:x,top:0,width:9,height:58,originX:'center',originY:'center',fill:'#fff',stroke:'#fff'}));
+  o=new fabric.Group(parts,{left:cx,top:cy,originX:'center',originY:'center',angle:ang})
+ }else if(type==='stopLine'){
+  o=new fabric.Line([-len/2,0,len/2,0],{left:cx,top:cy,originX:'center',originY:'center',stroke:'#fff',strokeWidth:10,strokeLineCap:'butt',angle:ang});
+ }else if(type==='yellowBox'){
+  var boxH=Math.max(55,Math.min(120,len*.38)),parts=[];
+  var border=new fabric.Rect({left:0,top:0,width:len,height:boxH,originX:'center',originY:'center',fill:'rgba(0,0,0,0)',stroke:'#f1c40f',strokeWidth:3});
+  parts.push(border);
+  var step=52, halfW=len/2, halfH=boxH/2;
+  function clippedDiag(c,slope){
+    var pts=[];
+    var y=slope*(-halfW)+c;if(y>=-halfH&&y<=halfH)pts.push([-halfW,y]);
+    y=slope*(halfW)+c;if(y>=-halfH&&y<=halfH)pts.push([halfW,y]);
+    var x=(-halfH-c)/slope;if(x>=-halfW&&x<=halfW)pts.push([x,-halfH]);
+    x=(halfH-c)/slope;if(x>=-halfW&&x<=halfW)pts.push([x,halfH]);
+    if(pts.length>=2)parts.push(new fabric.Line([pts[0][0],pts[0][1],pts[1][0],pts[1][1]],{stroke:'#f1c40f',strokeWidth:2,strokeLineCap:'butt'}));
+  }
+  for(var c=-halfW-halfH;c<=halfW+halfH;c+=step){clippedDiag(c,1);clippedDiag(c,-1)}
+  o=new fabric.Group(parts,{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+ }else if(type==='arrow'){
+  o=new fabric.Line([-len/2,0,len/2-12,0],{stroke:'#111',strokeWidth:3,originX:'center',originY:'center'});
+  var tri=new fabric.Triangle({left:len/2-4,top:0,width:16,height:16,fill:'#111',originX:'center',originY:'center',angle:90});
+  o=new fabric.Group([o,tri],{left:cx,top:cy,originX:'center',originY:'center',angle:ang})
+ }else if(type==='dimension'){
+  var line=new fabric.Line([-len/2,0,len/2,0],{stroke:'#111',strokeWidth:1.5});
+  var l=new fabric.Triangle({left:-len/2,top:0,width:15,height:18,angle:270,originX:'center',originY:'center',fill:'#111',strokeWidth:0});
+  var r=new fabric.Triangle({left:len/2,top:0,width:15,height:18,angle:90,originX:'center',originY:'center',fill:'#111',strokeWidth:0});
+  var tx=new fabric.Text(meters(len).toFixed(2).replace('.',',')+' m',{left:0,top:-17,originX:'center',fontSize:21,fontWeight:'bold',fill:'#111',backgroundColor:'#fff'});
+  o=new fabric.Group([line,l,r,tx],{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+  o.meters=meters(len)
+ }
+ if(o){o.kind='drawn';o.toolType=type;o.lengthPx=len;o.set({cornerSize:12,touchCornerSize:24,transparentCorners:false});canvas.add(o);canvas.setActiveObject(o);save();canvas.requestRenderAll()}
+}
+
+
+function getMeasureTextObject(o){
+ if(!o)return null;
+ if(o.type==='text'||o.type==='i-text'||o.type==='textbox')return o;
+ if(o._objects){
+  for(var i=0;i<o._objects.length;i++){
+   var t=getMeasureTextObject(o._objects[i]);
+   if(t)return t
+  }
+ }
+ return null
+}
+function editRulerValue(o){
+ if(!o||o.toolType!=='ruler')return;
+ var txt=getMeasureTextObject(o);
+ var atual=o.customMeasure || (txt&&txt.text) || '';
+ var novo=prompt('Digite o valor que deseja mostrar na régua:',atual);
+ if(novo===null)return;
+ novo=String(novo).trim();
+ if(!novo)return;
+ o.customMeasure=novo;
+ if(txt)txt.set({text:novo});
+ if(o.addWithUpdate)o.addWithUpdate();
+ o.setCoords();
+ canvas.requestRenderAll();
+ save();
+ note('Valor da régua atualizado.')
+}
+
+
+function addSpeedBump(a,b){
+ var dx=b.x-a.x,dy=b.y-a.y,len=Math.sqrt(dx*dx+dy*dy);
+ if(len<12)return;
+ var ang=Math.atan2(dy,dx)*180/Math.PI;
+ var bumpH=42,parts=[];
+ // V101: lombada com pintura transversal alternada, inspirada na sinalização real.
+ parts.push(new fabric.Rect({
+  left:0,top:0,width:len,height:bumpH,originX:'center',originY:'center',
+  fill:'#ffd400',stroke:'#111',strokeWidth:2
+ }));
+ var bandW=18,step=42;
+ for(var x=-len/2+21;x<len/2-8;x+=step){
+  parts.push(new fabric.Rect({
+   left:x,top:0,width:bandW,height:bumpH-4,
+   originX:'center',originY:'center',fill:'#111',strokeWidth:0
+  }));
+ }
+ var g=new fabric.Group(parts,{
+  left:(a.x+b.x)/2,top:(a.y+b.y)/2,
+  originX:'center',originY:'center',angle:ang,
+  selectable:true,evented:true,objectCaching:false
+ });
+ g.kind='drawn';g.toolType='speedBump';
+ canvas.add(g);canvas.setActiveObject(g);save();canvas.requestRenderAll()
+}
+
+
+function addCompassRoseAt(p){
+ var parts=[], tips=[
+  [[0,-44],[-7,-9],[0,-3],[7,-9]],
+  [[44,0],[9,-7],[3,0],[9,7]],
+  [[0,44],[7,9],[0,3],[-7,9]],
+  [[-44,0],[-9,7],[-3,0],[-9,-7]],
+  [[31,-31],[7,-10],[3,-3],[10,-7]],
+  [[31,31],[10,7],[3,3],[7,10]],
+  [[-31,31],[-7,10],[-3,3],[-10,7]],
+  [[-31,-31],[-10,-7],[-3,-3],[-7,-10]]
+ ];
+ tips.forEach(function(q,i){
+  parts.push(new fabric.Polygon(q.map(function(v){return{x:v[0],y:v[1]}}),{
+   fill:i%2===0?'#111':'#fff',stroke:'#111',strokeWidth:1.5
+  }));
+ });
+ parts.push(new fabric.Circle({left:0,top:0,radius:3,originX:'center',originY:'center',fill:'#111'}));
+ var g=new fabric.Group(parts,{left:p.x,top:p.y,originX:'center',originY:'center',selectable:true,evented:true,objectCaching:false});
+ g.kind='symbol';g.toolType='compassRose';
+ canvas.add(g);canvas.setActiveObject(g);save();canvas.requestRenderAll();
+}
+function addCardinalAt(letter,p,type){
+ var t=new fabric.Text(letter,{left:p.x,top:p.y,originX:'center',originY:'center',fontFamily:'Arial',fontSize:28,fontWeight:'bold',fill:'#111'});
+ t.kind='symbol';t.toolType=type;t.objectColor='#111';
+ canvas.add(t);canvas.setActiveObject(t);save();canvas.requestRenderAll();
+}
+function addRuler(a,b){
+ var len=distance(a,b),cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,ang=angleDeg(a,b),label=meters(len).toFixed(2).replace('.',',')+' m';
+ var o=new fabric.Group([
+  new fabric.Line([-len/2,0,len/2,0],{stroke:'#111',strokeWidth:2}),
+  new fabric.Triangle({left:-len/2,top:0,width:15,height:18,angle:270,originX:'center',originY:'center',fill:'#111',strokeWidth:0}),
+  new fabric.Triangle({left:len/2,top:0,width:15,height:18,angle:90,originX:'center',originY:'center',fill:'#111',strokeWidth:0}),
+  new fabric.Text(label,{left:0,top:-17,originX:'center',fontSize:21,fontWeight:'bold',fill:'#111',backgroundColor:'#fff'})
+ ],{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+ o.kind='measure';o.toolType='ruler';o.lengthPx=len;o.meters=meters(len);canvas.add(o);canvas.setActiveObject(o);save();canvas.requestRenderAll()
+}
+
+function makeRoadPath(points){
+ var p=points||[];
+ if(p.length<2)return '';
+ if(p.length===2)return 'M '+p[0].x+' '+p[0].y+' L '+p[1].x+' '+p[1].y;
+ var d='M '+p[0].x+' '+p[0].y;
+ for(var i=1;i<p.length-1;i++){
+  var mx=(p[i].x+p[i+1].x)/2, my=(p[i].y+p[i+1].y)/2;
+  d+=' Q '+p[i].x+' '+p[i].y+' '+mx+' '+my;
+ }
+ d+=' Q '+p[p.length-1].x+' '+p[p.length-1].y+' '+p[p.length-1].x+' '+p[p.length-1].y;
+ return d
+}
+
+function roadPointsDefault(a,b){
+ var dx=b.x-a.x,dy=b.y-a.y,len=Math.max(40,Math.hypot(dx,dy));
+ var nx=-dy/len,ny=dx/len;
+ return [
+  {x:a.x,y:a.y},
+  {x:a.x+dx*.33+nx*45,y:a.y+dy*.33+ny*45},
+  {x:a.x+dx*.66+nx*45,y:a.y+dy*.66+ny*45},
+  {x:b.x,y:b.y}
+ ]
+}
+
+function rebuildEditableRoad(road){
+ if(!road||!road.roadPoints)return;
+ road.set({path:fabric.util.parsePath(makeRoadPath(road.roadPoints))});
+ road.setCoords();
+ canvas.requestRenderAll()
+}
+
+function removeCurveHandles(){
+ var hs=canvas.getObjects().filter(function(x){return x.isCurveHandle});
+ hs.forEach(function(h){canvas.remove(h)});
+}
+
+function showCurveHandles(road){
+ removeCurveHandles();
+ if(!road||!isEditableLinearTool(road.toolType)||!road.roadPoints)return;
+ road.set({hasControls:true,hasBorders:true,transparentCorners:false,cornerSize:12});
+ road.setControlsVisibility({tl:true,tr:true,bl:true,br:true,ml:true,mr:true,mt:true,mb:true,mtr:true});
+ road.roadPoints.forEach(function(p,idx){
+  var h=new fabric.Circle({
+   left:p.x,top:p.y,radius:7,originX:'center',originY:'center',
+   fill:'#2f80ed',stroke:'#fff',strokeWidth:2,
+   hasControls:false,hasBorders:false,selectable:true,evented:true,
+   lockScalingX:true,lockScalingY:true
+  });
+  h.isCurveHandle=true;h.handleIndex=idx;h.roadRef=road;
+  h.on('moving',function(){
+   var q={x:h.left,y:h.top};
+   road.roadPoints[h.handleIndex]=q;
+   rebuildEditableRoad(road)
+  });
+  h.on('modified',function(){save()});
+  canvas.add(h);canvas.bringToFront(h)
+ })
+}
+
+function getRoundPart(g,name){
+ if(!g||!g._objects)return null;
+ return g._objects.find(function(o){return o.roundPart===name})||null
+}
+function getRoundRoadWidth(g){
+ var outer=getRoundPart(g,'outer'),island=getRoundPart(g,'island');
+ if(!outer||!island)return g.roundRoadWidth||50;
+ return Math.max(20,((outer.radius||0)-((island.radius||0)*(island.scaleX||1))))
+}
+function updateRoundRoadWidthLabel(){
+ var el=$('roundRoadWidthLabel');if(!el)return;
+ var g=canvas.getActiveObject();
+ el.textContent=(g&&g.toolType==='roundabout')?Math.round(getRoundRoadWidth(g))+' px':'—'
+}
+function changeRoundRoadWidth(delta){
+ var g=canvas.getActiveObject();
+ if(!g||g.toolType!=='roundabout'){note('Selecione primeiro uma rotatória.');return}
+ var circles=(g._objects||[]).filter(function(o){return o.type==='circle'});
+ if(circles.length<3){note('Não foi possível editar esta rotatória.');return}
+ var outer=circles.slice().sort(function(a,b){return (b.radius||0)-(a.radius||0)})[0];
+ var island=circles.slice().sort(function(a,b){return (a.radius||0)-(b.radius||0)})[0];
+ var lane=circles.find(function(o){return o.strokeDashArray&&o.strokeDashArray.length});
+ if(!outer||!island||!lane)return;
+ var outerR=outer.radius||1;
+ var islandVisual=(island.radius||1)*(island.scaleX||1);
+ var current=outerR-islandVisual;
+ var next=Math.max(24,Math.min(outerR-18,current+delta));
+ var newIslandR=outerR-next;
+ island.set({scaleX:newIslandR/(island.radius||1),scaleY:newIslandR/(island.radius||1)});
+ var laneTarget=(outerR+newIslandR)/2;
+ lane.set({scaleX:laneTarget/(lane.radius||1),scaleY:laneTarget/(lane.radius||1)});
+ island.dirty=true;lane.dirty=true;g.dirty=true;g.objectCaching=false;
+ g.roundRoadWidth=next;g.setCoords();
+ canvas.requestRenderAll();refreshAllRoundaboutConnections();updateRoundRoadWidthLabel();save();
+}
+function addRoundabout(a,b){
+ var cx=(a.x+b.x)/2,cy=(a.y+b.y)/2;
+ var outerR=Math.max(55,Math.min(240,distance(a,b)/2));
+ var roadW=Math.max(34,Math.min(72,outerR*.34));
+ var islandR=Math.max(18,outerR-roadW);
+ var parts=[];
+
+ // borda externa clara
+ var outerCircle=new fabric.Circle({
+  left:0,top:0,radius:outerR,originX:'center',originY:'center',
+  fill:'#4a4f55',stroke:'#d7d4cb',strokeWidth:5
+ });
+ outerCircle.roundPart='outer';
+ parts.push(outerCircle);
+ // ilha central
+ var islandCircle=new fabric.Circle({
+  left:0,top:0,radius:islandR,originX:'center',originY:'center',
+  fill:'#5d7f35',stroke:'#d7d4cb',strokeWidth:5
+ });
+ islandCircle.roundPart='island';
+ parts.push(islandCircle);
+ // linha circular tracejada no centro da faixa
+ var laneR=(outerR+islandR)/2;
+ var laneCircle=new fabric.Circle({
+  left:0,top:0,radius:laneR,originX:'center',originY:'center',
+  fill:'rgba(0,0,0,0)',stroke:'#fff',strokeWidth:3,
+  strokeDashArray:[13,10]
+ });
+ laneCircle.roundPart='lane';
+ parts.push(laneCircle);
+ var g=new fabric.Group(parts,{
+  left:cx,top:cy,originX:'center',originY:'center',
+  selectable:true,evented:true,objectCaching:false
+ });
+ g.kind='drawn';g.toolType='roundabout';g.roundRoadWidth=roadW;
+ canvas.add(g);canvas.bringToFront(g);canvas.setActiveObject(g);
+ refreshAllRoundaboutConnections();save();canvas.requestRenderAll()
+}
+
+
+function isEditableLinearTool(t){
+ return t==='streetCurved'||t==='streetEditable'||t==='cycleLaneEditable'||
+        t==='sidewalkEditable'||t==='grassEditable'||
+        t==='whiteDashEditable'||t==='yellowDashEditable'||
+        t==='whiteSolidEditable'||t==='yellowSolidEditable'||
+        t==='doubleSolidEditable'||t==='stopLineEditable'
+}
+function editableStraightPoints(a,b){
+ return [
+  {x:a.x,y:a.y},
+  {x:a.x+(b.x-a.x)/3,y:a.y+(b.y-a.y)/3},
+  {x:a.x+(b.x-a.x)*2/3,y:a.y+(b.y-a.y)*2/3},
+  {x:b.x,y:b.y}
+ ]
+}
+function editableLinearStyle(type){
+ if(type==='streetEditable'||type==='streetCurved')
+  return {stroke:'#4a4f55',strokeWidth:72};
+ if(type==='cycleLaneEditable')
+  return {stroke:'#c8102e',strokeWidth:54};
+ if(type==='sidewalkEditable')
+  return {stroke:'#d9d2c1',strokeWidth:12};
+ if(type==='grassEditable')
+  return {stroke:'#b8d8a9',strokeWidth:35};
+ if(type==='whiteDashEditable')
+  return {stroke:'#ffffff',strokeWidth:4,dash:[14,10]};
+ if(type==='yellowDashEditable')
+  return {stroke:'#f1c40f',strokeWidth:4,dash:[14,10]};
+ if(type==='whiteSolidEditable')
+  return {stroke:'#ffffff',strokeWidth:4};
+ if(type==='yellowSolidEditable')
+  return {stroke:'#f1c40f',strokeWidth:4};
+ if(type==='stopLineEditable')
+  return {stroke:'#ffffff',strokeWidth:10};
+ return {stroke:'#4a4f55',strokeWidth:20}
+}
+function addEditableLinear(type,a,b){
+ var pts=(type==='streetCurved')?roadPointsDefault(a,b):editableStraightPoints(a,b);
+ var st=editableLinearStyle(type),path;
+ path=new fabric.Path(makeRoadPath(pts),{
+  fill:'',stroke:st.stroke,strokeWidth:st.strokeWidth,
+  strokeDashArray:st.dash||null,
+  strokeLineCap:'butt',strokeLineJoin:'round',
+  selectable:true,evented:true,objectCaching:false,
+  perPixelTargetFind:true
+ });
+ path.kind='drawn';path.toolType=type;path.roadPoints=pts;
+ path.set({hasControls:true,hasBorders:true,transparentCorners:false,cornerSize:12});
+ // V72: mantém os pontos azuis de edição do traçado e também libera
+ // alças padrão do Fabric para redimensionar largura/altura por arrasto.
+ path.setControlsVisibility({tl:true,tr:true,bl:true,br:true,ml:true,mr:true,mt:true,mb:true,mtr:true});
+ canvas.add(path);canvas.setActiveObject(path);save();canvas.requestRenderAll();
+ setTool('select');showCurveHandles(path)
+}
+
+function addCurvedRoad(a,b){
+ addEditableLinear('streetCurved',a,b)
+}
+
+function previewLine(type,a,b){
+ if(type==='streetEditable')type='street';
+ if(type==='cycleLaneEditable')type='cycleLane';
+ if(type==='sidewalkEditable')type='sidewalk';
+ if(type==='grassEditable')type='grass';
+ if(type==='whiteDashEditable')type='whiteDash';
+ if(type==='yellowDashEditable')type='yellowDash';
+ if(type==='whiteSolidEditable')type='whiteSolid';
+ if(type==='yellowSolidEditable')type='yellowSolid';
+ if(type==='stopLineEditable')type='stopLine';
+ var dx=b.x-a.x,dy=b.y-a.y,len=Math.max(10,Math.hypot(dx,dy)),cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,ang=angleDeg(a,b),o,h;
+ if(type==='roundabout'){
+  var rr=Math.max(55,Math.min(240,distance(a,b)/2));
+  var ccx=(a.x+b.x)/2,ccy=(a.y+b.y)/2;
+  var ro=new fabric.Circle({left:ccx,top:ccy,radius:rr,originX:'center',originY:'center',
+   fill:'rgba(74,79,85,.55)',stroke:'#d7d4cb',strokeWidth:5,opacity:.8});
+  ro.selectable=false;ro.evented=false;return ro
+ }
+ if(type==='crosswalk'){
+  var arr=[];for(var x=-len/2;x<=len/2;x+=16)arr.push(new fabric.Rect({left:x,top:0,width:9,height:58,originX:'center',originY:'center',fill:'#fff'}));
+  o=new fabric.Group(arr,{left:cx,top:cy,originX:'center',originY:'center',angle:ang,opacity:.55})
+ }else if(type==='arrow'){
+  o=new fabric.Line([a.x,a.y,b.x,b.y],{stroke:'#111',strokeWidth:3,strokeDashArray:[8,6],opacity:.55})
+ }else if(type==='ruler'||type==='dimension'){
+  o=new fabric.Line([a.x,a.y,b.x,b.y],{stroke:'#111',strokeWidth:2,strokeDashArray:[6,4],opacity:.55})
+ }else if(type==='whiteDash'||type==='yellowDash'||type==='centerDash'){
+  o=new fabric.Line([a.x,a.y,b.x,b.y],{stroke:type==='yellowDash'?'#f1c40f':'#fff',strokeWidth:4,strokeDashArray:[14,10],strokeLineCap:'butt',opacity:.55})
+ }else if(type==='stopLine'){
+  o=new fabric.Line([a.x,a.y,b.x,b.y],{stroke:'#fff',strokeWidth:10,strokeLineCap:'butt',opacity:.65})
+ }else if(type==='yellowBox'){
+  o=new fabric.Rect({left:cx,top:cy,width:len,height:Math.max(55,Math.min(120,len*.38)),originX:'center',originY:'center',fill:'rgba(241,196,15,.06)',stroke:'#f1c40f',strokeWidth:3,angle:ang,opacity:.75})
+ }else if(type==='whiteSolid'||type==='yellowSolid'){
+  o=new fabric.Line([a.x,a.y,b.x,b.y],{
+   stroke:type==='yellowSolid'?'#f1c40f':'#fff',strokeWidth:4,strokeLineCap:'butt',opacity:.65
+  })
+ }else if(type==='doubleSolid'){
+  var pg=5;
+  var pa=new fabric.Line([-len/2,-pg,len/2,-pg],{stroke:'#f1c40f',strokeWidth:4});
+  var pb=new fabric.Line([-len/2,pg,len/2,pg],{stroke:'#f1c40f',strokeWidth:4});
+  o=new fabric.Group([pa,pb],{left:cx,top:cy,originX:'center',originY:'center',angle:ang,opacity:.65})
+ }else if(type==='cycleLane'){
+  o=new fabric.Rect({left:cx,top:cy,width:len,height:54,originX:'center',originY:'center',
+   fill:'#c8102e',stroke:'#fff',strokeWidth:2,angle:ang,opacity:.65})
+ }else{
+  h=type==='street'?72:type==='sidewalk'?12:type==='grass'?35:4;
+  o=new fabric.Rect({left:cx,top:cy,width:len,height:h,originX:'center',originY:'center',
+   fill:type==='street'?'#30343b':type==='sidewalk'?'#d9d2c1':type==='grass'?'#b8d8a9':'rgba(255,255,255,0)',
+   stroke:type==='yellowDash'?'#f1c40f':(type==='whiteDash'||type==='centerDash')?'#fff':'#888',
+   strokeWidth:(type==='whiteDash'||type==='yellowDash'||type==='centerDash')?4:1,
+   strokeDashArray:(type==='whiteDash'||type==='yellowDash'||type==='centerDash')?[18,12]:null,angle:ang,opacity:.55})
+ }
+ if(o){o.isGuide=true;o.selectable=false;o.evented=false;return o}
+}
+
+function clearDrawingPreview(){
+ if(window.__preview){canvas.remove(window.__preview);window.__preview=null}
+ canvas.requestRenderAll()
+}
+function cancelPendingDrawing(){
+ clearDrawingPreview();start=null;drawingPreview=false;lastLeftClick=0;note('Desenho cancelado.')
+}
+function finishTwoClickDrawing(p){
+ if(!start||distance(start,p)<10){cancelPendingDrawing();return}
+ clearDrawingPreview();
+ // Guarda a ferramenta atual. O retorno para Selecionar/mover acontece em finally,
+ // portanto vale para TODAS as ferramentas mesmo se alguma rotina interna gerar erro.
+ var finishedTool=tool;
+ try{
+  if(finishedTool==='speedBump')addSpeedBump(start,p);
+  else if(finishedTool==='street')addRoad(start,p);
+  else if(finishedTool==='streetCurved')addCurvedRoad(start,p);
+  else if(finishedTool==='streetEditable'||finishedTool==='cycleLaneEditable'||finishedTool==='sidewalkEditable'||finishedTool==='grassEditable'||
+          finishedTool==='whiteDashEditable'||finishedTool==='yellowDashEditable'||finishedTool==='whiteSolidEditable'||
+          finishedTool==='yellowSolidEditable'||finishedTool==='doubleSolidEditable'||finishedTool==='stopLineEditable')addEditableLinear(finishedTool,start,p);
+  else if(finishedTool==='roundabout')addRoundabout(start,p);
+  else if(finishedTool==='ruler')addRuler(start,p);
+  else if(finishedTool==='arrow'||finishedTool==='centerDash'||finishedTool==='sidewalk'||finishedTool==='grass'||finishedTool==='whiteDash'||finishedTool==='yellowDash'||finishedTool==='whiteSolid'||finishedTool==='yellowSolid'||finishedTool==='doubleSolid'||finishedTool==='cycleLane'||finishedTool==='crosswalk'||finishedTool==='stopLine')addLine(finishedTool,start,p);
+ }finally{
+  start=null;drawingPreview=false;lastLeftClick=0;clearDrawingPreview();
+  setTool('select');
+  canvas.discardActiveObject();
+  canvas.requestRenderAll();
+ }
+}
+
+function pointerCanvasPos(opt){
+ return opt && opt.pointer ? {x:opt.pointer.x,y:opt.pointer.y} : null
+}
+function isRightMouse(opt){
+ // Fabric pode informar o botão direito como button=3; o evento nativo usa button=2.
+ return !!(opt && (opt.button===3 || (opt.e && opt.e.button===2) || (opt.e && opt.e.which===3)));
+}
+canvas.on('mouse:down',function(opt){
+ // V81: Rua curva ponto a ponto. O duplo clique é feito no ÚLTIMO ponto.
+ if(isMultiCurveTool(tool) && opt && opt.button===1){
+  if(opt.e){opt.e.preventDefault();opt.e.stopPropagation();}
+  var rp=pointerCanvasPos(opt);if(!rp)return;
+  rp=snapPoint(rp);
+  var rnow=Date.now();
+  var last=curvedRoadPoints.length?curvedRoadPoints[curvedRoadPoints.length-1]:null;
+  var nearLast=last && distance(last,rp)<=28;
+
+  // Segundo clique rápido no último ponto conclui sem acrescentar ponto duplicado.
+  if(curvedRoadPoints.length>=(tool==='polygonPen'?2:3) && nearLast && (rnow-lastCurvedRoadClick)<500){
+   finishCurvedRoad();
+   return;
+  }
+
+  curvedRoadPoints.push({x:rp.x,y:rp.y});
+  lastCurvedRoadClick=rnow;
+  updateCurvedRoadPreview(null);
+  note(curvedRoadPoints.length===1?
+   'Primeiro ponto marcado. Continue clicando para definir o trajeto.':
+   curvedRoadPoints.length+' pontos marcados. No último ponto, dê 2 cliques rápidos para concluir.');
+  return;
+ }
+
+ // V47: canalização usa o botão esquerdo, sem manter pressionado.
+ if(isChannelTool(tool) && opt && opt.button===1){
+  if(opt.e){opt.e.preventDefault();opt.e.stopPropagation();}
+  var cp=pointerCanvasPos(opt);if(!cp)return;
+  cp=snapPoint(cp);
+  var now=Date.now();
+  var first=channelPoints.length?channelPoints[0]:null;
+  var nearFirst=first && distance(first,cp)<=28;
+
+  // Depois de 3 ou mais vértices, dois cliques esquerdos rápidos sobre o ponto inicial concluem.
+  // O primeiro clique de fechamento não cria um vértice extra.
+  if(channelPoints.length>=3 && nearFirst){
+   if((now-lastChannelClick)<500){
+    finishChannelPolygon();
+    return;
+   }
+   lastChannelClick=now;
+   updateChannelPreview(first);
+   note('Ponto inicial alcançado. Clique com o botão esquerdo novamente para concluir.');
+   return;
+  }
+
+  channelPoints.push({x:cp.x,y:cp.y});
+  lastChannelClick=now;
+  updateChannelPreview(null);
+  note(channelPoints.length===1?'Primeiro ponto marcado. Continue clicando com o botão esquerdo.':channelPoints.length+' pontos marcados.');
+  return;
+ }
+ // Botão direito: mover objeto, sem interferir no modo de desenho com botão esquerdo.
+ if(!isRightMouse(opt))return;
+ var target=opt.target,p=pointerCanvasPos(opt);
+ if(!target||!p||target.isCurveHandle)return;
+ if(target.toolType==='ruler'){
+  // Clique direito na régua abre apenas a edição, sem iniciar arraste.
+  pendingRulerEdit=target;
+  canvas.setActiveObject(target);
+  canvas.requestRenderAll();
+  return;
+ }
+ if(['channelWhite','channelYellow','channelZebraWhite','channelZebraYellow'].includes(target.toolType)){
+  // V105: nas hachuras e zebradas, o botão direito alterna somente a direção dos riscos internos.
+  cycleChannelHatchDirection(target);
+  return;
+ }
+ rightDrag={
+  obj:target,
+  px:p.x,py:p.y,
+  left:target.left,top:target.top
+ };
+ canvas.setActiveObject(target);
+ target.setCoords();
+ canvas.requestRenderAll();
+});
+canvas.on('mouse:move',function(opt){
+ if(isMultiCurveTool(tool)&&curvedRoadPoints.length&&!rightDrag){
+  var crp=pointerCanvasPos(opt);if(crp)updateCurvedRoadPreview(snapPoint(crp));
+  return;
+ }
+ if(isChannelTool(tool)&&channelPoints.length&&!rightDrag){
+  var pp=pointerCanvasPos(opt);if(pp)updateChannelPreview(snapPoint(pp));
+  return;
+ }
+ if(!rightDrag)return;
+ var p=pointerCanvasPos(opt);if(!p)return;
+ var obj=rightDrag.obj;
+ obj.set({
+  left:rightDrag.left+(p.x-rightDrag.px),
+  top:rightDrag.top+(p.y-rightDrag.py)
+ });
+ obj.setCoords();
+ // Se for rua curva, desloca também os pontos vetoriais para que continuem editáveis.
+ if(isEditableLinearTool(obj.toolType)&&obj.roadPoints){
+  var dx=obj.left-rightDrag.left,dy=obj.top-rightDrag.top;
+  if(!rightDrag.baseRoadPoints)rightDrag.baseRoadPoints=obj.roadPoints.map(function(q){return{x:q.x,y:q.y}});
+  obj.roadPoints=rightDrag.baseRoadPoints.map(function(q){return{x:q.x+dx,y:q.y+dy}});
+ }
+ canvas.requestRenderAll()
+});
+canvas.on('mouse:up',function(opt){
+ if(!isRightMouse(opt)||!rightDrag)return;
+ var obj=rightDrag.obj;
+ rightDrag=null;
+ obj.setCoords();
+ if(isEditableLinearTool(obj.toolType))showCurveHandles(obj);
+ if(obj.toolType==='street'){
+  // Ao terminar de mover uma rua, procura novamente um encaixe próximo à rotatória.
+  var ctr=obj.getCenterPoint(),ang=(obj.angle||0)*Math.PI/180;
+  var half=(obj.width*obj.scaleX)/2;
+  var pa={x:ctr.x-Math.cos(ang)*half,y:ctr.y-Math.sin(ang)*half};
+  var pb={x:ctr.x+Math.cos(ang)*half,y:ctr.y+Math.sin(ang)*half};
+  var fit=snapRoadEndpointToRoundabout(pa,pb);
+  if(fit.roundabout){
+   var na=fit.a,nb=fit.b,dx=nb.x-na.x,dy=nb.y-na.y;
+   obj.set({
+    left:(na.x+nb.x)/2,top:(na.y+nb.y)/2,
+    width:Math.hypot(dx,dy),angle:Math.atan2(dy,dx)*180/Math.PI,
+    scaleX:1
+   });
+   obj.connectedRoundabout=true;obj.setCoords();
+   canvas.bringToFront(fit.roundabout)
+  }
+ }
+ refreshAllRoundaboutConnections();
+ save();
+ canvas.requestRenderAll()
+});
+
+var pendingRulerEdit=null;
+canvas.on('mouse:up',function(opt){
+ if(!isRightMouse(opt)||!pendingRulerEdit)return;
+ var ruler=pendingRulerEdit;
+ pendingRulerEdit=null;
+ // Abre o diálogo só depois que o Fabric concluiu o gesto do mouse.
+ setTimeout(function(){
+  if(canvas.getObjects().indexOf(ruler)!==-1)editRulerValue(ruler);
+ },0);
+});
+canvas.on('mouse:down',function(e){
+ if(!e.pointer||e.button!==1||tool==='select'||isChannelTool(tool)||isMultiCurveTool(tool))return;
+ var p=snapPoint(e.pointer),now=Date.now();
+
+ // Rosa dos ventos e pontos cardeais são colocados individualmente com um clique.
+ if(tool==='compassRose'){
+  addCompassRoseAt(p);setTool('select');return;
+ }
+ if(tool==='cardinalN'||tool==='cardinalS'||tool==='cardinalL'||tool==='cardinalO'){
+  var letter=tool==='cardinalN'?'N':tool==='cardinalS'?'S':tool==='cardinalL'?'L':'O';
+  addCardinalAt(letter,p,tool);setTool('select');return;
+ }
+
+ // Se já há um ponto inicial, dois cliques esquerdos rápidos cancelam.
+ if(start&&(now-lastLeftClick)<350){
+  cancelPendingDrawing();return
+ }
+ lastLeftClick=now;
+
+ if(tool==='text'){addTextAt(p);lastLeftClick=0;setTool('select');return}
+
+ if(!start){
+  start=p;drawingPreview=true;
+  note('Início marcado. Mova o mouse sem segurar e clique com o botão esquerdo novamente para concluir.');
+  return
+ }
+ finishTwoClickDrawing(p)
+});
+canvas.on('mouse:move',function(e){
+ if(!start||!e.pointer||tool==='select'||isMultiCurveTool(tool))return;
+ var p=snapPoint(e.pointer);
+ clearDrawingPreview();
+ if(distance(start,p)<3)return;
+ window.__preview=previewLine(tool,start,p);
+ if(window.__preview){
+  drawingPreview=true;canvas.add(window.__preview);canvas.bringToFront(window.__preview);canvas.requestRenderAll()
+ }
+});
+
+canvas.upperCanvasEl.addEventListener('contextmenu',function(ev){ev.preventDefault()});
+canvas.lowerCanvasEl.addEventListener('contextmenu',function(ev){ev.preventDefault()});
+
+canvas.on('object:modified',function(e){
+ if(e&&e.target&&e.target.isRoundaboutOpening)return;
+ save();
+ setTimeout(function(){refreshAllRoundaboutConnections()},0);
+});
+canvas.on('object:removed',function(){save()});
+canvas.on('selection:created',function(e){
+ var o=e.selected&&e.selected[0];if(o){$('texto').value=o.label||'';if(isEditableLinearTool(o.toolType))showCurveHandles(o);updateRoundRoadWidthLabel()}
+});
+canvas.on('selection:updated',function(e){
+ var o=e.selected&&e.selected[0];if(o){$('texto').value=o.label||'';if(isEditableLinearTool(o.toolType))showCurveHandles(o);else if(!o.isCurveHandle)removeCurveHandles();updateRoundRoadWidthLabel()}
+});
+canvas.on('selection:cleared',function(){$('texto').value='';removeCurveHandles();updateRoundRoadWidthLabel()});
+
+document.addEventListener('keydown',function(e){
+ if(e.key==='Escape'&&start){e.preventDefault();cancelPendingDrawing();return}
+ if((e.key==='Delete'||e.key==='Backspace')&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){
+  var o=canvas.getActiveObject();if(o){canvas.remove(o);canvas.discardActiveObject();canvas.requestRenderAll()}
+ }
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}
+});
+
+document.addEventListener('keydown',function(ev){
+ if(ev.key==='Escape'&&isMultiCurveTool(tool)&&curvedRoadPoints.length){
+  cancelCurvedRoadDrawing();ev.preventDefault();return;
+ }
+ if(ev.key==='Escape'&&isChannelTool(tool)&&channelPoints.length){
+  cancelChannelDrawing();ev.preventDefault();
+ }
+});
+// V100: ajuda contextual junto às abas, sem alterar a lógica de desenho.
+var toolHelpDescriptions={
+ select:'Clique no objeto para selecioná-lo; use as alças para dimensionar ou girar. Segure o botão direito sobre ele para mover. Delete exclui o selecionado.',
+ street:'Clique no início da via, mova o cursor sem segurar e clique no fim. A rua é criada sem sinalização automática.',
+ streetMultiCurve:'Clique no ponto inicial e nos pontos seguintes para formar o trajeto. Dois cliques rápidos no último ponto concluem a rua. Selecione-a e use − Via / + Via para ajustar a largura.',
+ roundabout:'Clique no local da rotatória para inseri-la. Selecione-a e use − Via / + Via para alterar a largura do anel.',
+ centerDash:'Marque os pontos do eixo tracejado acompanhando o trajeto. Dois cliques rápidos no último ponto concluem.',
+ arrow:'Clique no início e depois no destino para indicar o sentido da trajetória.',
+ sidewalk:'Marque os pontos do percurso da calçada; ela inicia com largura semelhante à ciclofaixa e recebe símbolos de pedestres ao longo do trajeto. Dois cliques rápidos no último ponto concluem.',
+ grass:'Marque os pontos da área de grama; dois cliques rápidos no último ponto concluem.',
+ whiteDash:'Marque os pontos da linha branca tracejada; dois cliques rápidos no último ponto concluem.',
+ yellowDash:'Marque os pontos da linha amarela tracejada; dois cliques rápidos no último ponto concluem.',
+ whiteSolid:'Marque os pontos da linha branca contínua; dois cliques rápidos no último ponto concluem.',
+ yellowSolid:'Marque os pontos da linha amarela contínua; dois cliques rápidos no último ponto concluem.',
+ doubleSolid:'Marque os pontos da dupla linha contínua; dois cliques rápidos no último ponto concluem.',
+ cycleLane:'Marque os pontos do trajeto da ciclofaixa; dois cliques rápidos no último ponto concluem.',
+ crosswalk:'Clique no início, mova o cursor e clique no fim para posicionar a faixa de pedestres.',
+ stopLine:'Clique no início e no fim para criar a faixa de retenção.',
+ speedBump:'Clique no início e no fim para posicionar a lombada.',
+ compassRose:'Clique no local desejado para inserir a rosa dos ventos; depois selecione para mover, girar ou dimensionar.',
+ cardinalN:'Clique para inserir a indicação Norte (N).',cardinalS:'Clique para inserir a indicação Sul (S).',cardinalL:'Clique para inserir a indicação Leste (L).',cardinalO:'Clique para inserir a indicação Oeste (O).',
+ text:'Clique no local desejado para inserir um texto.',
+ polygonPen:'Clique no primeiro ponto e continue marcando os vértices da linha. Dois cliques rápidos no último ponto concluem; útil para muros e limites.',
+ ruler:'Clique nos dois extremos da medição. Para alterar o valor, clique com o botão direito na régua; o clique esquerdo apenas seleciona.',
+ streetEditable:'Marque início e fim; depois selecione a rua para ajustar seu traçado pelos pontos de edição.',
+ streetCurved:'Marque início e fim; selecione a rua e arraste os pontos de edição para formar a curva.',
+ sidewalkEditable:'Marque início e fim; selecione e arraste os pontos de edição para ajustar a calçada.',
+ grassEditable:'Marque início e fim; selecione e arraste os pontos de edição para ajustar a grama.',
+ whiteDashEditable:'Marque início e fim; selecione e ajuste a linha branca tracejada pelos pontos de edição.',
+ yellowDashEditable:'Marque início e fim; selecione e ajuste a linha amarela tracejada pelos pontos de edição.',
+ whiteSolidEditable:'Marque início e fim; selecione e ajuste a linha branca contínua pelos pontos de edição.',
+ yellowSolidEditable:'Marque início e fim; selecione e ajuste a linha amarela contínua pelos pontos de edição.',
+ cycleLaneEditable:'Marque início e fim; selecione e ajuste o trajeto da ciclofaixa pelos pontos de edição.',
+ stopLineEditable:'Marque início e fim; selecione e ajuste a faixa de retenção pelos pontos de edição.',
+ channelWhite:'Marque pelo menos três vértices; volte ao primeiro ponto e dê dois cliques rápidos para fechar. Depois de pronta, clique com o botão direito sobre a hachura para alternar: diagonal ↗, horizontal, diagonal ↘ e vertical.',
+ channelYellow:'Marque pelo menos três vértices; volte ao primeiro ponto e dê dois cliques rápidos para fechar. Depois de pronta, clique com o botão direito sobre a hachura para alternar: diagonal ↗, horizontal, diagonal ↘ e vertical.',
+ channelZebraWhite:'Marque o contorno ponto a ponto; volte ao início e dê dois cliques rápidos para fechar a área zebrada branca.',
+ channelZebraYellow:'Marque o contorno ponto a ponto; volte ao início e dê dois cliques rápidos para fechar a área zebrada amarela.',
+ channelGridWhite:'Marque o contorno ponto a ponto; volte ao início e dê dois cliques rápidos para fechar a grade branca.',
+ yellowBox:'Marque o contorno da Yellow Box ponto a ponto; volte ao início e dê dois cliques rápidos para fechar.',
+ centralMedian:'Marque o contorno do canteiro com três ou mais pontos; volte ao primeiro e dê dois cliques rápidos para fechar.'
+};
+function updateToolHelp(title,description){
+ var box=document.getElementById('toolHelp');if(!box)return;
+ box.querySelector('b').textContent='📏 Como usar — '+title;
+ document.getElementById('toolHelpText').textContent=description;
+}
+document.querySelectorAll('[data-tool],[data-horizontal-symbol],[data-traffic-symbol],[data-symbol],[data-vehicle-id]').forEach(function(b){
+ b.addEventListener('click',function(){
+  var name=b.textContent.trim();var key=b.dataset.tool;
+  var desc=key?toolHelpDescriptions[key]:null;
+  if(!desc && b.hasAttribute('data-horizontal-symbol'))desc='Clique no quadro para inserir esta marca de solo. Depois selecione para mover, girar, dimensionar ou mudar a cor.';
+  if(!desc && b.hasAttribute('data-traffic-symbol'))desc='Clique para adicionar a placa ou sinal. Selecione o objeto para posicionar, girar ou ajustar o tamanho.';
+  if(!desc && b.hasAttribute('data-vehicle-id'))desc='Clique para adicionar a identificação do veículo ao croqui. Depois arraste e ajuste a posição.';
+  if(!desc && b.hasAttribute('data-symbol'))desc='Clique para inserir o símbolo no croqui. Selecione para mover, girar, dimensionar ou alterar a cor sem perder o contorno.';
+  updateToolHelp(name,desc||'Clique no quadro para usar esta ferramenta. Esc cancela um desenho em andamento.');
+ });
+});
+document.querySelectorAll('[data-tool]').forEach(function(b){b.onclick=function(){setTool(b.dataset.tool)}});
+document.querySelectorAll('[data-symbol]').forEach(function(b){b.onclick=function(){addSymbol(b.dataset.symbol)}});
+document.querySelectorAll('[data-horizontal-symbol]').forEach(function(b){b.onclick=function(){addHorizontalSymbol(b.dataset.horizontalSymbol)}});
+document.querySelectorAll('[data-vehicle-id]').forEach(function(b){
+ b.onclick=function(){
+  addVehicleIdentification('V.'+b.dataset.vehicleId);
+ };
+});
+
+$('addVeiculo').onclick=function(){if(vehicles.length>=12)return note('Limite de 12 envolvidos atingido.');vehicles.push(novoVeiculo());renderVehicles();renderHeader()};
+$('atualizar').onclick=function(){renderHeader();note('Documento atualizado.')};
+$('data').oninput=renderHeader;$('hora').oninput=renderHeader;$('local').oninput=renderHeader;$('equipe').oninput=renderHeader;$('orgao').oninput=renderHeader;
+
+
+$('texto').oninput=function(){
+ var o=canvas.getActiveObject();
+ if(o){o.label=this.value;if(o.type==='textbox'||o.type==='text')o.text=this.value;canvas.requestRenderAll();save()}
+};
+$('girarEsq').onclick=function(){var o=canvas.getActiveObject();if(o){o.rotate((o.angle||0)-15);save();canvas.requestRenderAll()}};
+$('girarDir').onclick=function(){var o=canvas.getActiveObject();if(o){o.rotate((o.angle||0)+15);save();canvas.requestRenderAll()}};
+$('frente').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.bringToFront(o);save()}};
+$('tras').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.sendToBack(o);save()}};
+$('excluir').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.remove(o);canvas.discardActiveObject();save();canvas.requestRenderAll()}};
+$('desfazer').onclick=undo;
+
+function buildDraftData(){
+ var __activeRoad=(canvas.getActiveObject()&&isEditableLinearTool(canvas.getActiveObject().toolType))?canvas.getActiveObject():null;
+ removeCurveHandles();
+ var d={
+  version:'V55',
+  savedAt:new Date().toISOString(),
+  canvas:canvas.toJSON(['kind','toolType','label','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation']),
+  data:$('data').value,hora:$('hora').value,local:$('local').value,equipe:$('equipe').value,orgao:$('orgao').value,
+  vehicles:vehicles
+ };
+ if(__activeRoad)showCurveHandles(__activeRoad);
+ setTimeout(function(){refreshAllRoundaboutConnections()},0);
+ return d
+}
+function applyDraftData(d){
+ if(!d||!d.canvas)throw new Error('Arquivo de rascunho inválido.');
+ canvas.loadFromJSON(d.canvas,function(){
+  $('data').value=d.data||'';$('hora').value=d.hora||'';$('local').value=d.local||'';
+  $('equipe').value=d.equipe||'';$('orgao').value=d.orgao||'';
+  vehicles=d.vehicles||[novoVeiculo(),novoVeiculo()];
+  renderVehicles();renderHeader();canvas.renderAll();
+  history=[];historyIndex=-1;save();
+  setTimeout(function(){refreshAllRoundaboutConnections()},0);
+  note('Rascunho aberto com sucesso.')
+ })
+}
+function draftFilename(){
+ var d=$('data').value||new Date().toISOString().slice(0,10);
+ var loc=($('local').value||'croqui').trim().replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').slice(0,45);
+ return 'croqui-rascunho-'+d+'-'+loc+'.json'
+}
+$('salvar').onclick=async function(){
+ try{
+  var d=buildDraftData();
+  var json=JSON.stringify(d,null,2);
+
+  // Mantém uma cópia automática no navegador como segurança.
+  localStorage.setItem('croquiSAATV55',JSON.stringify(d));
+
+  // Navegadores Chromium modernos: abre "Salvar como" para escolher pasta e nome.
+  if(window.showSaveFilePicker){
+   try{
+    var handle=await window.showSaveFilePicker({
+     suggestedName:draftFilename(),
+     types:[{
+      description:'Rascunho do Croqui SAAT',
+      accept:{'application/json':['.json']}
+     }]
+    });
+    var writable=await handle.createWritable();
+    await writable.write(json);
+    await writable.close();
+    note('Rascunho salvo na pasta escolhida.');
+    return
+   }catch(err){
+    if(err&&err.name==='AbortError'){note('Salvamento cancelado.');return}
+    throw err
+   }
+  }
+
+  // Compatibilidade: navegadores que não oferecem o seletor nativo.
+  var blob=new Blob([json],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=draftFilename();
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url)},1500);
+  note('Seu navegador não permite escolher a pasta pelo programa; o arquivo foi enviado para Downloads.')
+ }catch(err){note('Não foi possível salvar o rascunho: '+err.message)}
+};
+
+$('abrir').onclick=function(){
+ $('draftFileInput').value='';
+ $('draftFileInput').click()
+};
+$('draftFileInput').onchange=function(){
+ var file=this.files&&this.files[0];if(!file)return;
+ var reader=new FileReader();
+ reader.onload=function(){
+  try{
+   var d=JSON.parse(reader.result);
+   applyDraftData(d);
+   localStorage.setItem('croquiSAATV54',JSON.stringify(d));
+  }catch(err){note('Não foi possível abrir: arquivo inválido ou corrompido.')}
+ };
+ reader.onerror=function(){note('Não foi possível ler o arquivo selecionado.')};
+ reader.readAsText(file,'UTF-8')
+};
+
+
+function recolorObject(obj,color){
+ if(!obj)return;
+ // Nos símbolos de perícia, cor branca altera somente o preenchimento:
+ // traços e contornos permanecem pretos, inclusive dentro dos grupos.
+ if(obj.preserveSymbolOutline){
+  (function fillOnly(part){
+   if(part._objects&&part._objects.length){part._objects.forEach(fillOnly);return}
+   if(part.type==='text'||part.type==='i-text'||part.type==='textbox')return;
+   if(part.fill && part.fill!=='transparent' && part.fill!=='rgba(0,0,0,0)'
+      && part.fill!=='rgba(255,255,255,0)' && part.fill!==''){
+    part.set('fill',color);
+   }else if((part.type==='polygon'||part.type==='ellipse'||part.type==='circle'||part.type==='rect')
+      && part.fill==='rgba(255,255,255,0)'){
+    part.set('fill',color);
+   }
+   part.dirty=true;
+  })(obj);
+  obj.objectColor=color;obj.dirty=true;return;
+ }
+ // Grupos: aplica aos componentes internos.
+ if(obj._objects&&obj._objects.length){
+  obj._objects.forEach(function(ch){recolorObject(ch,color)});
+  obj.objectColor=color;obj.dirty=true;
+  return
+ }
+ // Não pinta textos; preserva texto branco da placa PARE.
+ if(obj.type==='text'||obj.type==='i-text'||obj.type==='textbox')return;
+ // Linhas/paths usam stroke. Formas preenchidas usam fill e, quando apropriado, stroke.
+ if(obj.type==='line'||obj.type==='path'){
+  obj.set({stroke:color});
+ }else{
+  var props={};
+  if(obj.fill && obj.fill!=='rgba(0,0,0,0)' && obj.fill!=='transparent')props.fill=color;
+  if(obj.stroke && obj.stroke!=='transparent')props.stroke=color;
+  obj.set(props);
+ }
+ obj.objectColor=color;obj.dirty=true;
+}
+document.querySelectorAll('[data-color]').forEach(function(btn){
+ btn.addEventListener('click',function(){
+  var o=canvas.getActiveObject();
+  if(!o){note('Selecione primeiro um objeto.');return}
+  recolorObject(o,btn.dataset.color);
+  o.objectColor=btn.dataset.color;
+  o.dirty=true;
+  canvas.requestRenderAll();
+  save();
+ });
+});
+
+document.querySelectorAll('[data-traffic-symbol]').forEach(function(btn){btn.addEventListener('click',function(){addTrafficSymbol(btn.dataset.trafficSymbol)})});
+// V83 — controle compartilhado de largura sem interromper o JavaScript.
+function adjustSelectedRoadWidth(delta){
+ var obj=canvas.getActiveObject();
+ if(!obj){note('Selecione uma rotatória ou uma Rua curva.');return false;}
+
+ if(obj.toolType==='streetMultiCurve'||obj.toolType==='sidewalk'||obj.toolType==='grass'||obj.toolType==='cycleLane'){
+  if(obj.type==='group' && obj.toolType==='sidewalk'){
+   var walk=obj._objects&&obj._objects[0];
+   if(walk){
+    var current=Number(walk.strokeWidth)||54;
+    var next=Math.max(20,Math.min(220,current+delta));
+    walk.set({strokeWidth:next});
+    obj.addWithUpdate();obj.setCoords();canvas.requestRenderAll();save();
+    note('Largura da Calçada: '+Math.round(next)+' px.');
+    return true;
+   }
+  }
+  if(obj.type==='group' && obj.toolType==='cycleLane'){
+   var edge=obj._objects&&obj._objects[0], lane=obj._objects&&obj._objects[1];
+   if(edge&&lane){
+    var current=Number(lane.strokeWidth)||54;
+    var next=Math.max(10,Math.min(220,current+delta));
+    lane.set({strokeWidth:next}); edge.set({strokeWidth:next+4});
+    obj.addWithUpdate();obj.setCoords();canvas.requestRenderAll();save();
+    note('Largura da '+multiToolName(obj.toolType)+': '+Math.round(next)+' px.');
+    return true;
+   }
+  }
+
+  var current=Number(obj.strokeWidth)||72;
+  var next=Math.max(20,Math.min(220,current+delta));
+  obj.set({strokeWidth:next});
+  obj.setCoords();
+  canvas.requestRenderAll();
+  save();
+  note('Largura da Rua curva: '+Math.round(next)+' px.');
+  return true;
+ }
+ return false;
+}
+
+if($('roundRoadMinus')){
+ $('roundRoadMinus').onclick=function(){
+  if(adjustSelectedRoadWidth(-10))return;
+  changeRoundRoadWidth(-8);
+ };
+}
+if($('roundRoadPlus')){
+ $('roundRoadPlus').onclick=function(){
+  if(adjustSelectedRoadWidth(10))return;
+  changeRoundRoadWidth(8);
+ };
+}
+var __printViewport=null;
+
+function fitCroquiForPrint(){
+ // Guarda exatamente a visualização usada no editor.
+ __printViewport=canvas.viewportTransform ? canvas.viewportTransform.slice() : [1,0,0,1,0,0];
+
+ // Não considera alças/pontos temporários de edição no enquadramento.
+ var objs=canvas.getObjects().filter(function(o){
+  return !o.isCurveHandle && !o.isGuide && o.visible!==false;
+ });
+
+ if(!objs.length){
+  canvas.setViewportTransform([1,0,0,1,0,0]);
+  canvas.renderAll();
+  return
+ }
+
+ // Calcula os limites reais de tudo que foi colocado no croqui.
+ var minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+ objs.forEach(function(o){
+  o.setCoords();
+  var r=o.getBoundingRect(true,true);
+  minX=Math.min(minX,r.left);
+  minY=Math.min(minY,r.top);
+  maxX=Math.max(maxX,r.left+r.width);
+  maxY=Math.max(maxY,r.top+r.height)
+ });
+
+ var contentW=Math.max(1,maxX-minX);
+ var contentH=Math.max(1,maxY-minY);
+
+ // Margem visual em torno do desenho e limite para não ampliar exageradamente.
+ var padX=115,padY=95;
+ var scale=Math.min(
+  (canvas.getWidth()-padX*2)/contentW,
+  (canvas.getHeight()-padY*2)/contentH
+ );
+ scale=Math.max(0.15,Math.min(scale,2.65));
+
+ // Centraliza automaticamente o conteúdo na área do croqui.
+ var centerX=(minX+maxX)/2;
+ var centerY=(minY+maxY)/2;
+ var tx=canvas.getWidth()/2-centerX*scale;
+ var ty=canvas.getHeight()/2-centerY*scale;
+
+ canvas.setViewportTransform([scale,0,0,scale,tx,ty]);
+ canvas.discardActiveObject();
+ removeCurveHandles();
+ canvas.renderAll()
+}
+
+function restoreCroquiAfterPrint(){
+ if(__printViewport){
+  canvas.setViewportTransform(__printViewport);
+  __printViewport=null;
+  canvas.renderAll()
+ }
+}
+
+// V62: área menor; impressão usa o enquadramento do próprio editor.
+
+
+$('imprimir').onclick=function(){
+ canvas.discardActiveObject();
+ removeCurveHandles();
+ canvas.renderAll();
+
+ // O beforeprint fará o enquadramento automático. Pequeno atraso ajuda
+ // navegadores Chromium a redesenhar o canvas antes de abrir a impressão.
+ setTimeout(function(){window.print()},60)
+};
+
+initDate();
+vehicles=[];
+vehicles.push(novoVeiculo());
+vehicles.push(novoVeiculo());
+renderVehicles();renderHeader();save();setTool('select');
+
+})();
+
+
+
+
+
+// V76 — zoom centralizado, estilo Word.
+var zoomPercent=100;
+var zoomPage=document.querySelector('.page');
+var zoomWork=document.querySelector('.work');
+
+function zoomEl(id){return document.getElementById(id)}
+
+function centerCroquiPage(){
+ if(!zoomPage)return;
+ zoomPage.style.marginLeft='auto';
+ zoomPage.style.marginRight='auto';
+}
+
+function applyCroquiZoom(value){
+ value=Math.max(40,Math.min(150,Math.round(Number(value)/5)*5));
+ zoomPercent=value;
+
+ var range=zoomEl('zoomRange');
+ var label=zoomEl('zoomValue');
+ if(range)range.value=value;
+ if(label)label.textContent=value+'%';
+
+ if(zoomPage){
+   var scale=value/100;
+   zoomPage.style.zoom=scale;
+   zoomPage.style.transform='none';
+   zoomPage.style.marginLeft='auto';
+   zoomPage.style.marginRight='auto';
+ }
+ centerCroquiPage();
+}
+
+var zr=zoomEl('zoomRange');
+var zm=zoomEl('zoomMinus');
+var zp=zoomEl('zoomPlus');
+var zf=zoomEl('zoomFit');
+
+if(zr)zr.addEventListener('input',function(){applyCroquiZoom(this.value)});
+if(zm)zm.addEventListener('click',function(){applyCroquiZoom(zoomPercent-5)});
+if(zp)zp.addEventListener('click',function(){applyCroquiZoom(zoomPercent+5)});
+
+if(zf)zf.addEventListener('click',function(){
+ if(!zoomPage||!zoomWork)return;
+
+ var old=zoomPage.style.zoom;
+ zoomPage.style.zoom=1;
+
+ var pageW=zoomPage.offsetWidth;
+ var pageH=zoomPage.offsetHeight;
+ var availW=Math.max(100,zoomWork.clientWidth-40);
+ var availH=Math.max(100,zoomWork.clientHeight-40);
+
+ zoomPage.style.zoom=old;
+
+ var pct=Math.min(availW/pageW,availH/pageH)*100;
+ applyCroquiZoom(pct);
+});
+
+window.addEventListener('resize',centerCroquiPage);
+
+
+applyCroquiZoom(100);
+
+
+// V78 — trocar abas nunca deve rolar a página externa.
+document.querySelectorAll('.toolTabs label').forEach(function(lbl){
+  lbl.addEventListener('click', function(){
+    requestAnimationFrame(function(){
+      document.documentElement.scrollTop=0;
+      document.body.scrollTop=0;
+    });
+  });
+});
+
+</script>
+</body></html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Croqui de Sinistro de Trânsito</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
 <style>
-:root{--blue:#123e69;--border:#b8c5cf}*{box-sizing:border-box}body{margin:0;background:#e9eff4;color:#172532;font-family:Arial,sans-serif}.top{background:linear-gradient(120deg,#102e50,#1c6197);color:#fff;padding:11px 15px;display:flex;align-items:center;gap:14px}.top h1{font-size:18px;margin:0}.top small{opacity:.86}.actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}button{border:1px solid #b8c7d1;border-radius:6px;background:#fff;color:#123e69;padding:8px 9px;font-size:11px;font-weight:bold;cursor:pointer;touch-action:manipulation}.actions button{border:0}.layout{max-width:1680px;margin:auto;padding:12px;display:grid;grid-template-columns:310px 1fr;gap:12px}.panel,.work{border:1px solid var(--border);border-radius:9px;background:#fff;padding:12px}.panel{max-height:calc(100vh - 18px);overflow:auto}.panel h2{font-size:14px;color:var(--blue);border-bottom:1px solid #dbe5eb;padding:6px 0;margin:10px 0 7px}.panel h2:first-child{margin-top:0}label{display:block;font-size:11px;font-weight:bold;margin:6px 0 3px}input,textarea,select{width:100%;border:1px solid #afbdc8;border-radius:4px;padding:6px;font:inherit;font-size:12px}textarea{height:43px;resize:vertical}.row,.buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px}.buttons button{font-size:11px;padding:8px 3px;background:#f7fafc}.buttons button.active{background:#cbe9fb;border-color:#1477bb}.primary{width:100%;background:var(--blue);color:#fff;margin-top:7px}.secondary{width:100%;margin-top:6px}.vehicle{border:1px solid #c5d2dc;border-left:4px solid #1e70ae;border-radius:5px;padding:7px;margin:7px 0;background:#fafcfd}.vehicle h3{font-size:12px;color:var(--blue);margin:0 0 5px}.vehicle .remove{float:right;border:0;background:transparent;color:#a11a1a;padding:0;font-size:16px}.help{font-size:11px;line-height:1.4;background:#edf6fd;border-left:3px solid #1e70ae;padding:8px;margin-top:10px}.status{min-height:17px;font-size:11px;color:#08612b;font-weight:bold;margin-top:7px}.work{background:#cbd8e1;overflow:auto;min-height:calc(100vh - 82px);display:flex;justify-content:flex-start;align-items:flex-start;padding:16px}.page{width:1236px;height:1030px;min-width:1236px;flex:0 0 1236px;background:#fff;position:relative;box-shadow:0 2px 14px #0004;padding:18px}.paperTitle{text-align:center;font:700 18px Georgia,serif;margin-bottom:5px}.header{height:150px;border:2px solid #111;padding:10px 13px;font:15px/1.42 'Times New Roman',serif;white-space:pre-wrap;overflow:hidden;color:#111;background:#fff;text-align:left}.headerTop{line-height:1.25}.headerVehicles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:14px;row-gap:1px;margin-top:3px;font-size:13px;line-height:1.15}.headerVehicle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.headerTeam{margin-top:3px;font-size:13px;line-height:1.15}.scene{position:absolute;left:18px;top:196px;width:1200px;height:790px;border:1px solid #111;background:#fff;overflow:hidden}.sceneGrid{position:absolute;inset:0;background-image:linear-gradient(#eef2f5 1px,transparent 1px),linear-gradient(90deg,#eef2f5 1px,transparent 1px);background-size:20px 20px;pointer-events:none}.canvasBox{position:absolute;inset:0}.footer{position:absolute;bottom:8px;left:18px;right:18px;border-top:1px solid #aaa;text-align:center;font-size:10px;color:#555;padding-top:3px}.hint{font-size:11px;background:#123e69;color:#fff;padding:7px;border-radius:5px;display:none;margin-top:8px}.locked{opacity:.65}@media(max-width:850px){.layout{grid-template-columns:1fr;padding:7px}.panel{max-height:72vh}.work{min-height:60vh;justify-content:flex-start;padding:8px}.top{flex-direction:column;align-items:flex-start}.actions{margin-left:0}}@media print{
+:root{--blue:#123e69;--border:#b8c5cf}*{box-sizing:border-box}body{margin:0;background:#e9eff4;color:#172532;font-family:Arial,sans-serif}.top{background:linear-gradient(120deg,#102e50,#1c6197);color:#fff;padding:11px 15px;display:flex;align-items:center;gap:14px}.top h1{font-size:18px;margin:0}.top small{opacity:.86}.actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}button{border:1px solid #b8c7d1;border-radius:6px;background:#fff;color:#123e69;padding:8px 9px;font-size:11px;font-weight:bold;cursor:pointer;touch-action:manipulation}.actions button{border:0}.layout{max-width:1680px;margin:auto;padding:12px;display:grid;grid-template-columns:310px 1fr;gap:12px}.panel,.work{border:1px solid var(--border);border-radius:9px;background:#fff;padding:12px}.panel{max-height:calc(100vh - 18px);overflow:auto}.panel h2{font-size:14px;color:var(--blue);border-bottom:1px solid #dbe5eb;padding:6px 0;margin:10px 0 7px}.panel h2:first-child{margin-top:0}label{display:block;font-size:11px;font-weight:bold;margin:6px 0 3px}input,textarea,select{width:100%;border:1px solid #afbdc8;border-radius:4px;padding:6px;font:inherit;font-size:12px}textarea{height:43px;resize:vertical}.row,.buttons{display:grid;grid-template-columns:1fr 1fr;gap:6px}.buttons button{font-size:11px;padding:8px 3px;background:#f7fafc}.buttons button.active{background:#cbe9fb;border-color:#1477bb}.primary{width:100%;background:var(--blue);color:#fff;margin-top:7px}.secondary{width:100%;margin-top:6px}.vehicle{border:1px solid #c5d2dc;border-left:4px solid #1e70ae;border-radius:5px;padding:7px;margin:7px 0;background:#fafcfd}.vehicle h3{font-size:12px;color:var(--blue);margin:0 0 5px}.vehicle .remove{float:right;border:0;background:transparent;color:#a11a1a;padding:0;font-size:16px}.help{font-size:11px;line-height:1.4;background:#edf6fd;border-left:3px solid #1e70ae;padding:8px;margin-top:10px}.status{min-height:17px;font-size:11px;color:#08612b;font-weight:bold;margin-top:7px}.work{background:#cbd8e1;overflow:auto;min-height:calc(100vh - 82px);display:flex;justify-content:flex-start;align-items:flex-start;padding:16px}.page{width:1236px;height:1030px;min-width:1236px;flex:0 0 1236px;background:#fff;position:relative;box-shadow:0 2px 14px #0004;padding:18px}.paperTitle{text-align:center;font:700 18px Georgia,serif;margin-bottom:5px}.header{height:206px;border:2px solid #111;padding:10px 13px;font:15px/1.42 'Times New Roman',serif;white-space:pre-wrap;overflow:hidden;color:#111;background:#fff;text-align:left}.headerTop{line-height:1.25}.headerVehicles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,auto);grid-auto-flow:column;column-gap:18px;row-gap:6px;margin-top:3px;font-size:16px;line-height:1.2}.headerVehicle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.headerDriver{font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.headerTeam{margin-top:3px;font-size:13px;line-height:1.15}.scene{position:absolute;left:18px;top:252px;width:1200px;height:734px;border:1px solid #111;background:#fff;overflow:hidden}.sceneGrid{position:absolute;inset:0;background-image:linear-gradient(#eef2f5 1px,transparent 1px),linear-gradient(90deg,#eef2f5 1px,transparent 1px);background-size:20px 20px;pointer-events:none}.canvasBox{position:absolute;inset:0}.footer{position:absolute;bottom:8px;left:18px;right:18px;border-top:1px solid #aaa;text-align:center;font-size:10px;color:#555;padding-top:3px}.hint{font-size:11px;background:#123e69;color:#fff;padding:7px;border-radius:5px;display:none;margin-top:8px}.locked{opacity:.65}@media(max-width:850px){.layout{grid-template-columns:1fr;padding:7px}.panel{max-height:72vh}.work{min-height:60vh;justify-content:flex-start;padding:8px}.top{flex-direction:column;align-items:flex-start}.actions{margin-left:0}}@media print{
  html,body{margin:0!important;padding:0!important;background:#fff!important}
  .top,.panel{display:none!important}
  .layout{display:block!important;margin:0!important;padding:0!important;max-width:none!important;height:auto!important}
@@ -12,7 +12,7 @@
  .page{
    box-shadow:none!important;
    margin:0 auto!important;
-   zoom:69%!important;
+   zoom:75%!important;
    page-break-inside:avoid!important;
    break-inside:avoid!important;
    page-break-after:avoid!important;
@@ -20,18 +20,26 @@
  }
  .paperTitle{font-size:22px!important;line-height:1.15!important;margin:0 0 7px!important}
  .header{
-   height:150px!important;
+   height:206px!important;
    padding:11px 14px!important;
    font-size:17px!important;
    line-height:1.42!important;
    overflow:hidden!important;
  }
- .scene{left:18px!important;top:196px!important;width:1200px!important;height:790px!important;overflow:hidden!important}
+ .scene{left:18px!important;top:252px!important;width:1200px!important;height:734px!important;overflow:hidden!important}
  .footer{
    left:18px!important;right:18px!important;bottom:8px!important;
    padding-top:4px!important;font-size:13px!important;line-height:1.2!important;
  }
- @page{size:A4 landscape;margin:4mm}
+ @page{size:A4 landscape;margin:3mm}
+}
+
+/* V121 — impede segunda página vazia mantendo escala de 75%. */
+@media print {
+  @page { size: A4 landscape; margin: 2mm; }
+  html, body { width: 100% !important; height: 100% !important; max-height: 100% !important; overflow: hidden !important; }
+  .layout, .work { margin: 0 !important; padding: 0 !important; height: auto !important; min-height: 0 !important; max-height: 100% !important; overflow: visible !important; }
+  .page { zoom: 75% !important; margin: 0 auto !important; page-break-before: avoid !important; page-break-after: avoid !important; break-after: avoid-page !important; }
 }
 
 /* ===== V3 ===== */
@@ -214,6 +222,18 @@ html,body{height:100%;min-height:100%}
 
 button[data-color="#b8b3a7"]{background:#b8b3a7!important;color:#222!important;border-color:#969084!important}
 .toolHelp{margin:7px 0 10px!important;position:relative;line-height:1.45}.toolHelp b{display:block;margin-bottom:4px;color:#123e69}.toolHelp #toolHelpText{font-size:11px}
+
+/* V114 — tipo do veículo, equipe legível e cabeçalho ampliado */
+.header{padding:9px 13px;line-height:1.15}
+.headerTop{font-size:16px;line-height:1.15}
+.headerVehicles{font-size:16px;line-height:1.15;row-gap:5px;margin-top:5px}
+.headerVehicle{line-height:1.15}
+.headerType,.headerDriver{font-size:15px;line-height:1.15}
+.headerTeam{font-size:16px;line-height:1.2;margin-top:6px;font-weight:normal}
+@media print{.header{padding:9px 14px!important;line-height:1.15!important}}
+/* V118 — texto preenchido com o mesmo peso dos rótulos, sem alterar a estrutura */
+.headerTop,.headerVehicles,.headerTeam{font-family:"Times New Roman",serif;font-weight:700}
+.headerTop b,.headerVehicle b,.headerType b,.headerDriver b,.headerTeam b{font-size:inherit;font-weight:700}
 </style>
 </head>
 <body>
@@ -302,7 +322,7 @@ function renderVehicles(){
  vehicles.forEach(function(v,i){
   var c=document.createElement('div');c.className='vehicle';
   c.innerHTML='<button class="remove" type="button">×</button><h3>'+v.label+' — veículo</h3>'+
-  '<div class="row"><div><label>Tipo</label><select data-c="tipo"><option>Automóvel</option><option>Motocicleta</option><option>Motoneta</option><option>Bicicleta</option><option>Autopropelido</option><option>Caminhão</option><option>Ônibus</option></select></div>'+
+  '<div class="row"><div><label>Tipo</label><select data-c="tipo"><option>Veículo</option><option>Motocicleta</option><option>Motoneta</option><option>Ciclomotor</option><option>Automóvel</option><option>Bicicleta</option><option>Camioneta</option><option>Caminhonete</option><option>Utilitário</option><option>Caminhão</option><option>Caminhão-trator</option><option>Veículo de emergência</option><option>Autopropelido</option><option>Ciclista</option><option>Pedestre</option><option>Reboque</option><option>Semi-reboque</option><option>Ônibus</option><option>Micro-ônibus</option><option>Motorhome</option><option>Triciclo</option><option>Charrete</option><option>Carroça</option><option>Trator de rodas</option><option>Trator de esteiras</option><option>Trator misto</option><option>Quadriciclo</option><option>Chassi/plataforma</option><option>Side-car</option></select></div>'+
   '<div><label>Placa</label><input data-c="placa"></div></div>'+
   '<label>Marca/modelo</label><input data-c="modelo"><label>Condutor</label><input data-c="condutor">';
   c.querySelectorAll('[data-c]').forEach(function(x){x.value=v[x.dataset.c]||'';x.oninput=function(){v[this.dataset.c]=this.value;renderHeader()}});
@@ -320,17 +340,17 @@ function renderHeader(){
  var r=$('data').value,d='____/____/______';
  if(r){var p=r.split('-');d=p[2]+'/'+p[1]+'/'+p[0]}
  var hd=$('header');
- var top='<div class="headerTop"><b>Data:</b> '+escHtml(d)+' &nbsp;&nbsp; <b>Hora:</b> '+escHtml($('hora').value||'__:__')+'<br><b>Local:</b> '+escHtml($('local').value||'________________________________________')+'</div>';
+ var top='<div class="headerTop"><b>Data:</b> '+'<b>'+escHtml(d)+'</b> &nbsp;&nbsp; <b>Hora:</b> '+'<b>'+escHtml($('hora').value||'__:__')+'</b><br><b>Local:</b> '+'<b>'+escHtml($('local').value||'________________________________________')+'</b></div>';
  var slots=[];
- for(var i=0;i<12;i++){
+ for(var i=0;i<6;i++){
   if(i<vehicles.length){
    var v=vehicles[i];
-   var info='<b>'+escHtml(v.label)+':</b> '+escHtml(v.placa||'________')+' — '+escHtml(v.modelo||'________________');
-   if(v.condutor)info+=' · '+escHtml(v.condutor);
-   slots.push('<div class="headerVehicle" title="'+escHtml((v.placa||'')+' '+(v.modelo||'')+' '+(v.condutor||''))+'">'+info+'</div>');
+   var info='<b>'+escHtml(v.label)+':</b> '+'<b>'+escHtml(v.placa||'________')+'</b> &nbsp; <b>Modelo:</b> '+'<b>'+escHtml(v.modelo||'________________')+'</b><div class="headerType"><b>Tipo:</b> '+'<b>'+escHtml(v.tipo||'Automóvel')+'</b></div>';
+   info+='<div class="headerDriver"><b>Condutor:</b> '+'<b>'+escHtml(v.condutor||'________________')+'</b></div>';
+   slots.push('<div class="headerVehicle" title="'+escHtml((v.placa||'')+' '+(v.modelo||'')+' '+(v.tipo||'')+' '+(v.condutor||''))+'">'+info+'</div>');
   }else slots.push('<div class="headerVehicle"></div>');
  }
- hd.innerHTML=top+'<div class="headerVehicles">'+slots.join('')+'</div><div class="headerTeam"><b>Atendimento / equipe:</b> '+escHtml($('equipe').value||'____________________________')+'</div>';
+ hd.innerHTML=top+'<div class="headerVehicles">'+slots.join('')+'</div><div class="headerTeam"><b>Atendimento / equipe:</b> '+'<b>'+escHtml($('equipe').value||'____________________________')+'</b></div>';
  hd.style.color='#111';hd.style.backgroundColor='#fff';hd.style.display='block';hd.style.visibility='visible';hd.style.opacity='1';
  $('footer').textContent=$('orgao').value||'Secretaria de Segurança do Cidadão'
 }
@@ -1791,7 +1811,7 @@ document.querySelectorAll('[data-vehicle-id]').forEach(function(b){
  };
 });
 
-$('addVeiculo').onclick=function(){if(vehicles.length>=12)return note('Limite de 12 envolvidos atingido.');vehicles.push(novoVeiculo());renderVehicles();renderHeader()};
+$('addVeiculo').onclick=function(){if(vehicles.length>=6)return note('Limite de 6 envolvidos atingido.');vehicles.push(novoVeiculo());renderVehicles();renderHeader()};
 $('atualizar').onclick=function(){renderHeader();note('Documento atualizado.')};
 $('data').oninput=renderHeader;$('hora').oninput=renderHeader;$('local').oninput=renderHeader;$('equipe').oninput=renderHeader;$('orgao').oninput=renderHeader;
 

@@ -358,7 +358,7 @@ function snapshot(){
  clearRoundaboutOpenings();
  var active=canvas.getActiveObject(),road=(active&&active.toolType==='streetCurved')?active:null;
  removeCurveHandles();
- var j=JSON.stringify(canvas.toJSON(['kind','toolType','label','points','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation']));
+ var j=JSON.stringify(canvas.toJSON(['kind','toolType','label','points','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation','rulerId','rulerLabelFor','rulerOffsetX','rulerOffsetY']));
  if(road&&canvas.getObjects().indexOf(road)>=0)showCurveHandles(road);
  return j
 }
@@ -1165,7 +1165,7 @@ function getMeasureTextObject(o){
 }
 function editRulerValue(o){
  if(!o||o.toolType!=='ruler')return;
- var txt=getMeasureTextObject(o);
+ var txt=rulerLabelOf(o)||getMeasureTextObject(o);
  var atual=o.customMeasure || (txt&&txt.text) || '';
  var novo=prompt('Digite o valor que deseja mostrar na régua:',atual);
  if(novo===null)return;
@@ -1234,15 +1234,34 @@ function addCardinalAt(letter,p,type){
  t.kind='symbol';t.toolType=type;t.objectColor='#111';
  canvas.add(t);canvas.setActiveObject(t);save();canvas.requestRenderAll();
 }
+var nextRulerId=1;
+function rulerLabelOf(o){
+ if(!o||!o.rulerId)return null;
+ return canvas.getObjects().find(function(x){return x.rulerLabelFor===o.rulerId})||null;
+}
+function rulerForLabel(label){
+ if(!label||!label.rulerLabelFor)return null;
+ return canvas.getObjects().find(function(x){return x.toolType==='ruler'&&x.rulerId===label.rulerLabelFor})||null;
+}
+function removeRulerPair(o){
+ if(!o)return;
+ var other=o.toolType==='ruler'?rulerLabelOf(o):rulerForLabel(o);
+ if(other)canvas.remove(other);
+ canvas.remove(o);
+}
 function addRuler(a,b){
  var len=distance(a,b),cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,ang=angleDeg(a,b),label=meters(len).toFixed(2).replace('.',',')+' m';
+ var id='ruler-'+Date.now()+'-'+(nextRulerId++);
  var o=new fabric.Group([
   new fabric.Line([-len/2,0,len/2,0],{stroke:'#111',strokeWidth:2}),
   new fabric.Triangle({left:-len/2,top:0,width:15,height:18,angle:270,originX:'center',originY:'center',fill:'#111',strokeWidth:0}),
-  new fabric.Triangle({left:len/2,top:0,width:15,height:18,angle:90,originX:'center',originY:'center',fill:'#111',strokeWidth:0}),
-  new fabric.Text(label,{left:0,top:-17,originX:'center',fontSize:21,fontWeight:'bold',fill:'#111',backgroundColor:'#fff'})
+  new fabric.Triangle({left:len/2,top:0,width:15,height:18,angle:90,originX:'center',originY:'center',fill:'#111',strokeWidth:0})
  ],{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
- o.kind='measure';o.toolType='ruler';o.lengthPx=len;o.meters=meters(len);canvas.add(o);canvas.setActiveObject(o);save();canvas.requestRenderAll()
+ o.kind='measure';o.toolType='ruler';o.rulerId=id;o.lengthPx=len;o.meters=meters(len);
+ var rad=ang*Math.PI/180,offset=36;
+ var tx=new fabric.Text(label,{left:cx+Math.sin(rad)*offset,top:cy-Math.cos(rad)*offset,originX:'center',originY:'center',fontSize:18,fontWeight:'bold',fill:'#111',backgroundColor:'#fff',padding:5,angle:ang,cornerSize:10});
+ tx.kind='measureLabel';tx.toolType='rulerLabel';tx.rulerLabelFor=id;
+ canvas.add(o);canvas.add(tx);canvas.setActiveObject(tx);save();canvas.requestRenderAll();
 }
 
 function makeRoadPath(points){
@@ -1587,6 +1606,7 @@ canvas.on('mouse:down',function(opt){
  if(!isRightMouse(opt))return;
  var target=opt.target,p=pointerCanvasPos(opt);
  if(!target||!p||target.isCurveHandle)return;
+ if(target.toolType==='rulerLabel')target=rulerForLabel(target)||target;
  if(target.toolType==='ruler'){
   // Clique direito na régua abre apenas a edição, sem iniciar arraste.
   pendingRulerEdit=target;
@@ -1714,6 +1734,43 @@ canvas.on('mouse:move',function(e){
 canvas.upperCanvasEl.addEventListener('contextmenu',function(ev){ev.preventDefault()});
 canvas.lowerCanvasEl.addEventListener('contextmenu',function(ev){ev.preventDefault()});
 
+// V123: conector pontilhado com seta da etiqueta até a régua.
+// Desenhado diretamente na camada visual, sem criar objetos selecionáveis
+// e sem alterar o JSON dos rascunhos ou a geometria das réguas.
+canvas.on('after:render',function(){
+ var ctx=canvas.contextContainer;
+ if(!ctx)return;
+ var vt=canvas.viewportTransform||[1,0,0,1,0,0];
+ ctx.save();ctx.transform(vt[0],vt[1],vt[2],vt[3],vt[4],vt[5]);
+ canvas.getObjects().forEach(function(r){
+  if(r.toolType!=='ruler'||!r.rulerId)return;
+  var label=rulerLabelOf(r);if(!label)return;
+  var a=label.getCenterPoint(),b=r.getCenterPoint();
+  var dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy);
+  if(d<18)return;
+  var ux=dx/d,uy=dy/d;
+  // Parte da borda da etiqueta e termina na linha central da régua.
+  var start=Math.min(24,d*.25),end=Math.max(start+2,d-5);
+  var x1=a.x+ux*start,y1=a.y+uy*start;
+  var x2=a.x+ux*end,y2=a.y+uy*end;
+  ctx.beginPath();ctx.setLineDash([6,5]);ctx.strokeStyle='#111';ctx.lineWidth=1.5;
+  ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-ux*10-uy*4,y2-uy*10+ux*4);
+  ctx.lineTo(x2-ux*10+uy*4,y2-uy*10-ux*4);
+  ctx.closePath();ctx.fillStyle='#111';ctx.fill();
+ });
+ ctx.restore();
+});
+canvas.on('object:moving',function(e){
+ var o=e&&e.target;
+ if(!o||o.toolType!=='ruler')return;
+ var tx=rulerLabelOf(o);if(!tx)return;
+ if(o._lastRulerX===undefined){o._lastRulerX=o.left;o._lastRulerY=o.top;return;}
+ tx.set({left:tx.left+o.left-o._lastRulerX,top:tx.top+o.top-o._lastRulerY});
+ tx.setCoords();o._lastRulerX=o.left;o._lastRulerY=o.top;
+});
+canvas.on('mouse:up',function(){canvas.getObjects().forEach(function(o){if(o.toolType==='ruler'){delete o._lastRulerX;delete o._lastRulerY}})});
 canvas.on('object:modified',function(e){
  if(e&&e.target&&e.target.isRoundaboutOpening)return;
  save();
@@ -1731,7 +1788,7 @@ canvas.on('selection:cleared',function(){$('texto').value='';removeCurveHandles(
 document.addEventListener('keydown',function(e){
  if(e.key==='Escape'&&start){e.preventDefault();cancelPendingDrawing();return}
  if((e.key==='Delete'||e.key==='Backspace')&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){
-  var o=canvas.getActiveObject();if(o){canvas.remove(o);canvas.discardActiveObject();canvas.requestRenderAll()}
+  var o=canvas.getActiveObject();if(o){removeRulerPair(o);canvas.discardActiveObject();canvas.requestRenderAll()}
  }
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}
 });
@@ -1767,7 +1824,7 @@ var toolHelpDescriptions={
  cardinalN:'Clique para inserir a indicação Norte (N).',cardinalS:'Clique para inserir a indicação Sul (S).',cardinalL:'Clique para inserir a indicação Leste (L).',cardinalO:'Clique para inserir a indicação Oeste (O).',
  text:'Clique no local desejado para inserir um texto.',
  polygonPen:'Clique no primeiro ponto e continue marcando os vértices da linha. Dois cliques rápidos no último ponto concluem; útil para muros e limites.',
- ruler:'Clique nos dois extremos da medição. Para alterar o valor, clique com o botão direito na régua; o clique esquerdo apenas seleciona.',
+ ruler:'Clique nos dois extremos. Arraste a etiqueta branca para posicionar a medida sem mover a régua. Clique com o botão direito na régua ou na etiqueta para alterar o valor.',
  streetEditable:'Marque início e fim; depois selecione a rua para ajustar seu traçado pelos pontos de edição.',
  streetCurved:'Marque início e fim; selecione a rua e arraste os pontos de edição para formar a curva.',
  sidewalkEditable:'Marque início e fim; selecione e arraste os pontos de edição para ajustar a calçada.',
@@ -1824,7 +1881,7 @@ $('girarEsq').onclick=function(){var o=canvas.getActiveObject();if(o){o.rotate((
 $('girarDir').onclick=function(){var o=canvas.getActiveObject();if(o){o.rotate((o.angle||0)+15);save();canvas.requestRenderAll()}};
 $('frente').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.bringToFront(o);save()}};
 $('tras').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.sendToBack(o);save()}};
-$('excluir').onclick=function(){var o=canvas.getActiveObject();if(o){canvas.remove(o);canvas.discardActiveObject();save();canvas.requestRenderAll()}};
+$('excluir').onclick=function(){var o=canvas.getActiveObject();if(o){removeRulerPair(o);canvas.discardActiveObject();save();canvas.requestRenderAll()}};
 $('desfazer').onclick=undo;
 
 function buildDraftData(){
@@ -1833,7 +1890,7 @@ function buildDraftData(){
  var d={
   version:'V55',
   savedAt:new Date().toISOString(),
-  canvas:canvas.toJSON(['kind','toolType','label','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation']),
+  canvas:canvas.toJSON(['kind','toolType','label','lengthPx','meters','customMeasure','objectColor','roadPoints','roundRoadWidth','roundPart','hatchOrientation','rulerId','rulerLabelFor','rulerOffsetX','rulerOffsetY']),
   data:$('data').value,hora:$('hora').value,local:$('local').value,equipe:$('equipe').value,orgao:$('orgao').value,
   vehicles:vehicles
  };

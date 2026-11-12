@@ -235,6 +235,47 @@ button[data-color="#b8b3a7"]{background:#b8b3a7!important;color:#222!important;b
 .headerTop,.headerVehicles,.headerTeam{font-family:"Times New Roman",serif;font-weight:700}
 .headerTop b,.headerVehicle b,.headerType b,.headerDriver b,.headerTeam b{font-size:inherit;font-weight:700}
 </style>
+
+<style id="v128-select-style">
+.mainSelectTool{margin:12px 0 8px}
+.mainSelectTool button{width:100%;padding:11px;border-radius:8px;
+ background:#e9f3ff;border:1px solid #8ab9df;color:#123e69;font-weight:800;cursor:pointer}
+.mainSelectTool button.active{background:#153f69;color:white}
+</style>
+<style id="v127-modal-style">
+.toolModalBackdrop{position:fixed;inset:0;z-index:100000;background:rgba(18,32,53,.52);
+ display:none;align-items:center;justify-content:center;padding:18px}
+.toolModalBackdrop.is-open{display:flex}
+.toolModal{background:#fff;color:#162b42;width:min(780px,96vw);max-height:min(780px,90vh);
+ border-radius:18px;box-shadow:0 22px 70px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden}
+.toolModalHead{display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:16px 20px;border-bottom:1px solid #e2e8f0;font-size:19px;font-weight:800}
+.toolModalClose{border:1px solid #d8e2ec;border-radius:9px;background:#f8fafc;
+ color:#334155;cursor:pointer;font-size:23px;line-height:1;padding:5px 12px}
+.toolModalBody{overflow-y:auto;padding:18px 20px 24px}
+.toolModalBody .toolTabPanel{display:none!important}
+.toolModalBody .toolTabPanel.v127-active{display:block!important}
+.toolModalBody .buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:14px}
+.toolModalBody .buttons button{min-height:55px;font-size:13px;white-space:normal;
+ border-radius:10px;padding:9px 10px}
+.toolModalBody h2{font-size:15px;margin:12px 0 10px}
+@media(max-width:520px){
+ .toolModalBackdrop{padding:8px}
+ .toolModal{max-height:94vh}
+ .toolModalBody{padding:12px}
+ .toolModalBody .buttons{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+}
+</style>
+<style id="v129-icon-style">
+.toolModalBody .buttons{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:12px}
+.toolModalBody .buttons button{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:7px;min-height:119px;padding:8px 6px 10px;border-radius:12px;background:#f4f7fa;border:1px solid #d3dde7;color:#193b59;font-size:11.5px;line-height:1.18;font-weight:700;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
+.toolModalBody .buttons button:hover{background:#e5f2ff;border-color:#4b9ddd}
+.toolModalBody .buttons button.active{background:#d4e9ff;border-color:#2475bd}
+.toolModalBody .toolIcon{display:block;width:100%;height:77px;flex:none;border-radius:9px;background:#e2e8f0;overflow:hidden}
+.toolModalBody .toolIcon svg{display:block;width:100%;height:100%}
+.toolModalBody .toolCaption{display:block;overflow-wrap:anywhere}
+@media(max-width:520px){.toolModalBody .buttons{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.toolModalBody .buttons button{min-height:105px;font-size:10px}.toolModalBody .toolIcon{height:64px}}
+</style>
 </head>
 <body>
 <input id="draftFileInput" type="file" accept=".json,application/json" style="display:none">
@@ -247,6 +288,7 @@ button[data-color="#b8b3a7"]{background:#b8b3a7!important;color:#222!important;b
  <button id="zoomFit" type="button" title="Ajustar folha à área visível">Ajustar</button>
 </span></div></header>
 <div class="layout"><aside class="panel"><h2>Identificação</h2><div class="row"><div><label>Data</label><input id="data" type="date"></div><div><label>Hora</label><input id="hora" type="time"></div></div><label>Local</label><textarea id="local" placeholder="Rua, número, rodovia, km, referência"></textarea><h2>Veículos</h2><div id="veiculos"></div><button id="addVeiculo" class="secondary" type="button">+ Adicionar veículo</button><label>Atendimento / equipe</label><input id="equipe"><label>Rodapé</label><input id="orgao" value="Secretaria de Segurança do Cidadão"><button id="atualizar" class="primary" type="button">Atualizar documento</button>
+<div class="mainSelectTool"><button data-tool="select" type="button">↖ Selecionar / mover</button></div>
 <div class="toolTabsWrap">
 <input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabDraw" checked>
 <input class="toolTabRadio" type="radio" name="toolTabs" id="toolTabEditable">
@@ -259,9 +301,22 @@ button[data-color="#b8b3a7"]{background:#b8b3a7!important;color:#222!important;b
 <label for="toolTabSymbols">Símbolos</label>
 </div>
 <div id="toolHelp" class="help toolHelp" role="status" aria-live="polite"><b>📏 Como usar — Selecionar / mover</b><div id="toolHelpText">Clique no objeto para selecioná-lo. Use as alças para ajustar e o botão direito para movimentar. Selecione uma ferramenta para ver as instruções específicas aqui.</div></div>
-<div id="tabDraw" class="toolTabPanel"><h2>Modos de desenho</h2><div class="buttons"><button data-tool="select" type="button">Selecionar / mover</button><button data-tool="street" type="button">Rua reta</button><button data-tool="streetMultiCurve" type="button">Rua curva</button><button data-tool="roundabout" type="button">Rotatória</button><button data-tool="centerDash" type="button">Eixo tracejado</button><button data-tool="arrow" type="button">Seta de trajetória</button><button data-tool="sidewalk" type="button">Calçada</button><button data-tool="grass" type="button">Grama</button><button data-tool="whiteDash" type="button">Branca tracejada</button><button data-tool="yellowDash" type="button">Amarela tracejada</button><button data-tool="whiteSolid" type="button">Branca contínua</button><button data-tool="yellowSolid" type="button">Amarela contínua</button><button data-tool="doubleSolid" type="button">Dupla contínua</button><button data-tool="cycleLane" type="button">Ciclovia / ciclofaixa</button><button data-tool="crosswalk" type="button">Faixa pedestre</button><button data-tool="stopLine" type="button">Faixa de retenção</button><button data-tool="speedBump" type="button">Lombada</button><button data-tool="compassRose" type="button">Rosa dos ventos</button><button data-tool="cardinalN" type="button">Norte (N)</button><button data-tool="cardinalS" type="button">Sul (S)</button><button data-tool="cardinalL" type="button">Leste (L)</button><button data-tool="cardinalO" type="button">Oeste (O)</button><button data-tool="text" type="button">Texto</button><button data-tool="polygonPen" type="button">Caneta Polígono</button><button data-tool="ruler" type="button">Régua</button></div></div>
+<div id="tabDraw" class="toolTabPanel"><h2>Modos de desenho</h2><div class="buttons"><button data-tool="street" type="button">Rua reta</button><button data-tool="streetMultiCurve" type="button">Rua curva</button><button data-tool="roundabout" type="button">Rotatória</button><button data-tool="sidewalk" type="button">Calçada</button><button data-tool="grass" type="button">Grama</button><button data-tool="cycleLane" type="button">Ciclovia / ciclofaixa</button><button data-tool="speedBump" type="button">Lombada</button><button data-tool="compassRose" type="button">Rosa dos ventos</button><button data-tool="cardinalN" type="button">Norte (N)</button><button data-tool="cardinalS" type="button">Sul (S)</button><button data-tool="cardinalL" type="button">Leste (L)</button><button data-tool="cardinalO" type="button">Oeste (O)</button><button data-tool="text" type="button">Texto</button><button data-tool="polygonPen" type="button">Caneta Polígono</button><button data-tool="ruler" type="button">Régua</button></div></div>
 <div id="tabEditable" class="toolTabPanel"><h2>Ferramentas editáveis</h2><div class="buttons"><button data-tool="streetEditable" type="button">Rua reta editável</button><button data-tool="streetCurved" type="button">Rua curva editável</button><button data-tool="sidewalkEditable" type="button">Calçada editável</button><button data-tool="grassEditable" type="button">Grama editável</button><button data-tool="whiteDashEditable" type="button">Branca tracejada editável</button><button data-tool="yellowDashEditable" type="button">Amarela tracejada editável</button><button data-tool="whiteSolidEditable" type="button">Branca contínua editável</button><button data-tool="yellowSolidEditable" type="button">Amarela contínua editável</button><button data-tool="cycleLaneEditable" type="button">Ciclofaixa editável</button><button data-tool="stopLineEditable" type="button">Faixa de retenção editável</button></div></div>
 <div id="tabSignal" class="toolTabPanel"><h2>Sinalização horizontal</h2>
+<h2>Linhas de sinalização viária</h2>
+<div class="buttons">
+<button data-tool="whiteDash" type="button">Branca tracejada</button>
+<button data-tool="yellowDash" type="button">Amarela tracejada</button>
+<button data-tool="whiteSolid" type="button">Branca contínua</button>
+<button data-tool="yellowSolid" type="button">Amarela contínua</button>
+<button data-tool="doubleSolid" type="button">Dupla contínua amarela</button>
+<button data-tool="doubleSolidWhite" type="button">Dupla contínua branca</button>
+<button data-tool="stopLine" type="button">Faixa de retenção</button>
+<button data-tool="crosswalk" type="button">Faixa pedestre</button>
+<button data-tool="arrow" type="button">Seta de trajetória</button>
+</div>
+
 <div class="buttons">
 <button data-tool="channelWhite" type="button">Hachurada branca</button>
 <button data-tool="channelYellow" type="button">Hachurada amarela</button>
@@ -307,7 +362,7 @@ Atendimento / equipe: ____________________________</div><div class="scene"><div 
 'use strict';
 
 var canvas=new fabric.Canvas('canvas',{preserveObjectStacking:true,selection:true,fireRightClick:true,stopContextMenu:true});
-var tool='select',drawingPreview=false,start=null,history=[],historyIndex=-1,vehicles=[],lastLeftClick=0,rightDrag=null,channelPoints=[],channelPreview=null,lastChannelClick=0;
+var tool='select',drawingPreview=false,start=null,history=[],historyIndex=-1,vehicles=[],lastLeftClick=0,lastDoubleLineFinish=0,rightDrag=null,channelPoints=[],channelPreview=null,lastChannelClick=0;
 var curvedRoadPoints=[],curvedRoadPreview=null,lastCurvedRoadClick=0;
 
 function $(x){return document.getElementById(x)}
@@ -529,7 +584,7 @@ function updateChannelPreview(pointer){
 
 var multiCurveTools={
  centerDash:true,sidewalk:true,grass:true,whiteDash:true,yellowDash:true,
- whiteSolid:true,yellowSolid:true,doubleSolid:true,cycleLane:true
+ whiteSolid:true,yellowSolid:true,doubleSolid:true,doubleSolidWhite:true,cycleLane:true
 };
 function isMultiCurveTool(t){return !!multiCurveTools[t] || t==='streetMultiCurve' || t==='polygonPen'}
 function multiToolName(t){
@@ -537,7 +592,7 @@ function multiToolName(t){
   streetMultiCurve:'Rua curva',polygonPen:'Caneta Polígono',centerDash:'Eixo tracejado',sidewalk:'Calçada',
   grass:'Grama',whiteDash:'Branca tracejada',yellowDash:'Amarela tracejada',
   whiteSolid:'Branca contínua',yellowSolid:'Amarela contínua',
-  doubleSolid:'Dupla contínua',cycleLane:'Ciclovia / ciclofaixa'
+  doubleSolid:'Dupla contínua amarela',doubleSolidWhite:'Dupla contínua branca',cycleLane:'Ciclovia / ciclofaixa'
  }[t]||'Ferramenta';
 }
 function multiToolStyle(t,preview){
@@ -554,6 +609,57 @@ function multiToolStyle(t,preview){
  if(t==='cycleLane')return Object.assign(base,{stroke:'#c8102e',strokeWidth:54,strokeLineCap:'butt'});
  return base;
 }
+function makeSeparatedDoubleLine(t,pts,preview){
+ // V130: restaura as curvas por pontos, mantendo os dois traços abertos.
+ // A linha central é amostrada como as outras ruas curvas do editor.
+ var color=t==='doubleSolidWhite'?'#ffffff':'#f1c40f';
+ var samples=[];
+ if(pts.length<2)return null;
+ samples.push({x:pts[0].x,y:pts[0].y});
+ if(pts.length===2){
+  samples.push({x:pts[1].x,y:pts[1].y});
+ }else{
+  var previous=pts[0];
+  for(var seg=1;seg<pts.length;seg++){
+   var control=pts[seg];
+   var target=seg===pts.length-1?control:{
+    x:(pts[seg].x+pts[seg+1].x)/2,
+    y:(pts[seg].y+pts[seg+1].y)/2
+   };
+   for(var step=1;step<=24;step++){
+    var u=step/24,v=1-u;
+    samples.push({x:v*v*previous.x+2*v*u*control.x+u*u*target.x,
+                  y:v*v*previous.y+2*v*u*control.y+u*u*target.y});
+   }
+   previous=target;
+  }
+ }
+ // Normal local em cada ponto: as faixas acompanham a curva, sem se cruzar.
+ var sides=[[],[]],halfGap=6;
+ for(var i=0;i<samples.length;i++){
+  var before=samples[Math.max(0,i-1)],after=samples[Math.min(samples.length-1,i+1)];
+  var dx=after.x-before.x,dy=after.y-before.y;
+  var len=Math.hypot(dx,dy)||1;
+  var nx=-dy/len*halfGap,ny=dx/len*halfGap;
+  sides[0].push({x:samples[i].x+nx,y:samples[i].y+ny});
+  sides[1].push({x:samples[i].x-nx,y:samples[i].y-ny});
+ }
+ function stroke(points){
+  // Um caminho aberto por faixa: sem fechamento, seta ou preenchimento.
+  var path=points.map(function(p,i){return (i?'L ':'M ')+p.x+' '+p.y}).join(' ');
+  return new fabric.Path(path,{
+   fill:null,stroke:color,strokeWidth:4,strokeLineCap:'butt',
+   strokeLineJoin:'round',selectable:false,evented:false,
+   objectCaching:false,opacity:preview?.55:1
+  });
+ }
+ var group=new fabric.Group([stroke(sides[0]),stroke(sides[1])],{
+  selectable:!preview,evented:!preview,objectCaching:false
+ });
+ group.toolType=t;
+ return group;
+}
+
 function buildMultiCurveObject(t,pts,preview){
  if(t==='polygonPen'){
   return new fabric.Polyline(pts.map(function(p){return{x:p.x,y:p.y}}),{
@@ -563,10 +669,8 @@ function buildMultiCurveObject(t,pts,preview){
   });
  }
  var pathData=makeRoadPath(pts);
- if(t==='doubleSolid'){
-  var outer=new fabric.Path(pathData,{fill:'',stroke:'#f1c40f',strokeWidth:12,strokeLineCap:'round',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
-  var inner=new fabric.Path(pathData,{fill:'',stroke:'#4a4f55',strokeWidth:4,strokeLineCap:'round',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
-  return new fabric.Group([outer,inner],{selectable:!preview,evented:!preview,objectCaching:false,opacity:1});
+ if(t==='doubleSolid'||t==='doubleSolidWhite'){
+  return makeSeparatedDoubleLine(t,pts,preview);
  }
  if(t==='sidewalk'){
   // V108: calçada com largura inicial semelhante à ciclofaixa e pedestres repetidos no trajeto.
@@ -1096,11 +1200,9 @@ function addLine(type,a,b){
    left:cx,top:cy,originX:'center',originY:'center',
    stroke:solidColor,strokeWidth:4,strokeLineCap:'butt',angle:ang
   });
- }else if(type==='doubleSolid'){
-  var gap=5;
-  var l1=new fabric.Line([-len/2,-gap,len/2,-gap],{stroke:'#f1c40f',strokeWidth:4,strokeLineCap:'butt'});
-  var l2=new fabric.Line([-len/2,gap,len/2,gap],{stroke:'#f1c40f',strokeWidth:4,strokeLineCap:'butt'});
-  o=new fabric.Group([l1,l2],{left:cx,top:cy,originX:'center',originY:'center',angle:ang});
+ }else if(type==='doubleSolid'||type==='doubleSolidWhite'){
+  // Dois traços abertos: sem preenchimento, fechamento ou união das pontas.
+  o=makeSeparatedDoubleLine(type,[{x:a.x,y:a.y},{x:b.x,y:b.y}],false);
  }else if(type==='cycleLane'){
   var laneH=54,parts=[];
   parts.push(new fabric.Rect({left:0,top:0,width:len,height:laneH,originX:'center',originY:'center',
@@ -1492,11 +1594,8 @@ function previewLine(type,a,b){
   o=new fabric.Line([a.x,a.y,b.x,b.y],{
    stroke:type==='yellowSolid'?'#f1c40f':'#fff',strokeWidth:4,strokeLineCap:'butt',opacity:.65
   })
- }else if(type==='doubleSolid'){
-  var pg=5;
-  var pa=new fabric.Line([-len/2,-pg,len/2,-pg],{stroke:'#f1c40f',strokeWidth:4});
-  var pb=new fabric.Line([-len/2,pg,len/2,pg],{stroke:'#f1c40f',strokeWidth:4});
-  o=new fabric.Group([pa,pb],{left:cx,top:cy,originX:'center',originY:'center',angle:ang,opacity:.65})
+ }else if(type==='doubleSolid'||type==='doubleSolidWhite'){
+  o=makeSeparatedDoubleLine(type,[{x:a.x,y:a.y},{x:b.x,y:b.y}],true);
  }else if(type==='cycleLane'){
   o=new fabric.Rect({left:cx,top:cy,width:len,height:54,originX:'center',originY:'center',
    fill:'#c8102e',stroke:'#fff',strokeWidth:2,angle:ang,opacity:.65})
@@ -1533,8 +1632,9 @@ function finishTwoClickDrawing(p){
           finishedTool==='yellowSolidEditable'||finishedTool==='doubleSolidEditable'||finishedTool==='stopLineEditable')addEditableLinear(finishedTool,start,p);
   else if(finishedTool==='roundabout')addRoundabout(start,p);
   else if(finishedTool==='ruler')addRuler(start,p);
-  else if(finishedTool==='arrow'||finishedTool==='centerDash'||finishedTool==='sidewalk'||finishedTool==='grass'||finishedTool==='whiteDash'||finishedTool==='yellowDash'||finishedTool==='whiteSolid'||finishedTool==='yellowSolid'||finishedTool==='doubleSolid'||finishedTool==='cycleLane'||finishedTool==='crosswalk'||finishedTool==='stopLine')addLine(finishedTool,start,p);
+  else if(finishedTool==='arrow'||finishedTool==='centerDash'||finishedTool==='sidewalk'||finishedTool==='grass'||finishedTool==='whiteDash'||finishedTool==='yellowDash'||finishedTool==='whiteSolid'||finishedTool==='yellowSolid'||finishedTool==='doubleSolid'||finishedTool==='doubleSolidWhite'||finishedTool==='cycleLane'||finishedTool==='crosswalk'||finishedTool==='stopLine')addLine(finishedTool,start,p);
  }finally{
+  if(finishedTool==='doubleSolid'||finishedTool==='doubleSolidWhite')lastDoubleLineFinish=Date.now();
   start=null;drawingPreview=false;lastLeftClick=0;clearDrawingPreview();
   setTool('select');
   canvas.discardActiveObject();
@@ -1695,6 +1795,8 @@ canvas.on('mouse:up',function(opt){
 canvas.on('mouse:down',function(e){
  if(!e.pointer||e.button!==1||tool==='select'||isChannelTool(tool)||isMultiCurveTool(tool))return;
  var p=snapPoint(e.pointer),now=Date.now();
+ // Descarta o terceiro evento de um duplo clique após finalizar a faixa dupla.
+ if((tool==='doubleSolid'||tool==='doubleSolidWhite')&&now-lastDoubleLineFinish<450)return;
 
  // Rosa dos ventos e pontos cardeais são colocados individualmente com um clique.
  if(tool==='compassRose'){
@@ -1815,7 +1917,8 @@ var toolHelpDescriptions={
  yellowDash:'Marque os pontos da linha amarela tracejada; dois cliques rápidos no último ponto concluem.',
  whiteSolid:'Marque os pontos da linha branca contínua; dois cliques rápidos no último ponto concluem.',
  yellowSolid:'Marque os pontos da linha amarela contínua; dois cliques rápidos no último ponto concluem.',
- doubleSolid:'Marque os pontos da dupla linha contínua; dois cliques rápidos no último ponto concluem.',
+ doubleSolid:'Desenhe duas linhas amarelas paralelas, sem fechamento nas extremidades. Dois cliques rápidos concluem.',
+ doubleSolidWhite:'Desenhe duas linhas brancas paralelas, sem fechamento nas extremidades. Dois cliques rápidos concluem.',
  cycleLane:'Marque os pontos do trajeto da ciclofaixa; dois cliques rápidos no último ponto concluem.',
  crosswalk:'Clique no início, mova o cursor e clique no fim para posicionar a faixa de pedestres.',
  stopLine:'Clique no início e no fim para criar a faixa de retenção.',
@@ -2236,5 +2339,124 @@ document.querySelectorAll('.toolTabs label').forEach(function(lbl){
   });
 });
 
+</script>
+
+<script id="v127-modal-script">
+(function(){
+ function initToolModal(){
+  var names={toolTabDraw:'Desenho',toolTabEditable:'Editáveis',
+             toolTabSignal:'Sinalização',toolTabSymbols:'Símbolos'};
+  var panels={toolTabDraw:'tabDraw',toolTabEditable:'tabEditable',
+              toolTabSignal:'tabSignal',toolTabSymbols:'tabSymbols'};
+  var backdrop=document.createElement('div');
+  backdrop.className='toolModalBackdrop';
+  backdrop.innerHTML='<section class="toolModal" role="dialog" aria-modal="true" aria-label="Ferramentas do croqui">'+
+   '<div class="toolModalHead"><span id="v127-modal-title">Ferramentas</span>'+
+   '<button class="toolModalClose" type="button" aria-label="Fechar">×</button></div>'+
+   '<div class="toolModalBody" id="v127-modal-body"></div></section>';
+  document.body.appendChild(backdrop);
+  var body=backdrop.querySelector('.toolModalBody');
+  Object.keys(panels).forEach(function(id){
+   var panel=document.getElementById(panels[id]);
+   if(panel)body.appendChild(panel);
+  });
+  function close(){backdrop.classList.remove('is-open')}
+  function open(id){
+   Object.keys(panels).forEach(function(k){
+    var panel=document.getElementById(panels[k]);
+    if(panel)panel.classList.toggle('v127-active',k===id);
+   });
+   document.getElementById('v127-modal-title').textContent=names[id]||'Ferramentas';
+   backdrop.classList.add('is-open');
+  }
+  document.querySelectorAll('.toolTabs label[for]').forEach(function(label){
+   label.addEventListener('click',function(){open(label.getAttribute('for'))});
+  });
+  backdrop.querySelector('.toolModalClose').addEventListener('click',close);
+  backdrop.addEventListener('click',function(e){if(e.target===backdrop)close()});
+  body.addEventListener('click',function(e){
+   if(e.target.closest('button[data-tool],button[data-horizontal-symbol],button[data-traffic-symbol],button[data-symbol],button[data-vehicle-id]'))close();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initToolModal);
+ else initToolModal();
+})();
+</script>
+<script id="v129-icon-script">
+(function(){
+ function drawIcon(key,label){
+  var bg='<rect width="112" height="76" rx="9" fill="#4d545c"/>';
+  var w='#fff',y='#ffcf22',red='#d80f39';
+  function line(c,dash,yy){return '<path d="M13 '+(yy||38)+' H99" stroke="'+c+'" stroke-width="4" stroke-linecap="butt" '+(dash?'stroke-dasharray="12 8"':'')+'/>'}
+  function road(){return '<path d="M15 76 V0 M97 76 V0" stroke="#f5f5f5" stroke-width="2" opacity=".7"/>'}
+  function stripes(c){return Array.from({length:6},function(_,i){return '<path d="M'+(14+i*15)+' 17 l-10 42" stroke="'+c+'" stroke-width="8"/>'}).join('')}
+  function arrow(dir){
+   var transform=dir==='left'?'rotate(-90 56 38)':dir==='right'?'rotate(90 56 38)':dir==='down'?'rotate(180 56 38)':'';
+   return '<g transform="'+transform+'"><path d="M56 63 V19 M42 32 L56 17 L70 32" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>';
+  }
+  function bike(){return '<g fill="none" stroke="white" stroke-width="2.5"><circle cx="35" cy="48" r="11"/><circle cx="77" cy="48" r="11"/><path d="M35 48 L49 28 L61 48 H35 L77 48 L62 28 H52"/></g>'}
+  function person(){return '<g fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><circle cx="56" cy="17" r="6" fill="white" stroke="none"/><path d="M56 26 L54 45 L40 61 M54 45 L69 61 M55 31 L40 40 M56 31 L71 39"/></g>'}
+  var d='';
+  if(/whiteDash|yellowDash/.test(key))d=line(key.includes('yellow')?y:w,true);
+  else if(/whiteSolid|yellowSolid/.test(key))d=line(key.includes('yellow')?y:w,false);
+  else if(/doubleSolid/.test(key))d=line(key==='doubleSolidWhite'?w:y,false,31)+line(key==='doubleSolidWhite'?w:y,false,44);
+  else if(/streetMultiCurve|streetCurved/.test(key))d='<path d="M14 74 Q95 56 65 0" fill="none" stroke="#353a40" stroke-width="42"/>'+'<path d="M14 74 Q95 56 65 0" fill="none" stroke="white" stroke-width="2" stroke-dasharray="9 6"/>';
+  else if(/street|road/i.test(key))d=road()+line(w,true);
+  else if(/roundabout/.test(key))d='<circle cx="56" cy="38" r="32" stroke="white" stroke-width="2" fill="#4d545c"/><circle cx="56" cy="38" r="18" stroke="white" stroke-width="2" fill="#6c9c71"/>';
+  else if(/cycleLane/.test(key))d='<rect x="7" y="11" width="98" height="54" fill="'+red+'"/>'+line(w,false,12)+line(w,false,64)+bike();
+  else if(/sidewalk/.test(key))d='<rect x="7" y="10" width="98" height="56" fill="#b8b3a7"/>'+person();
+  else if(/grass/.test(key))d='<rect x="7" y="10" width="98" height="56" fill="#699f69"/><path d="M16 59 l8 -18 6 11 10 -22 9 25 12 -17 12 20 12 -23 12 24" stroke="#d7eed7" fill="none" stroke-width="3"/>';
+  else if(/crosswalk/.test(key))d=Array.from({length:6},(_,i)=>'<rect x="'+(12+i*16)+'" y="12" width="9" height="52" fill="white"/>').join('');
+  else if(/stopLine/.test(key))d='<rect x="15" y="30" width="82" height="15" fill="white"/>';
+  else if(/channelGridWhite|yellowBox/.test(key))d='<g stroke="'+(key==='yellowBox'?y:w)+'" stroke-width="3">'+Array.from({length:5},(_,i)=>'<path d="M'+(16+i*20)+' 14 V62 M14 '+(16+i*11)+' H98"/>').join('')+'</g>';
+  else if(/channel/.test(key))d='<defs><clipPath id="clipicon"><rect x="12" y="11" width="88" height="54"/></clipPath></defs><g clip-path="url(#clipicon)" stroke="'+(key.includes('Yellow')?y:w)+'" stroke-width="7">'+Array.from({length:10},(_,i)=>'<path d="M'+(-65+i*19)+' 67 L'+(-10+i*19)+' 9"/>').join('')+'</g>';
+  else if(/centralMedian/.test(key))d='<rect x="39" y="5" width="34" height="66" rx="9" fill="#6d9c67" stroke="white" stroke-width="3"/>';
+  else if(/speedBump/.test(key))d='<rect x="9" y="22" width="94" height="32" fill="#4d545c"/>'+Array.from({length:5},(_,i)=>'<rect x="'+(14+i*19)+'" y="24" width="12" height="28" fill="'+y+'"/>').join('');
+  else if(/straightRight/.test(key))d=arrow('up')+arrow('right');
+  else if(/straightLeft/.test(key))d=arrow('up')+arrow('left');
+  else if(/turnRight/.test(key))d=arrow('right');
+  else if(/turnLeft/.test(key))d=arrow('left');
+  else if(/straight|forward/.test(key))d=arrow('up');
+  else if(/reverse/.test(key))d=arrow('left');
+  else if(/yield/.test(key))d='<path d="M56 62 L19 15 H93 Z" fill="none" stroke="white" stroke-width="6"/>';
+  else if(/signStop/.test(key))d='<path d="M40 10 H72 L91 29 V47 L72 66 H40 L21 47 V29 Z" fill="#d5242e" stroke="white" stroke-width="3"/><text x="56" y="43" font-size="17" text-anchor="middle" fill="white" font-weight="bold">PARE</text>';
+  else if(/trafficLight/.test(key))d='<rect x="43" y="5" width="26" height="66" rx="7" fill="#242b32" stroke="white" stroke-width="2"/>'+['#e33','#edcb26','#4ba35a'].map((c,i)=>'<circle cx="56" cy="'+(18+i*20)+'" r="7" fill="'+c+'"/>').join('');
+  else if(/car/.test(key))d='<path d="M38 10 H74 L86 28 V53 L74 66 H38 L26 53 V28 Z" fill="white" stroke="#17283c" stroke-width="3" '+(key.includes('Final')?'stroke-dasharray="6 4"':'')+'/>'+'<path d="M38 28 H74 M38 52 H74" stroke="#4d545c" stroke-width="3"/>';
+  else if(/twoWheels/.test(key))d=bike();
+  else if(/truckBus/.test(key))d='<rect x="37" y="5" width="38" height="66" fill="white" stroke="#182735" stroke-width="3" '+(key.includes('Final')?'stroke-dasharray="6 4"':'')+'/>';
+  else if(/victim/.test(key))d=person();
+  else if(/animals/.test(key))d='<ellipse cx="56" cy="37" rx="26" ry="15" fill="none" stroke="white" stroke-width="3"/><path d="M37 47 L31 65 M49 49 L46 65 M65 49 L68 65 M76 47 L83 65" stroke="white" stroke-width="3"/>';
+  else if(/tree/.test(key))d='<circle cx="56" cy="32" r="24" fill="#6eaa70" stroke="white" stroke-width="3"/><path d="M56 52 V69" stroke="white" stroke-width="6"/>';
+  else if(/post|fixed/.test(key))d='<circle cx="56" cy="38" r="14" fill="white" stroke="#17283c" stroke-width="4"/>';
+  else if(/impact/.test(key))d='<circle cx="56" cy="38" r="23" fill="none" stroke="white" stroke-width="4"/><path d="M40 22 L72 54 M72 22 L40 54" stroke="white" stroke-width="4"/>';
+  else if(/braking/.test(key))d='<path d="M35 8 L35 68 M70 8 L70 68" stroke="white" stroke-width="5" stroke-dasharray="22 6"/>';
+  else if(/ruler/.test(key))d='<path d="M13 39 H99" stroke="white" stroke-width="2"/><path d="M13 39 l12 -7 v14 Z M99 39 l-12 -7 v14 Z" fill="white"/><text x="56" y="31" fill="white" font-size="13" text-anchor="middle">5 m</text>';
+  else if(/arrow/.test(key))d=arrow('right');
+  else if(/cardinalN/.test(key))d=arrow('up');
+  else if(/cardinalS/.test(key))d=arrow('down');
+  else if(/cardinalL/.test(key))d=arrow('right');
+  else if(/cardinalO/.test(key))d=arrow('left');
+  else if(/text/.test(key))d='<text x="56" y="53" fill="white" font-size="42" font-weight="bold" text-anchor="middle">T</text>';
+  else if(/polygonPen/.test(key))d='<path d="M17 58 L48 12 L94 30 L76 65 Z" stroke="white" stroke-width="3" fill="none"/><circle cx="48" cy="12" r="5" fill="#73c3ff"/>';
+  else if(/compassRose/.test(key))d='<path d="M56 5 L65 29 L88 38 L65 47 L56 71 L47 47 L24 38 L47 29 Z" stroke="white" stroke-width="2" fill="#a9c4d9"/>';
+  else if(/vehicle/.test(key))d='<text x="56" y="48" fill="white" font-size="30" text-anchor="middle" font-weight="bold">'+label.replace(/[^0-9]/g,'')+'</text>';
+  else d='<circle cx="56" cy="38" r="24" fill="none" stroke="white" stroke-width="3"/><path d="M56 20 V56 M38 38 H74" stroke="white" stroke-width="3"/>';
+  if(key.endsWith('Editable'))d+='<circle cx="15" cy="14" r="5" fill="#74c0fc" stroke="white" stroke-width="2"/><circle cx="97" cy="62" r="5" fill="#74c0fc" stroke="white" stroke-width="2"/>';
+  return '<span class="toolIcon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 76">'+bg+d+'</svg></span>';
+ }
+ function init(){
+  document.querySelectorAll('.toolModalBody .toolTabPanel .buttons button').forEach(function(button){
+   var key=button.getAttribute('data-tool')||button.getAttribute('data-horizontal-symbol')||button.getAttribute('data-traffic-symbol')||button.getAttribute('data-symbol')||('vehicle'+(button.getAttribute('data-vehicle-id')||''));
+   var label=button.textContent.trim();
+   button.textContent='';
+   button.insertAdjacentHTML('beforeend',drawIcon(key,label));
+   var caption=document.createElement('span');caption.className='toolCaption';caption.textContent=label;button.appendChild(caption);
+   button.setAttribute('aria-label',label);
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(init,0)});
+ else setTimeout(init,0);
+})();
 </script>
 </body></html>

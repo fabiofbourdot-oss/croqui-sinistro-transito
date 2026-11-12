@@ -660,6 +660,57 @@ function makeSeparatedDoubleLine(t,pts,preview){
  return group;
 }
 
+function grassTuft(x,y,angle,scale){
+ var green='#397c37';
+ var blades=[
+  new fabric.Line([-9,7,-13,-5],{stroke:green,strokeWidth:2.3,strokeLineCap:'round'}),
+  new fabric.Line([-5,7,-5,-10],{stroke:green,strokeWidth:2.3,strokeLineCap:'round'}),
+  new fabric.Line([0,7,3,-14],{stroke:green,strokeWidth:2.3,strokeLineCap:'round'}),
+  new fabric.Line([5,7,12,-7],{stroke:green,strokeWidth:2.3,strokeLineCap:'round'}),
+  new fabric.Line([9,7,17,1],{stroke:green,strokeWidth:2.3,strokeLineCap:'round'})
+ ];
+ return new fabric.Group(blades,{left:x,top:y,originX:'center',originY:'center',
+  angle:angle||0,scaleX:scale||1,scaleY:scale||1,
+  selectable:false,evented:false,objectCaching:false});
+}
+function grassPathSamples(pts){
+ var samples=[pts[0]],previous=pts[0];
+ if(pts.length===2)return pts;
+ for(var seg=1;seg<pts.length;seg++){
+  var control=pts[seg],target=seg===pts.length-1?control:
+   {x:(pts[seg].x+pts[seg+1].x)/2,y:(pts[seg].y+pts[seg+1].y)/2};
+  for(var step=1;step<=20;step++){
+   var u=step/20,v=1-u;
+   samples.push({x:v*v*previous.x+2*v*u*control.x+u*u*target.x,
+                 y:v*v*previous.y+2*v*u*control.y+u*u*target.y});
+  }
+  previous=target;
+ }
+ return samples;
+}
+function makeGrassWithTufts(pts,preview){
+ var path=new fabric.Path(makeRoadPath(pts),{fill:'',stroke:'#b8d8a9',
+  strokeWidth:35,strokeLineCap:'butt',strokeLineJoin:'round',
+  opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
+ var parts=[path];
+ if(!preview){
+  var samples=grassPathSamples(pts),distance=0,next=34,idx=0;
+  for(var i=1;i<samples.length;i++){
+   var a=samples[i-1],b=samples[i],seg=Math.hypot(b.x-a.x,b.y-a.y);
+   while(seg>0 && distance+seg>=next){
+    var t=(next-distance)/seg,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;
+    var nx=-(b.y-a.y)/seg,ny=(b.x-a.x)/seg;
+    var shift=idx%2===0?-5:5;
+    parts.push(grassTuft(x+nx*shift,y+ny*shift,0,.75));
+    next+=53;idx++;
+   }
+   distance+=seg;
+  }
+ }
+ var group=new fabric.Group(parts,{selectable:!preview,evented:!preview,objectCaching:false});
+ group.toolType='grass';
+ return group;
+}
 function buildMultiCurveObject(t,pts,preview){
  if(t==='polygonPen'){
   return new fabric.Polyline(pts.map(function(p){return{x:p.x,y:p.y}}),{
@@ -672,6 +723,7 @@ function buildMultiCurveObject(t,pts,preview){
  if(t==='doubleSolid'||t==='doubleSolidWhite'){
   return makeSeparatedDoubleLine(t,pts,preview);
  }
+ if(t==='grass')return makeGrassWithTufts(pts,preview);
  if(t==='sidewalk'){
   // V108: calçada com largura inicial semelhante à ciclofaixa e pedestres repetidos no trajeto.
   var walk=new fabric.Path(pathData,{fill:'',stroke:'#d9d2c1',strokeWidth:54,strokeLineCap:'butt',strokeLineJoin:'round',opacity:preview?.58:1,selectable:false,evented:false,objectCaching:false});
@@ -1191,9 +1243,11 @@ function addLine(type,a,b){
  if(type==='whiteDash'||type==='yellowDash'||type==='centerDash'){
   var stroke=type==='yellowDash'?'#f1c40f':'#fff';
   o=new fabric.Line([-len/2,0,len/2,0],{left:cx,top:cy,originX:'center',originY:'center',stroke:stroke,strokeWidth:4,strokeDashArray:[14,10],strokeLineCap:'butt',angle:ang});
- }else if(type==='sidewalk'||type==='grass'){
-  h=type==='sidewalk'?12:35;
-  o=new fabric.Rect({left:cx,top:cy,width:len,height:h,originX:'center',originY:'center',fill:type==='sidewalk'?'#d9d2c1':'#b8d8a9',stroke:'#888',strokeWidth:1,angle:ang});
+  }else if(type==='grass'){
+  o=makeGrassWithTufts([a,b],false);
+ }else if(type==='sidewalk'){
+  h=12;
+  o=new fabric.Rect({left:cx,top:cy,width:len,height:h,originX:'center',originY:'center',fill:'#d9d2c1',stroke:'#888',strokeWidth:1,angle:ang});
   }else if(type==='whiteSolid'||type==='yellowSolid'){
   var solidColor=type==='yellowSolid'?'#f1c40f':'#fff';
   o=new fabric.Line([-len/2,0,len/2,0],{
@@ -1912,7 +1966,7 @@ var toolHelpDescriptions={
  centerDash:'Marque os pontos do eixo tracejado acompanhando o trajeto. Dois cliques rápidos no último ponto concluem.',
  arrow:'Clique no início e depois no destino para indicar o sentido da trajetória.',
  sidewalk:'Marque os pontos do percurso da calçada; ela inicia com largura semelhante à ciclofaixa e recebe símbolos de pedestres ao longo do trajeto. Dois cliques rápidos no último ponto concluem.',
- grass:'Marque os pontos da área de grama; dois cliques rápidos no último ponto concluem.',
+ grass:'Marque o percurso da grama. Pequenos desenhos de capim aparecem repetidos ao longo da faixa, inclusive nas curvas. Dois cliques rápidos concluem.',
  whiteDash:'Marque os pontos da linha branca tracejada; dois cliques rápidos no último ponto concluem.',
  yellowDash:'Marque os pontos da linha amarela tracejada; dois cliques rápidos no último ponto concluem.',
  whiteSolid:'Marque os pontos da linha branca contínua; dois cliques rápidos no último ponto concluem.',
@@ -2142,6 +2196,17 @@ function adjustSelectedRoadWidth(delta){
     walk.set({strokeWidth:next});
     obj.addWithUpdate();obj.setCoords();canvas.requestRenderAll();save();
     note('Largura da Calçada: '+Math.round(next)+' px.');
+    return true;
+   }
+  }
+  if(obj.type==='group' && obj.toolType==='grass'){
+   var grassBase=obj._objects&&obj._objects[0];
+   if(grassBase){
+    var current=Number(grassBase.strokeWidth)||35;
+    var next=Math.max(20,Math.min(220,current+delta));
+    grassBase.set({strokeWidth:next});
+    obj.addWithUpdate();obj.setCoords();canvas.requestRenderAll();save();
+    note('Largura da Grama: '+Math.round(next)+' px.');
     return true;
    }
   }

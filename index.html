@@ -960,15 +960,21 @@ function addHorizontalSymbol(kind){
  }else if(kind==='turnLeft'){
   parts.push(makeTurn('left'));
  }else if(kind==='straightRight'||kind==='straightLeft'){
-  // Combina os dois símbolos originais, como na montagem de referência.
-  // Sem contornos, as áreas brancas sobrepostas se unem visualmente.
-  var dir=kind==='straightRight'?'right':'left';
-  var straight=makeStraight();
-  straight.set({stroke:null,strokeWidth:0,left:0,top:0});
-  parts.push(straight);
-  var turn=makeTurn(dir);
-  turn.set({stroke:null,strokeWidth:0,left:dir==='right'?18:-18,top:19,scaleX:.78,scaleY:.78});
-  parts.push(turn);
+  // Seta bifurcada: haste vertical e ramificação lateral em uma única silhueta.
+  // A ponta frontal fica acima da bifurcação, evitando cruzamento das pontas.
+  var k=kind==='straightRight'?1:-1;
+  var points=[
+   {x:-9,y:50},{x:9,y:50},{x:9,y:5},
+   {x:20,y:-5},{x:37,y:-10},{x:37,y:-1},
+   {x:62,y:-21},{x:37,y:-41},{x:37,y:-31},
+   {x:17,y:-24},{x:9,y:-16},{x:9,y:-34},
+   {x:23,y:-34},{x:0,y:-63},{x:-23,y:-34},
+   {x:-9,y:-34}
+  ];
+  if(k===-1)points=points.map(function(p){return{x:-p.x,y:p.y}}).reverse();
+  parts.push(new fabric.Polygon(points,{fill:white,stroke:null,strokeWidth:0,
+   originX:'center',originY:'center',objectCaching:false}));
+
  }
  var g=new fabric.Group(parts,{
   left:c.left,top:c.top,originX:'center',originY:'center',
@@ -1381,12 +1387,14 @@ function addCompassRoseAt(p){
   }));
  });
  parts.push(new fabric.Circle({left:0,top:0,radius:3,originX:'center',originY:'center',fill:'#111'}));
+ parts.push(new fabric.Text('N',{left:0,top:-64,originX:'center',originY:'center',fontFamily:'Arial',fontSize:24,fontWeight:'bold',fill:'#111'}));
  var g=new fabric.Group(parts,{left:p.x,top:p.y,originX:'center',originY:'center',selectable:true,evented:true,objectCaching:false});
  g.kind='symbol';g.toolType='compassRose';
  canvas.add(g);canvas.setActiveObject(g);save();canvas.requestRenderAll();
 }
 function addCardinalAt(letter,p,type){
- var t=new fabric.Text(letter,{left:p.x,top:p.y,originX:'center',originY:'center',fontFamily:'Arial',fontSize:28,fontWeight:'bold',fill:'#111'});
+ var t=new fabric.Text(letter,{left:p.x,top:p.y,originX:'center',originY:'center',
+  fontFamily:'Arial',fontSize:60,fontWeight:'bold',fill:'#111',stroke:null});
  t.kind='symbol';t.toolType=type;t.objectColor='#111';
  canvas.add(t);canvas.setActiveObject(t);save();canvas.requestRenderAll();
 }
@@ -2463,7 +2471,29 @@ document.querySelectorAll('.toolTabs label').forEach(function(lbl){
   function bike(){return '<g fill="none" stroke="white" stroke-width="2.5"><circle cx="35" cy="48" r="11"/><circle cx="77" cy="48" r="11"/><path d="M35 48 L49 28 L61 48 H35 L77 48 L62 28 H52"/></g>'}
   function person(){return '<g fill="none" stroke="white" stroke-width="4" stroke-linecap="round"><circle cx="56" cy="17" r="6" fill="white" stroke="none"/><path d="M56 26 L54 45 L40 61 M54 45 L69 61 M55 31 L40 40 M56 31 L71 39"/></g>'}
   var d='';
-  if(/whiteDash|yellowDash/.test(key))d=line(key.includes('yellow')?y:w,true);
+  // V134: miniaturas dos símbolos reproduzem a geometria dos objetos do croqui.
+  var sym={
+   carInitial:'<path d="M15 20 H70 L94 38 L70 56 H15 Z" fill="white" stroke="#111" stroke-width="3.5"/>',
+   carFinal:'<path d="M15 20 H70 L94 38 L70 56 H15 Z" fill="white" stroke="#111" stroke-width="3.5" stroke-dasharray="6 4"/>',
+   truckBus:'<path d="M15 19 H68 V57 H15 Z M68 23 L96 38 L68 53 Z" fill="white" stroke="#111" stroke-width="3.5"/>',
+   truckBusFinal:'<path d="M15 19 H68 V57 H15 Z M68 23 L96 38 L68 53 Z" fill="white" stroke="#111" stroke-width="3.5" stroke-dasharray="6 4"/>',
+   twoWheelsInitial:'<g stroke="#111" stroke-width="3" fill="white"><circle cx="28" cy="51" r="12"/><circle cx="84" cy="51" r="12"/><path d="M40 51 L56 17 L72 51 Z" fill="#ddd"/></g>',
+   twoWheelsFinal:'<g stroke="#111" stroke-width="3" stroke-dasharray="4 3" fill="white"><circle cx="28" cy="51" r="12"/><circle cx="84" cy="51" r="12"/><path d="M40 51 L56 17 L72 51 Z" fill="#ddd"/></g>',
+   victim:'<g stroke="white" stroke-width="4" fill="none" stroke-linecap="round"><ellipse cx="59" cy="38" rx="25" ry="13"/><circle cx="24" cy="38" r="8" fill="white"/><path d="M42 27 L31 13 M76 27 L87 13 M42 49 L31 63 M76 49 L87 63"/></g>',
+   animals:'<g stroke="white" stroke-width="4" fill="none" stroke-linecap="round"><ellipse cx="56" cy="38" rx="28" ry="15"/><path d="M35 27 L19 10 M77 27 L93 10 M35 49 L19 66 M77 49 L93 66"/></g>',
+   fixed:'<rect x="27" y="17" width="58" height="42" fill="white" stroke="#111" stroke-width="3"/><path d="M27 17 L85 59 M85 17 L27 59" stroke="#111" stroke-width="3"/>',
+   puddle:'<path d="M16 17 H63 V10 H78 V27 L91 43 V51 H100 V65 H34 L16 57 Z" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round"/>',
+   tree:'<path d="M16 17 H63 V10 H78 V27 L91 43 V51 H100 V65 H34 L16 57 Z" fill="none" stroke="white" stroke-width="4" stroke-linejoin="round"/><circle cx="52" cy="45" r="12" fill="none" stroke="white" stroke-width="4"/>',
+   post:'<circle cx="56" cy="38" r="23" fill="white" stroke="#111" stroke-width="3"/><path d="M40 22 L72 54 M72 22 L40 54" stroke="#111" stroke-width="3"/>',
+   fence:'<g stroke="white" stroke-width="3.5" fill="none"><path d="M8 38 H104 M12 24 L35 52 M12 52 L35 24 M39 24 L62 52 M39 52 L62 24 M66 24 L89 52 M66 52 L89 24"/></g>',
+   impact:'<g stroke="white" stroke-width="4"><path d="M56 12 V64 M30 38 H82 M38 20 L74 56 M74 20 L38 56"/></g>',
+   braking:'<g stroke="white" stroke-width="3" fill="none" stroke-dasharray="3 3"><path d="M12 49 Q56 15 100 49 M12 61 Q56 27 100 61"/></g>',
+   rollover:'<path d="M8 46 C28 46 41 52 59 51 C82 49 82 31 66 17 C49 0 26 17 31 37 C35 53 67 62 104 70" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>',
+   forward:'<path d="M16 38 H90 M75 24 L94 38 L75 52" fill="none" stroke="white" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>',
+   reverse:'<g stroke="white" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M99 27 H39 L21 27 M36 14 L19 27 L36 40 M99 51 H39 L21 51 M36 38 L19 51 L36 64"/></g>'
+  };
+  if(Object.prototype.hasOwnProperty.call(sym,key))d=sym[key];
+  else if(/whiteDash|yellowDash/.test(key))d=line(key.includes('yellow')?y:w,true);
   else if(/whiteSolid|yellowSolid/.test(key))d=line(key.includes('yellow')?y:w,false);
   else if(/doubleSolid/.test(key))d=line(key==='doubleSolidWhite'?w:y,false,31)+line(key==='doubleSolidWhite'?w:y,false,44);
   else if(/streetMultiCurve|streetCurved/.test(key))d='<path d="M14 74 Q95 56 65 0" fill="none" stroke="#353a40" stroke-width="42"/>'+'<path d="M14 74 Q95 56 65 0" fill="none" stroke="white" stroke-width="2" stroke-dasharray="9 6"/>';
@@ -2478,8 +2508,11 @@ document.querySelectorAll('.toolTabs label').forEach(function(lbl){
   else if(/channel/.test(key))d='<defs><clipPath id="clipicon"><rect x="12" y="11" width="88" height="54"/></clipPath></defs><g clip-path="url(#clipicon)" stroke="'+(key.includes('Yellow')?y:w)+'" stroke-width="7">'+Array.from({length:10},(_,i)=>'<path d="M'+(-65+i*19)+' 67 L'+(-10+i*19)+' 9"/>').join('')+'</g>';
   else if(/centralMedian/.test(key))d='<rect x="39" y="5" width="34" height="66" rx="9" fill="#6d9c67" stroke="white" stroke-width="3"/>';
   else if(/speedBump/.test(key))d='<rect x="9" y="22" width="94" height="32" fill="#4d545c"/>'+Array.from({length:5},(_,i)=>'<rect x="'+(14+i*19)+'" y="24" width="12" height="28" fill="'+y+'"/>').join('');
-  else if(/straightRight/.test(key))d=arrow('up')+arrow('right');
-  else if(/straightLeft/.test(key))d=arrow('up')+arrow('left');
+  else if(/straightRight|straightLeft/.test(key)){
+   var fork='M47 68 L59 68 L59 40 Q59 34 67 30 L78 25 L78 31 L101 14 L78 0 L78 7 Q62 8 52 20 L52 13 L63 13 L53 -1 L42 13 L47 13 Z';
+   // Ícone simplificado: tronco vertical, ponta frontal e saída lateral à direita/esquerda.
+   d='<g transform="'+(key==='straightLeft'?'translate(112 0) scale(-1 1)':'')+'"><path d="M49 69 V25 L41 25 L56 7 L71 25 L63 25 V38 Q70 26 82 25 L82 17 L103 36 L82 55 L82 47 Q66 47 63 58 V69 Z" fill="white"/></g>';
+  }
   else if(/turnRight/.test(key))d=arrow('right');
   else if(/turnLeft/.test(key))d=arrow('left');
   else if(/straight|forward/.test(key))d=arrow('up');
@@ -2487,6 +2520,10 @@ document.querySelectorAll('.toolTabs label').forEach(function(lbl){
   else if(/yield/.test(key))d='<path d="M56 62 L19 15 H93 Z" fill="none" stroke="white" stroke-width="6"/>';
   else if(/signStop/.test(key))d='<path d="M40 10 H72 L91 29 V47 L72 66 H40 L21 47 V29 Z" fill="#d5242e" stroke="white" stroke-width="3"/><text x="56" y="43" font-size="17" text-anchor="middle" fill="white" font-weight="bold">PARE</text>';
   else if(/trafficLight/.test(key))d='<rect x="43" y="5" width="26" height="66" rx="7" fill="#242b32" stroke="white" stroke-width="2"/>'+['#e33','#edcb26','#4ba35a'].map((c,i)=>'<circle cx="56" cy="'+(18+i*20)+'" r="7" fill="'+c+'"/>').join('');
+  else if(/cardinalN/.test(key))d='<text x="56" y="55" fill="white" font-family="Arial" font-size="52" font-weight="900" text-anchor="middle">N</text>';
+  else if(/cardinalS/.test(key))d='<text x="56" y="55" fill="white" font-family="Arial" font-size="52" font-weight="900" text-anchor="middle">S</text>';
+  else if(/cardinalL/.test(key))d='<text x="56" y="55" fill="white" font-family="Arial" font-size="52" font-weight="900" text-anchor="middle">L</text>';
+  else if(/cardinalO/.test(key))d='<text x="56" y="55" fill="white" font-family="Arial" font-size="52" font-weight="900" text-anchor="middle">O</text>';
   else if(/car/.test(key))d='<path d="M38 10 H74 L86 28 V53 L74 66 H38 L26 53 V28 Z" fill="white" stroke="#17283c" stroke-width="3" '+(key.includes('Final')?'stroke-dasharray="6 4"':'')+'/>'+'<path d="M38 28 H74 M38 52 H74" stroke="#4d545c" stroke-width="3"/>';
   else if(/twoWheels/.test(key))d=bike();
   else if(/truckBus/.test(key))d='<rect x="37" y="5" width="38" height="66" fill="white" stroke="#182735" stroke-width="3" '+(key.includes('Final')?'stroke-dasharray="6 4"':'')+'/>';
@@ -2498,13 +2535,9 @@ document.querySelectorAll('.toolTabs label').forEach(function(lbl){
   else if(/braking/.test(key))d='<path d="M35 8 L35 68 M70 8 L70 68" stroke="white" stroke-width="5" stroke-dasharray="22 6"/>';
   else if(/ruler/.test(key))d='<path d="M13 39 H99" stroke="white" stroke-width="2"/><path d="M13 39 l12 -7 v14 Z M99 39 l-12 -7 v14 Z" fill="white"/><text x="56" y="31" fill="white" font-size="13" text-anchor="middle">5 m</text>';
   else if(/arrow/.test(key))d=arrow('right');
-  else if(/cardinalN/.test(key))d=arrow('up');
-  else if(/cardinalS/.test(key))d=arrow('down');
-  else if(/cardinalL/.test(key))d=arrow('right');
-  else if(/cardinalO/.test(key))d=arrow('left');
   else if(/text/.test(key))d='<text x="56" y="53" fill="white" font-size="42" font-weight="bold" text-anchor="middle">T</text>';
   else if(/polygonPen/.test(key))d='<path d="M17 58 L48 12 L94 30 L76 65 Z" stroke="white" stroke-width="3" fill="none"/><circle cx="48" cy="12" r="5" fill="#73c3ff"/>';
-  else if(/compassRose/.test(key))d='<path d="M56 5 L65 29 L88 38 L65 47 L56 71 L47 47 L24 38 L47 29 Z" stroke="white" stroke-width="2" fill="#a9c4d9"/>';
+  else if(/compassRose/.test(key))d='<path d="M56 16 L64 38 L56 60 L48 38 Z M34 38 L56 30 L78 38 L56 46 Z" fill="white"/><text x="56" y="13" font-size="14" font-weight="bold" fill="white" text-anchor="middle">N</text>';
   else if(/vehicle/.test(key))d='<text x="56" y="48" fill="white" font-size="30" text-anchor="middle" font-weight="bold">'+label.replace(/[^0-9]/g,'')+'</text>';
   else d='<circle cx="56" cy="38" r="24" fill="none" stroke="white" stroke-width="3"/><path d="M56 20 V56 M38 38 H74" stroke="white" stroke-width="3"/>';
   if(key.endsWith('Editable'))d+='<circle cx="15" cy="14" r="5" fill="#74c0fc" stroke="white" stroke-width="2"/><circle cx="97" cy="62" r="5" fill="#74c0fc" stroke="white" stroke-width="2"/>';
